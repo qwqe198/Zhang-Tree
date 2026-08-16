@@ -38,11 +38,10 @@ function canGenPoints(){
 // Calculate points/sec!
 function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(0)
-	let gain = new ExpantaNum(1.01)
-if(hasUpgrade("u",11))gain=gain.pow(upgradeEffect("u",11))
-gain=gain.pow(layers.u.dzeff())
-	return gain
-}
+	let g = new ExpantaNum(1.01)
+if(hasUpgrade("u",11))g=g.pow(upgradeEffect("u",11))
+g=g.pow(layers.u.dzeff())
+	return g}
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {
@@ -50,7 +49,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e131声望点`}
+	function(){return `残局1e486声望点`}
 ]
 
 // Determines when the game "ends"

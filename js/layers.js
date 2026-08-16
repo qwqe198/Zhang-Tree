@@ -6,6 +6,7 @@ var uNode = { //这是代码中的节点代码 例如player.p可以调用该层�
             unlocked: true, //是否开始就解锁
             points: new ExpantaNum(0),
 dz: new ExpantaNum(0),
+swz: new ExpantaNum(0),
         }
     },
     color: "green",
@@ -31,8 +32,18 @@ if(hasUpgrade("u",22))g=g.pow(2)
 if(hasUpgrade("u",23))g=g.pow(2)
 if(hasUpgrade("u",24))g=g.pow(2)
 if(hasUpgrade("u",25))g=g.pow(2)
+g=g.pow(layers.u.swzeff())
 if(g.gte(1e100))g=expRoot(g,2).mul(1e90)
 if(g.gte(1e125))g=expRoot(g,2).mul(1e114)
+if(g.gte(1e185))g=expRoot(g,2).mul(3e171)
+if(g.gte(1e225))g=expRoot(g,2).mul(1e210)
+if(g.gte(1e256))g=expRoot(g,2).mul(1e240)
+if(g.gte(1e289))g=expRoot(g,2).mul(1e272)
+if(g.gte("1e324"))g=expRoot(g,2).mul(1e306)
+if(g.gte("1e361"))g=expRoot(g,2).mul("1e342")
+if(g.gte("1e400"))g=expRoot(g,2).mul("1e380")
+if(g.gte("1e441"))g=expRoot(g,2).mul("1e420")
+if(g.gte("1e484"))g=expRoot(g,2).mul("1e462")
         return g.floor()
     },
    getNextAt() {
@@ -49,14 +60,29 @@ if(hasUpgrade("u",35))g=g.pow(10)
 if(player.u.points.lt(1e102))g=n(0)
         return g
     },
+ swzgain() {
+        let g = player.u.points.log10().div(13.1).log10()
+if(hasUpgrade("u",42))g=g.pow(10)
+if(hasUpgrade("u",43))g=g.pow(10)
+if(hasUpgrade("u",44))g=g.pow(10)
+if(hasUpgrade("u",45))g=g.pow(10)
+if(player.u.points.lt(1e131))g=n(0)
+        return g
+    },
   dzeff() {
         let g = player.u.dz.add(1).pow(player.u.dz.add(1))
+        return g
+    },
+ swzeff() {
+        let g = player.u.swz.add(1)
         return g
     },
     effectDescription() {
         return `
    <br>
 你有${format(player.u.dz)}点胀(+${format(layers.u.dzgain())}/s)(需1e102声望点),点数获取^${format(this.dzeff())}
+  <br>
+你有${format(player.u.swz)}声望胀(+${format(layers.u.swzgain())}/s)(需1e131声望点),声望获取^${format(this.swzeff())}
         `},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return true },
@@ -71,6 +97,8 @@ if(hasUpgrade("u",13))g=g.pow(2)
 if(hasUpgrade("u",14))g=g.pow(2)
 if(hasUpgrade("u",15))g=g.pow(2)
 if(hasUpgrade("u",34))g=expPow(g,100)
+if(hasUpgrade("u",41))g=expPow(g,3)
+if(hasUpgrade("u",45))g=expPow(g,2)
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -122,7 +150,7 @@ if(hasUpgrade("u",34))g=expPow(g,100)
             cost: n(1e+48),
         },
 31: {
-            description: `点胀获取10次方.`,
+            description: `点胀获取10次方(提示:声望点超过1e100有很弱的软上限).`,
            unlocked() { return hasUpgrade("u", 25) },
             cost: n(1.5e102),
         },
@@ -146,10 +174,35 @@ if(hasUpgrade("u",34))g=expPow(g,100)
            unlocked() { return hasUpgrade("u", 34) },
             cost: n(1e130),
         },
+41: {
+            description: `升级11效果指数3次方.`,
+           unlocked() { return hasUpgrade("u", 35) },
+            cost: n(1e160),
+        },
+42: {
+            description: `声望胀获取10次方.`,
+           unlocked() { return hasUpgrade("u", 41) },
+            cost: n(1e173),
+        },
+43: {
+            description: `声望胀获取10次方.`,
+           unlocked() { return hasUpgrade("u", 42) },
+            cost: n(1e185),
+        },
+44: {
+            description: `声望胀获取10次方.`,
+           unlocked() { return hasUpgrade("u", 43) },
+            cost: n(1e228),
+        },
+45: {
+            description: `声望胀获取10次方,升级11效果指数2次方.`,
+           unlocked() { return hasUpgrade("u", 44) },
+            cost: n("1e331"),
+        },
     },
   update(diff) {
                 player.u.dz =  player.u.dz.add(this.dzgain().mul(diff))
-
+player.u.swz =  player.u.swz.add(this.swzgain().mul(diff))
         },
 }
 
