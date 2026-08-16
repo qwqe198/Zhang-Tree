@@ -7,6 +7,7 @@ var uNode = { //这是代码中的节点代码 例如player.p可以调用该层�
             points: new ExpantaNum(0),
 dz: new ExpantaNum(0),
 swz: new ExpantaNum(0),
+zzyz: new ExpantaNum(0),
         }
     },
     color: "green",
@@ -44,6 +45,8 @@ if(g.gte("1e361"))g=expRoot(g,2).mul("1e342")
 if(g.gte("1e400"))g=expRoot(g,2).mul("1e380")
 if(g.gte("1e441"))g=expRoot(g,2).mul("1e420")
 if(g.gte("1e484"))g=expRoot(g,2).mul("1e462")
+if(g.gte("1e529"))g=expRoot(g,2).mul("1e506")
+if(g.gte("1e625"))g=expRoot(g,2).mul("1e600")
         return g.floor()
     },
    getNextAt() {
@@ -52,7 +55,7 @@ if(g.gte("1e484"))g=expRoot(g,2).mul("1e462")
         return g
     },
    dzgain() {
-        let g = player.u.points.log10().div(10.2).log10()
+        let g = player.u.points.log10().div(10.2).mul(layers.u.zzyzeff()).log10()
 if(hasUpgrade("u",31))g=g.pow(10)
 if(hasUpgrade("u",32))g=g.pow(10)
 if(hasUpgrade("u",33))g=g.pow(10)
@@ -61,12 +64,22 @@ if(player.u.points.lt(1e102))g=n(0)
         return g
     },
  swzgain() {
-        let g = player.u.points.log10().div(13.1).log10()
+        let g = player.u.points.log10().div(13.1).mul(layers.u.zzyzeff()).log10()
 if(hasUpgrade("u",42))g=g.pow(10)
 if(hasUpgrade("u",43))g=g.pow(10)
 if(hasUpgrade("u",44))g=g.pow(10)
 if(hasUpgrade("u",45))g=g.pow(10)
 if(player.u.points.lt(1e131))g=n(0)
+        return g
+    },
+ zzyzgain() {
+        let g = player.u.points.log10().div(48.6).log10()
+if(hasUpgrade("u",51))g=g.pow(2)
+if(hasUpgrade("u",52))g=g.pow(2)
+if(hasUpgrade("u",53))g=g.pow(10)
+if(hasUpgrade("u",54))g=g.pow(2)
+if(hasUpgrade("u",55))g=g.pow(2)
+if(player.u.points.lt("1e486"))g=n(0)
         return g
     },
   dzeff() {
@@ -77,12 +90,18 @@ if(player.u.points.lt(1e131))g=n(0)
         let g = player.u.swz.add(1)
         return g
     },
+ zzyzeff() {
+        let g = player.u.zzyz.add(1)
+        return g
+    },
     effectDescription() {
         return `
    <br>
 你有${format(player.u.dz)}点胀(+${format(layers.u.dzgain())}/s)(需1e102声望点),点数获取^${format(this.dzeff())}
   <br>
 你有${format(player.u.swz)}声望胀(+${format(layers.u.swzgain())}/s)(需1e131声望点),声望获取^${format(this.swzeff())}
+  <br>
+你有${format(player.u.zzyz)}子资源胀(+${format(layers.u.zzyzgain())}/s)(需1e486声望点),计算前2个资源获取公式的声望点^${format(this.zzyzeff())}
         `},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return true },
@@ -99,53 +118,56 @@ if(hasUpgrade("u",15))g=g.pow(2)
 if(hasUpgrade("u",34))g=expPow(g,100)
 if(hasUpgrade("u",41))g=expPow(g,3)
 if(hasUpgrade("u",45))g=expPow(g,2)
+if(hasUpgrade("u",51))g=expPow(g,2)
+if(hasUpgrade("u",52))g=expPow(g,2)
+
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
             cost: n(1),
         },
    12: {
-            description: `升级11效果平方.`,
+            description: `升级11效果2次方.`,
            unlocked() { return hasUpgrade("u", 11) },
             cost: n(15),
         },
  13: {
-            description: `升级11效果平方.`,
+            description: `升级11效果2次方.`,
            unlocked() { return hasUpgrade("u", 12) },
             cost: n(75),
         },
 14: {
-            description: `升级11效果平方.`,
+            description: `升级11效果2次方.`,
            unlocked() { return hasUpgrade("u", 13) },
             cost: n(500),
         },
 15: {
-            description: `升级11效果平方.`,
+            description: `升级11效果2次方.`,
            unlocked() { return hasUpgrade("u", 14) },
             cost: n(2500),
         },
 21: {
-            description: `声望点获取平方.`,
+            description: `声望点获取2次方.`,
            unlocked() { return hasUpgrade("u", 15) },
             cost: n(10000),
         },
 22: {
-            description: `声望点获取平方.`,
+            description: `声望点获取2次方.`,
            unlocked() { return hasUpgrade("u", 21) },
             cost: n(1000000),
         },
 23: {
-            description: `声望点获取平方.`,
+            description: `声望点获取2次方.`,
            unlocked() { return hasUpgrade("u", 22) },
             cost: n(1e+11),
         },
 24: {
-            description: `声望点获取平方.`,
+            description: `声望点获取2次方.`,
            unlocked() { return hasUpgrade("u", 23) },
             cost: n(1e+22),
         },
 25: {
-            description: `声望点获取平方.`,
+            description: `声望点获取2次方.`,
            unlocked() { return hasUpgrade("u", 24) },
             cost: n(1e+48),
         },
@@ -199,10 +221,36 @@ if(hasUpgrade("u",45))g=expPow(g,2)
            unlocked() { return hasUpgrade("u", 44) },
             cost: n("1e331"),
         },
+51: {
+            description: `子资源胀获取2次方,升级11效果指数2次方.`,
+           unlocked() { return hasUpgrade("u", 45) },
+            cost: n("1e545"),
+        },
+52: {
+            description: `子资源胀获取2次方,升级11效果指数2次方.`,
+           unlocked() { return hasUpgrade("u", 51) },
+            cost: n("1e548"),
+        },
+53: {
+            description: `子资源胀获取10次方.`,
+           unlocked() { return hasUpgrade("u", 52) },
+            cost: n("1e550"),
+        },
+54: {
+            description: `子资源胀获取2次方.`,
+           unlocked() { return hasUpgrade("u", 53) },
+            cost: n("1e565"),
+        },
+55: {
+            description: `子资源胀获取2次方,解锁新层级(制作中).`,
+           unlocked() { return hasUpgrade("u", 54) },
+            cost: n("1e625"),
+        },
     },
   update(diff) {
                 player.u.dz =  player.u.dz.add(this.dzgain().mul(diff))
 player.u.swz =  player.u.swz.add(this.swzgain().mul(diff))
+player.u.zzyz =  player.u.zzyz.add(this.zzyzgain().mul(diff))
         },
 }
 

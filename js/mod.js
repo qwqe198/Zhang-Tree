@@ -49,7 +49,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e486声望点`}
+	function(){return `残局1e631声望点`}
 ]
 
 // Determines when the game "ends"
