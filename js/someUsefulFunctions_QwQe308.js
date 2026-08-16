@@ -49,7 +49,7 @@ function expRoot(num,root){
 }
 //e后数字乘方
 function expPow(num,pow){
-    return ten.pow(num.log10().root(pow))
+    return ten.pow(num.log10().pow(pow))
 }
 //e后数字指数软上限
 function expRootSoftcap(num,start,power){

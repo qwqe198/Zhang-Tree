@@ -40,6 +40,7 @@ function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(0)
 	let gain = new ExpantaNum(1.01)
 if(hasUpgrade("u",11))gain=gain.pow(upgradeEffect("u",11))
+gain=gain.pow(layers.u.dzeff())
 	return gain
 }
 
@@ -49,7 +50,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e105声望点`}
+	function(){return `残局1e131声望点`}
 ]
 
 // Determines when the game "ends"
