@@ -57,6 +57,8 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
     effectDescription() {
         return `
  <br>
+膨胀点需要1e631声望
+ <br>
 你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15),每秒获取${format(this.zdzeff())}x的声望
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
