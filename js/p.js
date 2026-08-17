@@ -63,6 +63,8 @@ if(hasUpgrade("p",31))g=g.pow(10)
 if(hasUpgrade("p",32))g=g.pow(10)
 if(hasUpgrade("p",33))g=g.pow(10)
 if(hasUpgrade("p",35))g=g.pow(10)
+if(hasUpgrade("pz",31))g=g.mul(10)
+if(hasUpgrade("pz",32))g=g.mul(10)
 if(player.p.points.lt(1e102))g=n(0)
         return g
     },
@@ -73,17 +75,22 @@ if(hasUpgrade("p",42))g=g.pow(10)
 if(hasUpgrade("p",43))g=g.pow(10)
 if(hasUpgrade("p",44))g=g.pow(10)
 if(hasUpgrade("p",45))g=g.pow(10)
+if(hasUpgrade("pz",31))g=g.mul(10)
+if(hasUpgrade("pz",32))g=g.mul(10)
 if(player.p.points.lt(1e131))g=n(0)
         return g
     },
  zzyzgain() {
         let g = player.p.points.log10().div(48.6).log10()
 if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
+g=g.mul(buyableEffect("p",11))
 if(hasUpgrade("p",51))g=g.pow(2)
 if(hasUpgrade("p",52))g=g.pow(2)
 if(hasUpgrade("p",53))g=g.pow(10)
 if(hasUpgrade("p",54))g=g.pow(2)
 if(hasUpgrade("p",55))g=g.pow(2)
+if(hasUpgrade("pz",31))g=g.mul(10)
+if(hasUpgrade("pz",32))g=g.mul(10)
 if(player.p.points.lt("1e486"))g=n(0)
         return g
     },
@@ -110,7 +117,29 @@ if(player.p.points.lt("1e486"))g=n(0)
         `},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return true },
+   buyables: {
+        11: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var c = n(10).pow(x.pow(2).add(645)).floor()
+                return c
+            },
+            display() { return `子资源胀获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.p.points.gte(this.cost()) },
+            buy() {
+                player.p.points = player.p.points.sub(this.cost())
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return ""
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var eff = n(x.add(1).pow(0.04))
+                return eff
+            },
+            unlocked() { return hasUpgrade("pz", 25) },
+        },
 
+    },
     upgrades: {
         11: {
             description: `点获取基于声望增加.`,

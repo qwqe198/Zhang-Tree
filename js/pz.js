@@ -47,7 +47,11 @@ if(!hasUpgrade("pz", 15))g=n(0)
     },
   zdzeff() {
         let g = player.pz.zdz.add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).pow(66686).sub(1.5).max(0)
-
+if(hasMilestone("pz",1))g=g.pow(2)
+if(hasMilestone("pz",2))g=g.pow(2)
+if(hasMilestone("pz",3))g=g.pow(2)
+if(hasMilestone("pz",4))g=g.pow(2)
+if(hasMilestone("pz",5))g=g.pow(2)
         return g
     },
     effectDescription() {
@@ -57,7 +61,38 @@ if(!hasUpgrade("pz", 15))g=n(0)
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return hasUpgrade("p", 25)||player.pz.points.gte(1)||hasUpgrade("pz", 11) },
-
+milestones: {
+    1: {
+        requirementDescription: "1e675声望",
+        effectDescription: "自动胀效果^2",
+        done() { return player.p.points.gte("1e675") }
+    },
+  2: {
+        requirementDescription: "1e691声望",
+        effectDescription: "自动胀效果^2",
+        done() { return player.p.points.gte("1e691") }
+    },
+3: {
+        requirementDescription: "1e727声望",
+        effectDescription: "自动胀效果^2",
+        done() { return player.p.points.gte("1e727") }
+    },
+4: {
+        requirementDescription: "1e783声望",
+        effectDescription: "自动胀效果^2",
+        done() { return player.p.points.gte("1e783") }
+    },
+5: {
+        requirementDescription: "1e812声望",
+        effectDescription: "自动胀效果^2",
+        done() { return player.p.points.gte("1e812") }
+    },
+6: {
+        requirementDescription: "1e1000声望获取",
+        effectDescription: "声望获取二重软上限，超过部分获取为lgx*1e997",
+        done() { return player.p.points.gte("1e1000") }
+    },
+},
     upgrades: {
         11: {
             description: `点,声望,p的3个胀获取基于膨胀点增加(效果很强).`,
@@ -108,27 +143,39 @@ if(!hasUpgrade("pz", 15))g=n(0)
 21: {
             description: `自动胀获取^10.`,
            unlocked() { return hasUpgrade("pz", 15) },
-            cost: n(2),
+            cost: n(1),
         },
 22: {
             description: `自动胀获取^10.`,
            unlocked() { return hasUpgrade("pz", 21) },
-            cost: n(2),
+            cost: n(1),
         },
 23: {
             description: `自动胀获取^10.`,
            unlocked() { return hasUpgrade("pz", 22) },
-            cost: n(2),
+            cost: n(1),
         },
 24: {
             description: `自动胀获取^10.`,
            unlocked() { return hasUpgrade("pz", 23) },
-            cost: n(2),
+            cost: n(1),
         },
 25: {
-            description: `自动胀获取^10,解锁新东西(咕咕咕).`,
+            description: `自动胀获取^10,在p解锁购买胀.`,
            unlocked() { return hasUpgrade("pz", 24) },
-            cost: n(2),
+            cost: n(1),
+        },
+31: {
+            description: `p的3个胀获取最终x10.`,
+
+           unlocked() { return hasUpgrade("pz", 25) },
+            cost: n(5),
+        },
+32: {
+            description: `p的3个胀获取最终x10.`,
+
+           unlocked() { return hasUpgrade("pz", 31) },
+            cost: n(20),
         },
     },
   update(diff) {
