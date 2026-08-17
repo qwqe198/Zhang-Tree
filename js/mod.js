@@ -51,7 +51,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e631声望`}
+	function(){return `残局购买所有升级`}
 ]
 
 // Determines when the game "ends"
