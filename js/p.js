@@ -171,27 +171,27 @@ if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
    12: {
             description: `升级11效果^2.`,
            unlocked() { return hasUpgrade("p", 11) },
-            cost: n(15),
+            cost: n(10),
         },
  13: {
             description: `升级11效果^2.`,
            unlocked() { return hasUpgrade("p", 12) },
-            cost: n(75),
+            cost: n(30),
         },
 14: {
             description: `升级11效果^2.`,
            unlocked() { return hasUpgrade("p", 13) },
-            cost: n(500),
+            cost: n(150),
         },
 15: {
             description: `升级11效果^2.`,
            unlocked() { return hasUpgrade("p", 14) },
-            cost: n(2500),
+            cost: n(800),
         },
 21: {
             description: `声望获取^2.`,
            unlocked() { return hasUpgrade("p", 15) },
-            cost: n(10000),
+            cost: n(3600),
         },
 22: {
             description: `声望获取^2.`,
