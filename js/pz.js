@@ -5,7 +5,7 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
         return {
             unlocked: true, //是否开始就解锁
             points: new ExpantaNum(0),
-zdz: new ExpantaNum(0),
+            zdz: new ExpantaNum(0),
 
         }
     },
@@ -25,33 +25,33 @@ zdz: new ExpantaNum(0),
         var g = new ExpantaNum(1)
         return g
     },
-   getResetGain() {
+    getResetGain() {
         var g = player.p.points.log10().div(63.1).log10()
-if(player.p.points.lt("1e631"))g=n(0)
+        if (player.p.points.lt("1e631")) g = n(0)
         return g.floor()
     },
-   getNextAt() {
+    getNextAt() {
         let g = n(10).pow(n(10).pow(this.getResetGain()))
 
         return g
     },
-  zdzgain() {
+    zdzgain() {
         let g = player.pz.points.add(2)
-if(hasUpgrade("pz",21))g=g.pow(10)
-if(hasUpgrade("pz",22))g=g.pow(10)
-if(hasUpgrade("pz",23))g=g.pow(10)
-if(hasUpgrade("pz",24))g=g.pow(10)
-if(hasUpgrade("pz",25))g=g.pow(10)
-if(!hasUpgrade("pz", 15))g=n(0)
+        if (hasUpgrade("pz", 21)) g = g.pow(10)
+        if (hasUpgrade("pz", 22)) g = g.pow(10)
+        if (hasUpgrade("pz", 23)) g = g.pow(10)
+        if (hasUpgrade("pz", 24)) g = g.pow(10)
+        if (hasUpgrade("pz", 25)) g = g.pow(10)
+        if (!hasUpgrade("pz", 15)) g = n(0)
         return g
     },
-  zdzeff() {
+    zdzeff() {
         let g = player.pz.zdz.add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).pow(66686).sub(1.5).max(0)
-if(hasMilestone("pz",1))g=g.pow(2)
-if(hasMilestone("pz",2))g=g.pow(2)
-if(hasMilestone("pz",3))g=g.pow(2)
-if(hasMilestone("pz",4))g=g.pow(2)
-if(hasMilestone("pz",5))g=g.pow(2)
+        if (hasMilestone("pz", 1)) g = g.pow(2)
+        if (hasMilestone("pz", 2)) g = g.pow(2)
+        if (hasMilestone("pz", 3)) g = g.pow(2)
+        if (hasMilestone("pz", 4)) g = g.pow(2)
+        if (hasMilestone("pz", 5)) g = g.pow(2)
         return g
     },
     effectDescription() {
@@ -60,39 +60,44 @@ if(hasMilestone("pz",5))g=g.pow(2)
 你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15),每秒获取${format(this.zdzeff())}x的声望
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
-    layerShown() { return hasUpgrade("p", 25)||player.pz.points.gte(1)||hasUpgrade("pz", 11) },
-milestones: {
-    1: {
-        requirementDescription: "1e675声望",
-        effectDescription: "自动胀效果^2",
-        done() { return player.p.points.gte("1e675") }
+    layerShown() { return hasUpgrade("p", 25) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
+    milestones: {
+        1: {
+            requirementDescription: "1e675声望",
+            effectDescription: "自动胀效果^2",
+            done() { return player.p.points.gte("1e675") }
+        },
+        2: {
+            requirementDescription: "1e691声望",
+            effectDescription: "自动胀效果^2",
+            done() { return player.p.points.gte("1e691") }
+        },
+        3: {
+            requirementDescription: "1e727声望",
+            effectDescription: "自动胀效果^2",
+            done() { return player.p.points.gte("1e727") }
+        },
+        4: {
+            requirementDescription: "1e783声望",
+            effectDescription: "自动胀效果^2",
+            done() { return player.p.points.gte("1e783") }
+        },
+        5: {
+            requirementDescription: "1e812声望",
+            effectDescription: "自动胀效果^2",
+            done() { return player.p.points.gte("1e812") }
+        },
+        6: {
+            requirementDescription: "1e1000声望获取",
+            effectDescription: "声望获取二重软上限，超过部分获取为lgx*1e997",
+            done() { return player.p.points.gte("1e1000") }
+        },
+7: {
+            requirementDescription: "1e1016声望",
+            effectDescription: "p升级11效果指数^1.5",
+            done() { return player.p.points.gte("1e1016") }
+        },
     },
-  2: {
-        requirementDescription: "1e691声望",
-        effectDescription: "自动胀效果^2",
-        done() { return player.p.points.gte("1e691") }
-    },
-3: {
-        requirementDescription: "1e727声望",
-        effectDescription: "自动胀效果^2",
-        done() { return player.p.points.gte("1e727") }
-    },
-4: {
-        requirementDescription: "1e783声望",
-        effectDescription: "自动胀效果^2",
-        done() { return player.p.points.gte("1e783") }
-    },
-5: {
-        requirementDescription: "1e812声望",
-        effectDescription: "自动胀效果^2",
-        done() { return player.p.points.gte("1e812") }
-    },
-6: {
-        requirementDescription: "1e1000声望获取",
-        effectDescription: "声望获取二重软上限，超过部分获取为lgx*1e997",
-        done() { return player.p.points.gte("1e1000") }
-    },
-},
     upgrades: {
         11: {
             description: `点,声望,p的3个胀获取基于膨胀点增加(效果很强).`,
@@ -106,7 +111,7 @@ milestones: {
 
             cost: n(1),
         },
-12: {
+        12: {
             description: `p升级11效果基于膨胀点增加.`,
             effect() {
                 var g = player.pz.points.add(2)
@@ -115,15 +120,15 @@ milestones: {
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
-  unlocked() { return hasUpgrade("pz", 11) },
+            unlocked() { return hasUpgrade("pz", 11) },
             cost: n(1),
         },
-13: {
+        13: {
             description: `自动购买p升级.`,
             unlocked() { return hasUpgrade("pz", 12) },
             cost: n(1),
         },
-14: {
+        14: {
             description: `点获取基于膨胀点增加.`,
             effect() {
                 var g = player.pz.points.add(2)
@@ -132,53 +137,90 @@ milestones: {
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
-  unlocked() { return hasUpgrade("pz", 13) },
+            unlocked() { return hasUpgrade("pz", 13) },
             cost: n(1),
         },
-15: {
+        15: {
             description: `解锁自动胀,获取随膨胀点增加.`,
             unlocked() { return hasUpgrade("pz", 14) },
             cost: n(1),
         },
-21: {
+        21: {
             description: `自动胀获取^10.`,
-           unlocked() { return hasUpgrade("pz", 15) },
+            unlocked() { return hasUpgrade("pz", 15) },
             cost: n(1),
         },
-22: {
+        22: {
             description: `自动胀获取^10.`,
-           unlocked() { return hasUpgrade("pz", 21) },
+            unlocked() { return hasUpgrade("pz", 21) },
             cost: n(1),
         },
-23: {
+        23: {
             description: `自动胀获取^10.`,
-           unlocked() { return hasUpgrade("pz", 22) },
+            unlocked() { return hasUpgrade("pz", 22) },
             cost: n(1),
         },
-24: {
+        24: {
             description: `自动胀获取^10.`,
-           unlocked() { return hasUpgrade("pz", 23) },
+            unlocked() { return hasUpgrade("pz", 23) },
             cost: n(1),
         },
-25: {
+        25: {
             description: `自动胀获取^10,在p解锁购买胀.`,
-           unlocked() { return hasUpgrade("pz", 24) },
+            unlocked() { return hasUpgrade("pz", 24) },
             cost: n(1),
         },
-31: {
+        31: {
             description: `p的3个胀获取最终x10.`,
 
-           unlocked() { return hasUpgrade("pz", 25) },
+            unlocked() { return hasUpgrade("pz", 25) },
             cost: n(5),
         },
-32: {
+        32: {
             description: `p的3个胀获取最终x10.`,
 
-           unlocked() { return hasUpgrade("pz", 31) },
+            unlocked() { return hasUpgrade("pz", 31) },
             cost: n(20),
         },
-    },
-  update(diff) {
-player.pz.zdz =  player.pz.zdz.add(this.zdzgain().mul(diff))
+33: {
+            description: `p升级11,点胀效果指数基于膨胀点增加.`,
+            effect() {
+                var g = player.pz.points.add(11).log10()
+
+
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 32) },
+            cost: n(50),
         },
+    },
+    update(diff) {
+        player.pz.zdz = player.pz.zdz.add(this.zdzgain().mul(diff))
+    },
+    tabFormat: {
+
+        "升级": {
+            content: [
+                "main-display",
+                "prestige-button",
+                "resource-display",
+
+
+                "upgrades",
+            ],
+            unlocked() { return true }
+        },
+        "里程碑": {
+            content: [
+                "main-display",
+                "prestige-button",
+                "resource-display",
+
+                "milestones",
+
+            ],
+            unlocked() { return true }
+        },
+    },
 })

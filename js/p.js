@@ -96,6 +96,7 @@ if(player.p.points.lt("1e486"))g=n(0)
     },
   dzeff() {
         let g = player.p.dz.add(1).pow(player.p.dz.add(1))
+if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
         return g
     },
  swzeff() {
@@ -155,7 +156,8 @@ if(hasUpgrade("p",41))g=expPow(g,3)
 if(hasUpgrade("p",45))g=expPow(g,2)
 if(hasUpgrade("p",51))g=expPow(g,2)
 if(hasUpgrade("p",52))g=expPow(g,2)
-
+if (hasMilestone("pz", 7)) g = expPow(g,1.5)
+if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },

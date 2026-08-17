@@ -43,6 +43,7 @@ if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
 if(hasUpgrade("pz",14))g=g.pow(upgradeEffect("pz",14))
 if(hasUpgrade("p",11))g=g.pow(upgradeEffect("p",11))
 g=g.pow(layers.p.dzeff())
+
 	return g}
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
@@ -51,7 +52,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e1016声望点`}
+	function(){return `残局eee40000点`}
 ]
 
 // Determines when the game "ends"
