@@ -254,6 +254,10 @@ if(hasUpgrade("p",52))g=expPow(g,2)
         },
     },
  autoUpgrade() { return hasUpgrade("pz", 13)  },
+ passiveGeneration() {
+        if (hasUpgrade("pz", 15)) return layers.pz.zdzeff()
+        return 0
+    },
   update(diff) {
                 player.p.dz =  player.p.dz.add(this.dzgain().mul(diff))
 player.p.swz =  player.p.swz.add(this.swzgain().mul(diff))

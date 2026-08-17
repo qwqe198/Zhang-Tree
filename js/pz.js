@@ -5,9 +5,8 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
         return {
             unlocked: true, //是否开始就解锁
             points: new ExpantaNum(0),
-dz: new ExpantaNum(0),
-swz: new ExpantaNum(0),
-zzyz: new ExpantaNum(0),
+zdz: new ExpantaNum(0),
+
         }
     },
     color: "blue",
@@ -36,10 +35,25 @@ if(player.p.points.lt("1e631"))g=n(0)
 
         return g
     },
- 
+  zdzgain() {
+        let g = player.pz.points.add(2)
+if(hasUpgrade("pz",21))g=g.pow(10)
+if(hasUpgrade("pz",22))g=g.pow(10)
+if(hasUpgrade("pz",23))g=g.pow(10)
+if(hasUpgrade("pz",24))g=g.pow(10)
+if(hasUpgrade("pz",25))g=g.pow(10)
+if(!hasUpgrade("pz", 15))g=n(0)
+        return g
+    },
+  zdzeff() {
+        let g = player.pz.zdz.add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).pow(66686).sub(1.5).max(0)
+
+        return g
+    },
     effectDescription() {
         return `
-
+ <br>
+你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15),每秒获取${format(this.zdzeff())}x的声望
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return hasUpgrade("p", 25)||player.pz.points.gte(1)||hasUpgrade("pz", 11) },
@@ -87,12 +101,37 @@ if(player.p.points.lt("1e631"))g=n(0)
             cost: n(1),
         },
 15: {
-            description: `解锁自动胀(制作中).`,
+            description: `解锁自动胀,获取随膨胀点增加.`,
             unlocked() { return hasUpgrade("pz", 14) },
             cost: n(1),
         },
+21: {
+            description: `自动胀获取^10.`,
+           unlocked() { return hasUpgrade("pz", 15) },
+            cost: n(2),
+        },
+22: {
+            description: `自动胀获取^10.`,
+           unlocked() { return hasUpgrade("pz", 21) },
+            cost: n(2),
+        },
+23: {
+            description: `自动胀获取^10.`,
+           unlocked() { return hasUpgrade("pz", 22) },
+            cost: n(2),
+        },
+24: {
+            description: `自动胀获取^10.`,
+           unlocked() { return hasUpgrade("pz", 23) },
+            cost: n(2),
+        },
+25: {
+            description: `自动胀获取^10,解锁新东西(咕咕咕).`,
+           unlocked() { return hasUpgrade("pz", 24) },
+            cost: n(2),
+        },
     },
   update(diff) {
-
+player.pz.zdz =  player.pz.zdz.add(this.zdzgain().mul(diff))
         },
 })
