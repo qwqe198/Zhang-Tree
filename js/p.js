@@ -121,21 +121,26 @@ if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
    buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var c = n(10).pow(x.pow(2).add(645)).floor()
-                return c
+                var g = n(10).pow(x.pow(2).add(645)).floor()
+if (hasMilestone("pz", 9)) g = n(10).pow(x.pow(2)).floor()
+                return g
             },
             display() { return `子资源胀获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.p.points.gte(this.cost()) },
             buy() {
-                player.p.points = player.p.points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             title() {
-                return ""
+                return "p购买胀1"
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
-                var eff = n(x.add(1).pow(0.04))
-                return eff
+                var g = n(x.add(1).pow(1/32))
+if(hasUpgrade("pz",34))g=g.pow(2)
+if(hasUpgrade("pz",35))g=g.pow(2)
+if(hasUpgrade("pz",42))g=g.pow(2)
+if (hasMilestone("pz", 9)) g = g.pow(2)
+if (hasMilestone("pz", 10)) g = g.pow(2)
+                return g
             },
             unlocked() { return hasUpgrade("pz", 25) },
         },
@@ -290,6 +295,7 @@ if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
         return 0
     },
   update(diff) {
+       if(hasMilestone("pz", 11))setBuyableAmount(this.layer, 11, player.p.points.add(1).log10().root(2).floor().add(1))
                 player.p.dz =  player.p.dz.add(this.dzgain().mul(diff))
 player.p.swz =  player.p.swz.add(this.swzgain().mul(diff))
 player.p.zzyz =  player.p.zzyz.add(this.zzyzgain().mul(diff))

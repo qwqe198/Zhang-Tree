@@ -18,7 +18,7 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
     baseResource: "声望",//基础资源名称
     gainMult() { // 资源获取数量倍率
         g = new ExpantaNum(1)
-
+  
         return g
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -27,6 +27,8 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
     },
     getResetGain() {
         var g = player.p.points.log10().div(63.1).log10()
+if (hasMilestone("pz", 7)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
+if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
         if (player.p.points.lt("1e631")) g = n(0)
         return g.floor()
     },
@@ -98,6 +100,26 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
             requirementDescription: "1e1016声望",
             effectDescription: "p升级11效果指数^1.5",
             done() { return player.p.points.gte("1e1016") }
+        },
+8: {
+            requirementDescription: "eee40000点",
+            effectDescription: "点加成膨胀点获取(公式:(lg^3)x^0.5/100)",
+            done() { return player.points.gte("eee40000") }
+        },
+9: {
+            requirementDescription: "6.5挑战胀1分数",
+            effectDescription: "p购买胀1效果^2,且降低它的需求",
+            done() { return challengeEffect("pz", 11).gte("6.5") }
+        },
+10: {
+            requirementDescription: "1e150子资源胀",
+            effectDescription: "p购买胀1效果^2",
+            done() { return player.p.zzyz.gte("1e150") }
+        },
+11: {
+            requirementDescription: "3.33e333子资源胀",
+            effectDescription: "自动购买p购买胀1",
+            done() { return player.p.zzyz.gte("3.33e333") }
         },
     },
     upgrades: {
@@ -196,9 +218,69 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked() { return hasUpgrade("pz", 32) },
             cost: n(50),
         },
+34: {
+            description: `p购买胀1效果^2`,
+            unlocked() { return hasUpgrade("pz", 33) },
+            cost: n(75),
+        },
+35: {
+            description: `p购买胀1效果^2,解锁挑战胀`,
+            unlocked() { return hasUpgrade("pz", 34) },
+            cost: n(100),
+        },
+41: {
+            description: `挑战胀1分数加成膨胀点获取.`,
+            effect() {
+                var g = challengeEffect("pz", 11).add(1).pow(0.5)
+
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 35) },
+            cost: n(125),
+        },
+42: {
+            description: `p购买胀1效果^2`,
+            unlocked() { return hasUpgrade("pz", 41) },
+            cost: n(400),
+        },
+43: {
+            description: `咕咕咕.`,
+            unlocked() { return hasUpgrade("pz", 42) },
+            cost: n(750),
+        },
     },
     update(diff) {
         player.pz.zdz = player.pz.zdz.add(this.zdzgain().mul(diff))
+    },
+  challenges: {
+        11: {
+            name() { return '挑战涨1'},
+            challengeDescription() { return '点获取log10,基于挑战内最高声望点获得分数.'},
+            rewardDescription() { 
+                return `分数:${format(this.rewardEffect())}`
+            },
+            rewardEffect() {
+let g=n(0)
+              if(inChallenge("pz",11))  g=g.max(player.p.points.add(1).log10().pow(0.5)).max(challengeEffect("pz", 11))
+
+ if(!inChallenge("pz",11))g=g.max(player.pz.challenges[11])
+return g
+            },
+            goal: 0,
+ goalDescription() {
+                return "更多声望"
+            },
+            onExit() {
+                player.pz.challenges[11] = player.p.points.add(1).log10().pow(0.5).max(challengeEffect("pz", 11)).max(0)
+            },
+            completionLimit: "1F9999",
+            canComplete() { return true },
+            resource() { return player.p.points },
+            unlocked() { return  hasUpgrade("pz", 35) }
+        },
+
     },
     tabFormat: {
 
@@ -223,6 +305,17 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
 
             ],
             unlocked() { return true }
+        },
+     "挑战": {
+            content: [
+                "main-display",
+                "prestige-button",
+                "resource-display",
+
+                "challenges",
+
+            ],
+            unlocked() { return hasUpgrade("pz", 35) }
         },
     },
 })

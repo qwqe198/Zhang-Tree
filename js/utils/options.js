@@ -61,7 +61,7 @@ function milestoneShown(layer, id) {
 			return true;
 			break;
 		case "last":
-			return (auto) || !complete || player[layer].lastMilestone === id;
+			return  player[layer].lastMilestone === id;
 			break;
 		case "automation":
 			return (auto) || !complete;
