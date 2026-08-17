@@ -44,6 +44,7 @@ if(hasUpgrade("pz",14))g=g.pow(upgradeEffect("pz",14))
 if(hasUpgrade("p",11))g=g.pow(upgradeEffect("p",11))
 g=g.pow(layers.p.dzeff())
 if(inChallenge("pz",11))g=g.add(10).log10()
+if(inChallenge("pz",22))g=g.add(10).log10()
 	return g}
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
@@ -52,7 +53,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局e7000000自动胀`}
+	function(){return `残局1e54膨胀点`}
 ]
 
 // Determines when the game "ends"

@@ -30,6 +30,7 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
 if (hasMilestone("pz", 7)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
 if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
 g=g.mul(buyableEffect("pz",11))
+g=g.mul(buyableEffect("pz",12))
         if (hasMilestone("pz", 12))g=g.mul(buyableEffect("p",11))
         if (player.p.points.lt("1e631")) g = n(0)
         return g.floor()
@@ -90,7 +91,27 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
             },
             unlocked() { return hasUpgrade("pz", 43) },
         },
+12: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x).floor()
 
+                return g
+            },
+            display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}膨胀点<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.pz.points.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "胀购买胀2"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(3).pow(x).floor()
+
+                return g
+            },
+            unlocked() { return hasMilestone("pz", 15) },
+        },
     },
     milestones: {
         1: {
@@ -162,6 +183,11 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
             requirementDescription: "10.9挑战胀1分数",
             effectDescription: "升级41效果^2",
             done() { return challengeEffect("pz", 11).gte("10.9") }
+        },
+15: {
+            requirementDescription: "e7000000自动胀",
+            effectDescription: "解锁胀购买胀2",
+            done() { return player.pz.zdz.gte("1e7000000") }
         },
     },
     upgrades: {
@@ -314,6 +340,100 @@ if(hasUpgrade("pz",44))g=g.pow(upgradeEffect("pz",33))
             unlocked() { return hasUpgrade("pz", 45) },
             cost: n(1e8),
         },
+52: {
+            description: `解锁挑战胀3`,
+            unlocked() { return hasUpgrade("pz", 51) },
+            cost: n(1e25),
+        },
+53: {
+            description: `挑战胀3分数加成点胀效果指数.`,
+            effect() {
+                var g = challengeEffect("pz", 21).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 52) },
+            cost: n(1e26),
+        },
+54: {
+            description: `解锁挑战胀4`,
+            unlocked() { return hasUpgrade("pz", 53) },
+            cost: n(1e27),
+        },
+55: {
+            description: `挑战胀2分数加成挑战胀1分数.`,
+            effect() {
+                var g = challengeEffect("pz", 12).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 54) },
+            cost: n(1e28),
+        },
+16: {
+            description: `挑战胀3分数加成挑战胀2分数.`,
+            effect() {
+                var g = challengeEffect("pz", 21).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 55) },
+            cost: n(1e31),
+        },
+26: {
+            description: `挑战胀4分数加成挑战胀3分数.`,
+            effect() {
+                var g = challengeEffect("pz", 22).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 16) },
+            cost: n(1e35),
+        },
+36: {
+            description: `挑战胀3分数加成挑战胀1分数.`,
+            effect() {
+                var g = challengeEffect("pz", 21).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 26) },
+            cost: n(1e39),
+        },
+46: {
+            description: `挑战胀4分数加成挑战胀2分数.`,
+            effect() {
+                var g = challengeEffect("pz", 22).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 36) },
+            cost: n(1e47),
+        },
+56: {
+            description: `挑战胀4分数加成挑战胀1分数.`,
+            effect() {
+                var g = challengeEffect("pz", 22).add(1)
+  
+
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            unlocked() { return hasUpgrade("pz", 46) },
+            cost: n(1e50),
+        },
     },
     update(diff) {
         player.pz.zdz = player.pz.zdz.add(this.zdzgain().mul(diff))
@@ -327,10 +447,12 @@ if(hasUpgrade("pz",44))g=g.pow(upgradeEffect("pz",33))
             },
             rewardEffect() {
 let g=n(0)
-              if(inChallenge("pz",11))  g=g.max(player.p.points.add(1).log10().pow(0.5)).max(challengeEffect("pz", 11))
-
+              if(inChallenge("pz",11))  g=g.max(player.p.points.add(1).log10().pow(0.5))
+if(hasUpgrade("pz",55))g=g.mul(challengeEffect("pz", 12))
+if(hasUpgrade("pz",36))g=g.mul(challengeEffect("pz", 21))
+if(hasUpgrade("pz",56))g=g.mul(challengeEffect("pz", 22))
  if(!inChallenge("pz",11))g=g.max(player.pz.challenges[11])
-return g
+return g.max(challengeEffect("pz", 11))
             },
             goal: 0,
  goalDescription() {
@@ -352,10 +474,11 @@ return g
             },
             rewardEffect() {
 let g=n(0)
-              if(inChallenge("pz",12))  g=g.max(player.p.points.add(1).log10().pow(0.5)).max(challengeEffect("pz", 12))
-
+              if(inChallenge("pz",12))  g=g.max(player.p.points.add(1).log10().pow(0.5))
+if(hasUpgrade("pz",16))g=g.mul(challengeEffect("pz", 21))
+if(hasUpgrade("pz",46))g=g.mul(challengeEffect("pz", 22))
  if(!inChallenge("pz",12))g=g.max(player.pz.challenges[12])
-return g
+return g.max(challengeEffect("pz", 12))
             },
             goal: 0,
  goalDescription() {
@@ -368,6 +491,56 @@ return g
             canComplete() { return true },
             resource() { return player.p.points },
             unlocked() { return  hasUpgrade("pz", 45) }
+        },
+21: {
+            name() { return '挑战胀3'},
+            challengeDescription() { return 'p的3个胀获取,效果指数^0.5,声望获取^0.5,p升级11失效,基于挑战内最高声望点获得分数.'},
+            rewardDescription() { 
+                return `分数:${format(this.rewardEffect())}`
+            },
+            rewardEffect() {
+let g=n(0)
+              if(inChallenge("pz",21))  g=g.max(player.p.points.add(1).log10().pow(0.5))
+if(hasUpgrade("pz",26))g=g.mul(challengeEffect("pz", 22))
+ if(!inChallenge("pz",21))g=g.max(player.pz.challenges[21])
+return g.max(challengeEffect("pz", 21))
+            },
+            goal: 0,
+ goalDescription() {
+                return "更多声望"
+            },
+            onExit() {
+                player.pz.challenges[21] = player.p.points.add(1).log10().pow(0.5).max(challengeEffect("pz", 21)).max(0)
+            },
+            completionLimit: "1F9999",
+            canComplete() { return true },
+            resource() { return player.p.points },
+            unlocked() { return  hasUpgrade("pz", 52) }
+        },
+22: {
+            name() { return '挑战胀4'},
+            challengeDescription() { return '同时进行前面3个挑战胀,基于挑战内最高声望点获得分数.'},
+            rewardDescription() { 
+                return `分数:${format(this.rewardEffect())}`
+            },
+            rewardEffect() {
+let g=n(0)
+              if(inChallenge("pz",22))  g=g.max(player.p.points.add(1).log10().pow(0.5))
+
+ if(!inChallenge("pz",22))g=g.max(player.pz.challenges[22])
+return g.max(challengeEffect("pz", 22))
+            },
+            goal: 0,
+ goalDescription() {
+                return "更多声望"
+            },
+            onExit() {
+                player.pz.challenges[22] = player.p.points.add(1).log10().pow(0.5).max(challengeEffect("pz", 22)).max(0)
+            },
+            completionLimit: "1F9999",
+            canComplete() { return true },
+            resource() { return player.p.points },
+            unlocked() { return  hasUpgrade("pz", 54) }
         },
     },
     tabFormat: {

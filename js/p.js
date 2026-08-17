@@ -50,6 +50,9 @@ if(g.gte("1e529"))g=expRoot(g,2).mul("1e506")
 if(g.gte("1e625"))g=expRoot(g,2).mul("1e600")
 if(g.gte("1e1000"))g=g.log10().mul("1e997")
 if(inChallenge("pz",12))g=expPow(g,0.75)
+if(inChallenge("pz",21))g=g.pow(0.5)
+if(inChallenge("pz",22))g=expPow(g,0.75)
+if(inChallenge("pz",22))g=g.pow(0.5)
         return g.floor()
     },
    getNextAt() {
@@ -66,6 +69,8 @@ if(hasUpgrade("p",33))g=g.pow(10)
 if(hasUpgrade("p",35))g=g.pow(10)
 if(hasUpgrade("pz",31))g=g.mul(10)
 if(hasUpgrade("pz",32))g=g.mul(10)
+if(inChallenge("pz",21))g=expPow(g,0.5)
+if(inChallenge("pz",22))g=expPow(g,0.5)
 if(player.p.points.lt(1e102))g=n(0)
         return g
     },
@@ -78,6 +83,8 @@ if(hasUpgrade("p",44))g=g.pow(10)
 if(hasUpgrade("p",45))g=g.pow(10)
 if(hasUpgrade("pz",31))g=g.mul(10)
 if(hasUpgrade("pz",32))g=g.mul(10)
+if(inChallenge("pz",21))g=expPow(g,0.5)
+if(inChallenge("pz",22))g=expPow(g,0.5)
 if(player.p.points.lt(1e131))g=n(0)
         return g
     },
@@ -92,21 +99,30 @@ if(hasUpgrade("p",54))g=g.pow(2)
 if(hasUpgrade("p",55))g=g.pow(2)
 if(hasUpgrade("pz",31))g=g.mul(10)
 if(hasUpgrade("pz",32))g=g.mul(10)
+if(inChallenge("pz",21))g=expPow(g,0.5)
+if(inChallenge("pz",22))g=expPow(g,0.5)
 if(player.p.points.lt("1e486"))g=n(0)
         return g
     },
   dzeff() {
         let g = player.p.dz.add(1).pow(player.p.dz.add(1))
 if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
+if(hasUpgrade("pz",53))g=expPow(g,upgradeEffect("pz",53))
         if (hasMilestone("pz", 13)) g = expPow(g,5)
+if(inChallenge("pz",21))g=expPow(g,0.5)
+if(inChallenge("pz",22))g=expPow(g,0.5)
         return g
     },
  swzeff() {
         let g = player.p.swz.add(1)
+if(inChallenge("pz",21))g=expPow(g,0.5)
+if(inChallenge("pz",22))g=expPow(g,0.5)
         return g
     },
  zzyzeff() {
         let g = player.p.zzyz.add(1)
+if(inChallenge("pz",21))g=expPow(g,0.5)
+if(inChallenge("pz",22))g=expPow(g,0.5)
         return g
     },
     effectDescription() {
@@ -165,6 +181,8 @@ if(hasUpgrade("p",51))g=expPow(g,2)
 if(hasUpgrade("p",52))g=expPow(g,2)
 if (hasMilestone("pz", 7)) g = expPow(g,1.5)
 if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
+if(inChallenge("pz",21))g=n(1)
+if(inChallenge("pz",22))g=n(1)
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
