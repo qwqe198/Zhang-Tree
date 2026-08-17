@@ -49,6 +49,7 @@ if(g.gte("1e484"))g=expRoot(g,2).mul("1e462")
 if(g.gte("1e529"))g=expRoot(g,2).mul("1e506")
 if(g.gte("1e625"))g=expRoot(g,2).mul("1e600")
 if(g.gte("1e1000"))g=g.log10().mul("1e997")
+if(inChallenge("pz",12))g=expPow(g,0.75)
         return g.floor()
     },
    getNextAt() {
@@ -97,6 +98,7 @@ if(player.p.points.lt("1e486"))g=n(0)
   dzeff() {
         let g = player.p.dz.add(1).pow(player.p.dz.add(1))
 if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
+        if (hasMilestone("pz", 13)) g = expPow(g,5)
         return g
     },
  swzeff() {
