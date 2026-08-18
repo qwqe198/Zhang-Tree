@@ -70,7 +70,7 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
 你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15),每秒获取${format(this.zdzeff())}x的声望
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
-    layerShown() { return hasUpgrade("p", 25) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
+    layerShown() { return hasUpgrade("p", 55) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
  buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
