@@ -109,6 +109,7 @@ if(player.p.points.lt("1e486"))g=n(0)
 if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
 if(hasUpgrade("pz",53))g=expPow(g,upgradeEffect("pz",53))
         if (hasMilestone("pz", 13)) g = expPow(g,5)
+  if (hasMilestone("pz", 17)) g = expPow(g,14)
 if(inChallenge("pz",21))g=expPow(g,0.5)
 if(inChallenge("pz",22))g=expPow(g,0.5)
         return g

@@ -31,7 +31,9 @@ if (hasMilestone("pz", 7)) g = g.mul(player.points.add(1).log10().add(1).log10()
 if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
 g=g.mul(buyableEffect("pz",11))
 g=g.mul(buyableEffect("pz",12))
+g=g.mul(buyableEffect("pz",13))
         if (hasMilestone("pz", 12))g=g.mul(buyableEffect("p",11))
+if (hasMilestone("pz", 18))g=g.mul(10)
         if (player.p.points.lt("1e631")) g = n(0)
         return g.floor()
     },
@@ -112,6 +114,27 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
             },
             unlocked() { return hasMilestone("pz", 15) },
         },
+13: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x).floor()
+
+                return g
+            },
+            display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}膨胀点<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.pz.points.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "胀购买胀3"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(1.5).pow(x).floor()
+
+                return g
+            },
+            unlocked() { return hasMilestone("pz", 16) },
+        },
     },
     milestones: {
         1: {
@@ -188,6 +211,21 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
             requirementDescription: "e7000000自动胀",
             effectDescription: "解锁胀购买胀2",
             done() { return player.pz.zdz.gte("1e7000000") }
+        },
+16: {
+            requirementDescription: "1e55膨胀点",
+            effectDescription: "解锁胀购买胀3",
+            done() { return player.pz.points.gte("1e55") }
+        },
+17: {
+            requirementDescription: "1e265膨胀点",
+            effectDescription: "点胀效果指数^14",
+            done() { return player.pz.points.gte("1e265") }
+        },
+18: {
+            requirementDescription: "1e285膨胀点",
+            effectDescription: "膨胀点获取x10",
+            done() { return player.pz.points.gte("1e285") }
         },
     },
     upgrades: {

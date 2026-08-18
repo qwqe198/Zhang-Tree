@@ -53,7 +53,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e54膨胀点`}
+	function(){return `残局1.8e308膨胀点`}
 ]
 
 // Determines when the game "ends"
