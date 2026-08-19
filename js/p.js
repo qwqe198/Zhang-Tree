@@ -5,9 +5,9 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         return {
             unlocked: true, //是否开始就解锁
             points: new ExpantaNum(0),
-dz: new ExpantaNum(0),
-swz: new ExpantaNum(0),
-zzyz: new ExpantaNum(0),
+            dz: new ExpantaNum(0),
+            swz: new ExpantaNum(0),
+            zzyz: new ExpantaNum(0),
         }
     },
     color: "green",
@@ -26,105 +26,108 @@ zzyz: new ExpantaNum(0),
         var g = new ExpantaNum(1)
         return g
     },
-   getResetGain() {
+    getResetGain() {
         var g = player.points.add(9999999999).log10().log10()
-g=g.mul(layers.am.zwzeff())
-if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
-if(hasUpgrade("p",21))g=g.pow(2)
-if(hasUpgrade("p",22))g=g.pow(2)
-if(hasUpgrade("p",23))g=g.pow(2)
-if(hasUpgrade("p",24))g=g.pow(2)
-if(hasUpgrade("p",25))g=g.pow(2)
-g=g.pow(layers.p.swzeff())
-if(g.gte(1e100))g=expRoot(g,2).mul(1e90)
-if(g.gte(1e125))g=expRoot(g,2).mul(1e114)
-if(g.gte(1e185))g=expRoot(g,2).mul(3e171)
-if(g.gte(1e225))g=expRoot(g,2).mul(1e210)
-if(g.gte(1e256))g=expRoot(g,2).mul(1e240)
-if(g.gte(1e289))g=expRoot(g,2).mul(1e272)
-if(g.gte("1e324"))g=expRoot(g,2).mul(1e306)
-if(g.gte("1e361"))g=expRoot(g,2).mul("1e342")
-if(g.gte("1e400"))g=expRoot(g,2).mul("1e380")
-if(g.gte("1e441"))g=expRoot(g,2).mul("1e420")
-if(g.gte("1e484"))g=expRoot(g,2).mul("1e462")
-if(g.gte("1e529"))g=expRoot(g,2).mul("1e506")
-if(g.gte("1e625"))g=expRoot(g,2).mul("1e600")
-if(g.gte("1e1000"))g=g.log10().mul("1e997")
-if(inChallenge("pz",12))g=expPow(g,0.75)
-if(inChallenge("pz",21))g=g.pow(0.5)
-if(inChallenge("pz",22))g=expPow(g,0.75)
-if(inChallenge("pz",22))g=g.pow(0.5)
+        g = g.mul(layers.am.zwzeff())
+        if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
+        if (hasUpgrade("p", 21)) g = g.pow(2)
+        if (hasUpgrade("p", 22)) g = g.pow(2)
+        if (hasUpgrade("p", 23)) g = g.pow(2)
+        if (hasUpgrade("p", 24)) g = g.pow(2)
+        if (hasUpgrade("p", 25)) g = g.pow(2)
+        g = g.pow(layers.p.swzeff())
+        if (g.gte(1e100)) g = expRoot(g, 2).mul(1e90)
+        if (g.gte(1e125)) g = expRoot(g, 2).mul(1e114)
+        if (g.gte(1e185)) g = expRoot(g, 2).mul(3e171)
+        if (g.gte(1e225)) g = expRoot(g, 2).mul(1e210)
+        if (g.gte(1e256)) g = expRoot(g, 2).mul(1e240)
+        if (g.gte(1e289)) g = expRoot(g, 2).mul(1e272)
+        if (g.gte("1e324")) g = expRoot(g, 2).mul(1e306)
+        if (g.gte("1e361")) g = expRoot(g, 2).mul("1e342")
+        if (g.gte("1e400")) g = expRoot(g, 2).mul("1e380")
+        if (g.gte("1e441")) g = expRoot(g, 2).mul("1e420")
+        if (g.gte("1e484")) g = expRoot(g, 2).mul("1e462")
+        if (g.gte("1e529")) g = expRoot(g, 2).mul("1e506")
+        if (g.gte("1e625")) g = expRoot(g, 2).mul("1e600")
+        if (g.gte("1e1000")) g = g.log10().mul("1e997")
+        if (inChallenge("pz", 12)) g = expPow(g, 0.75)
+        if (inChallenge("pz", 21)) g = g.pow(0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.75)
+        if (inChallenge("pz", 22)) g = g.pow(0.5)
         return g.floor()
     },
-   getNextAt() {
+    getNextAt() {
         let g = n(10).pow(n(10).pow(this.getResetGain()))
 
         return g
     },
-   dzgain() {
+    dzgain() {
         let g = player.p.points.log10().div(10.2).mul(layers.p.zzyzeff()).log10()
-if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
-if(hasUpgrade("p",31))g=g.pow(10)
-if(hasUpgrade("p",32))g=g.pow(10)
-if(hasUpgrade("p",33))g=g.pow(10)
-if(hasUpgrade("p",35))g=g.pow(10)
-if(hasUpgrade("pz",31))g=g.mul(10)
-if(hasUpgrade("pz",32))g=g.mul(10)
-if(inChallenge("pz",21))g=expPow(g,0.5)
-if(inChallenge("pz",22))g=expPow(g,0.5)
-if(player.p.points.lt(1e102))g=n(0)
+        if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
+if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
+        if (hasUpgrade("p", 31)) g = g.pow(10)
+        if (hasUpgrade("p", 32)) g = g.pow(10)
+        if (hasUpgrade("p", 33)) g = g.pow(10)
+        if (hasUpgrade("p", 35)) g = g.pow(10)
+        if (hasUpgrade("pz", 31)) g = g.mul(10)
+        if (hasUpgrade("pz", 32)) g = g.mul(10)
+        if (inChallenge("pz", 21)) g = expPow(g, 0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.5)
+        if (player.p.points.lt(1e102)) g = n(0)
         return g
     },
- swzgain() {
+    swzgain() {
         let g = player.p.points.log10().div(13.1).mul(layers.p.zzyzeff()).log10()
-if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
-if(hasUpgrade("p",42))g=g.pow(10)
-if(hasUpgrade("p",43))g=g.pow(10)
-if(hasUpgrade("p",44))g=g.pow(10)
-if(hasUpgrade("p",45))g=g.pow(10)
-if(hasUpgrade("pz",31))g=g.mul(10)
-if(hasUpgrade("pz",32))g=g.mul(10)
-if(inChallenge("pz",21))g=expPow(g,0.5)
-if(inChallenge("pz",22))g=expPow(g,0.5)
-if(player.p.points.lt(1e131))g=n(0)
+        if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
+if (hasMilestone("am",3))g = g.mul(layers.am.zwzeff())
+        if (hasUpgrade("p", 42)) g = g.pow(10)
+        if (hasUpgrade("p", 43)) g = g.pow(10)
+        if (hasUpgrade("p", 44)) g = g.pow(10)
+        if (hasUpgrade("p", 45)) g = g.pow(10)
+        if (hasUpgrade("pz", 31)) g = g.mul(10)
+        if (hasUpgrade("pz", 32)) g = g.mul(10)
+        if (inChallenge("pz", 21)) g = expPow(g, 0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.5)
+        if (player.p.points.lt(1e131)) g = n(0)
         return g
     },
- zzyzgain() {
+    zzyzgain() {
         let g = player.p.points.log10().div(48.6).log10()
-if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
-g=g.mul(buyableEffect("p",11))
-if(hasUpgrade("p",51))g=g.pow(2)
-if(hasUpgrade("p",52))g=g.pow(2)
-if(hasUpgrade("p",53))g=g.pow(10)
-if(hasUpgrade("p",54))g=g.pow(2)
-if(hasUpgrade("p",55))g=g.pow(2)
-if(hasUpgrade("pz",31))g=g.mul(10)
-if(hasUpgrade("pz",32))g=g.mul(10)
-if(inChallenge("pz",21))g=expPow(g,0.5)
-if(inChallenge("pz",22))g=expPow(g,0.5)
-if(player.p.points.lt("1e486"))g=n(0)
+        if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
+if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
+        g = g.mul(buyableEffect("p", 11))
+        if (hasUpgrade("p", 51)) g = g.pow(2)
+        if (hasUpgrade("p", 52)) g = g.pow(2)
+        if (hasUpgrade("p", 53)) g = g.pow(10)
+        if (hasUpgrade("p", 54)) g = g.pow(2)
+        if (hasUpgrade("p", 55)) g = g.pow(2)
+        if (hasUpgrade("pz", 31)) g = g.mul(10)
+        if (hasUpgrade("pz", 32)) g = g.mul(10)
+        if (inChallenge("pz", 21)) g = expPow(g, 0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.5)
+        if (player.p.points.lt("1e486")) g = n(0)
         return g
     },
-  dzeff() {
+    dzeff() {
         let g = player.p.dz.add(1).pow(player.p.dz.add(1))
-if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
-if(hasUpgrade("pz",53))g=expPow(g,upgradeEffect("pz",53))
-        if (hasMilestone("pz", 13)) g = expPow(g,5)
-  if (hasMilestone("pz", 17)) g = expPow(g,14)
-if(inChallenge("pz",21))g=expPow(g,0.5)
-if(inChallenge("pz",22))g=expPow(g,0.5)
+        if (hasUpgrade("pz", 33)) g = expPow(g, upgradeEffect("pz", 33))
+        if (hasUpgrade("pz", 53)) g = expPow(g, upgradeEffect("pz", 53))
+        if (hasMilestone("pz", 13)) g = expPow(g, 5)
+        if (hasMilestone("pz", 17)) g = expPow(g, 14)
+        if (inChallenge("pz", 21)) g = expPow(g, 0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.5)
         return g
     },
- swzeff() {
+    swzeff() {
         let g = player.p.swz.add(1)
-if(inChallenge("pz",21))g=expPow(g,0.5)
-if(inChallenge("pz",22))g=expPow(g,0.5)
+        if (inChallenge("pz", 21)) g = expPow(g, 0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.5)
         return g
     },
- zzyzeff() {
+    zzyzeff() {
         let g = player.p.zzyz.add(1)
-if(inChallenge("pz",21))g=expPow(g,0.5)
-if(inChallenge("pz",22))g=expPow(g,0.5)
+        if (inChallenge("pz", 21)) g = expPow(g, 0.5)
+        if (inChallenge("pz", 22)) g = expPow(g, 0.5)
         return g
     },
     effectDescription() {
@@ -138,24 +141,23 @@ if(inChallenge("pz",22))g=expPow(g,0.5)
         `},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return true },
- clickables: {
+    clickables: {
         11: {
             canClick() { return true },
             display() { return `手机端qol<br>长按以重置` },
+            onClick() {
+                doReset(this.layer)
+            },
             onHold() {
-
-     
-                    doReset(this.layer)
-               
+                doReset(this.layer)
             }
         },
-
     },
-   buyables: {
+    buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.pow(2).add(645)).floor()
-if (hasMilestone("pz", 9)) g = n(10).pow(x.pow(2)).floor()
+                if (hasMilestone("pz", 9)) g = n(10).pow(x.pow(2)).floor()
                 return g
             },
             display() { return `子资源胀获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -167,12 +169,12 @@ if (hasMilestone("pz", 9)) g = n(10).pow(x.pow(2)).floor()
                 return "p购买胀1"
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
-                var g = n(x.add(1).pow(1/32))
-if(hasUpgrade("pz",34))g=g.pow(2)
-if(hasUpgrade("pz",35))g=g.pow(2)
-if(hasUpgrade("pz",42))g=g.pow(2)
-if (hasMilestone("pz", 9)) g = g.pow(2)
-if (hasMilestone("pz", 10)) g = g.pow(2)
+                var g = n(x.add(1).pow(1 / 32))
+                if (hasUpgrade("pz", 34)) g = g.pow(2)
+                if (hasUpgrade("pz", 35)) g = g.pow(2)
+                if (hasUpgrade("pz", 42)) g = g.pow(2)
+                if (hasMilestone("pz", 9)) g = g.pow(2)
+                if (hasMilestone("pz", 10)) g = g.pow(2)
                 return g
             },
             unlocked() { return hasUpgrade("pz", 25) },
@@ -184,158 +186,158 @@ if (hasMilestone("pz", 10)) g = g.pow(2)
             description: `点获取基于声望增加.`,
             effect() {
                 var g = player.p.points.add(1)
-if(hasUpgrade("pz",12))g=g.pow(upgradeEffect("pz",12))
-if(hasUpgrade("p",12))g=g.pow(2)
-if(hasUpgrade("p",13))g=g.pow(2)
-if(hasUpgrade("p",14))g=g.pow(2)
-if(hasUpgrade("p",15))g=g.pow(2)
-if(hasUpgrade("p",34))g=expPow(g,100)
-if(hasUpgrade("p",41))g=expPow(g,3)
-if(hasUpgrade("p",45))g=expPow(g,2)
-if(hasUpgrade("p",51))g=expPow(g,2)
-if(hasUpgrade("p",52))g=expPow(g,2)
-if (hasMilestone("pz", 7)) g = expPow(g,1.5)
-if(hasUpgrade("pz",33))g=expPow(g,upgradeEffect("pz",33))
-if(inChallenge("pz",21))g=n(1)
-if(inChallenge("pz",22))g=n(1)
+                if (hasUpgrade("pz", 12)) g = g.pow(upgradeEffect("pz", 12))
+                if (hasUpgrade("p", 12)) g = g.pow(2)
+                if (hasUpgrade("p", 13)) g = g.pow(2)
+                if (hasUpgrade("p", 14)) g = g.pow(2)
+                if (hasUpgrade("p", 15)) g = g.pow(2)
+                if (hasUpgrade("p", 34)) g = expPow(g, 100)
+                if (hasUpgrade("p", 41)) g = expPow(g, 3)
+                if (hasUpgrade("p", 45)) g = expPow(g, 2)
+                if (hasUpgrade("p", 51)) g = expPow(g, 2)
+                if (hasUpgrade("p", 52)) g = expPow(g, 2)
+                if (hasMilestone("pz", 7)) g = expPow(g, 1.5)
+                if (hasUpgrade("pz", 33)) g = expPow(g, upgradeEffect("pz", 33))
+                if (inChallenge("pz", 21)) g = n(1)
+                if (inChallenge("pz", 22)) g = n(1)
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
             cost: n(1),
         },
-   12: {
+        12: {
             description: `升级11效果^2.`,
-           unlocked() { return hasUpgrade("p", 11) },
+            unlocked() { return hasUpgrade("p", 11) },
             cost: n(10),
         },
- 13: {
+        13: {
             description: `升级11效果^2.`,
-           unlocked() { return hasUpgrade("p", 12) },
+            unlocked() { return hasUpgrade("p", 12) },
             cost: n(30),
         },
-14: {
+        14: {
             description: `升级11效果^2.`,
-           unlocked() { return hasUpgrade("p", 13) },
+            unlocked() { return hasUpgrade("p", 13) },
             cost: n(150),
         },
-15: {
+        15: {
             description: `升级11效果^2.`,
-           unlocked() { return hasUpgrade("p", 14) },
+            unlocked() { return hasUpgrade("p", 14) },
             cost: n(800),
         },
-21: {
+        21: {
             description: `声望获取^2.`,
-           unlocked() { return hasUpgrade("p", 15) },
+            unlocked() { return hasUpgrade("p", 15) },
             cost: n(3600),
         },
-22: {
+        22: {
             description: `声望获取^2.`,
-           unlocked() { return hasUpgrade("p", 21) },
+            unlocked() { return hasUpgrade("p", 21) },
             cost: n(1000000),
         },
-23: {
+        23: {
             description: `声望获取^2.`,
-           unlocked() { return hasUpgrade("p", 22) },
+            unlocked() { return hasUpgrade("p", 22) },
             cost: n(1e+11),
         },
-24: {
+        24: {
             description: `声望获取^2.`,
-           unlocked() { return hasUpgrade("p", 23) },
+            unlocked() { return hasUpgrade("p", 23) },
             cost: n(1e+22),
         },
-25: {
+        25: {
             description: `声望获取^2.`,
-           unlocked() { return hasUpgrade("p", 24) },
+            unlocked() { return hasUpgrade("p", 24) },
             cost: n(1e+48),
         },
-31: {
+        31: {
             description: `点胀获取^10(提示:声望超过1e100有很弱的软上限).`,
-           unlocked() { return hasUpgrade("p", 25) },
+            unlocked() { return hasUpgrade("p", 25) },
             cost: n(1.5e102),
         },
-32: {
+        32: {
             description: `点胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 31) },
+            unlocked() { return hasUpgrade("p", 31) },
             cost: n(2e102),
         },
-33: {
+        33: {
             description: `点胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 32) },
+            unlocked() { return hasUpgrade("p", 32) },
             cost: n(2.5e102),
         },
-34: {
+        34: {
             description: `升级11效果指数^100.`,
-           unlocked() { return hasUpgrade("p", 33) },
+            unlocked() { return hasUpgrade("p", 33) },
             cost: n(1e127),
         },
-35: {
+        35: {
             description: `点胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 34) },
+            unlocked() { return hasUpgrade("p", 34) },
             cost: n(1e130),
         },
-41: {
+        41: {
             description: `升级11效果指数^3.`,
-           unlocked() { return hasUpgrade("p", 35) },
+            unlocked() { return hasUpgrade("p", 35) },
             cost: n(1e160),
         },
-42: {
+        42: {
             description: `声望胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 41) },
+            unlocked() { return hasUpgrade("p", 41) },
             cost: n(1e173),
         },
-43: {
+        43: {
             description: `声望胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 42) },
+            unlocked() { return hasUpgrade("p", 42) },
             cost: n(1e185),
         },
-44: {
+        44: {
             description: `声望胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 43) },
+            unlocked() { return hasUpgrade("p", 43) },
             cost: n(1e228),
         },
-45: {
+        45: {
             description: `声望胀获取^10,升级11效果指数^2.`,
-           unlocked() { return hasUpgrade("p", 44) },
+            unlocked() { return hasUpgrade("p", 44) },
             cost: n("1e331"),
         },
-51: {
+        51: {
             description: `子资源胀获取^2,升级11效果指数^2.`,
-           unlocked() { return hasUpgrade("p", 45) },
+            unlocked() { return hasUpgrade("p", 45) },
             cost: n("1e545"),
         },
-52: {
+        52: {
             description: `子资源胀获取^2,升级11效果指数^2.`,
-           unlocked() { return hasUpgrade("p", 51) },
+            unlocked() { return hasUpgrade("p", 51) },
             cost: n("1e548"),
         },
-53: {
+        53: {
             description: `子资源胀获取^10.`,
-           unlocked() { return hasUpgrade("p", 52) },
+            unlocked() { return hasUpgrade("p", 52) },
             cost: n("1e550"),
         },
-54: {
+        54: {
             description: `子资源胀获取^2.`,
-           unlocked() { return hasUpgrade("p", 53) },
+            unlocked() { return hasUpgrade("p", 53) },
             cost: n("1e565"),
         },
-55: {
+        55: {
             description: `子资源胀获取^2,解锁新层级.`,
-           unlocked() { return hasUpgrade("p", 54) },
+            unlocked() { return hasUpgrade("p", 54) },
             cost: n("1e625"),
         },
     },
- autoUpgrade() { return hasUpgrade("pz", 13)  },
- passiveGeneration() {
+    autoUpgrade() { return hasUpgrade("pz", 13) },
+    passiveGeneration() {
         if (hasUpgrade("pz", 15)) return layers.pz.zdzeff()
         return 0
     },
-  update(diff) {
-       if(hasMilestone("pz", 11))setBuyableAmount(this.layer, 11, player.p.points.add(1).log10().root(2).floor().add(1))
-                player.p.dz =  player.p.dz.add(this.dzgain().mul(diff))
-player.p.swz =  player.p.swz.add(this.swzgain().mul(diff))
-player.p.zzyz =  player.p.zzyz.add(this.zzyzgain().mul(diff))
-        },
-hotkeys: [
+    update(diff) {
+        if (hasMilestone("pz", 11)) setBuyableAmount(this.layer, 11, player.p.points.add(1).log10().root(2).floor().add(1))
+        player.p.dz = player.p.dz.add(this.dzgain().mul(diff))
+        player.p.swz = player.p.swz.add(this.swzgain().mul(diff))
+        player.p.zzyz = player.p.zzyz.add(this.zzyzgain().mul(diff))
+    },
+    hotkeys: [
         { key: "p", description: "p: 进行声望重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
 })

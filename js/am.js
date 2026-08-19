@@ -38,13 +38,21 @@ addLayer("am", { //这是代码中的节点代码 例如player.p可以调用该�
     },
     zwzgain() {
         let g = player.am.points
-     
+     g=g.mul(buyableEffect("am",11))
+g=g.mul(buyableEffect("am",12))
+g=g.mul(buyableEffect("am",13))
+g=g.mul(buyableEffect("am",14))
         return g.max(0)
     },
     zwzeff() {
         let g = player.am.zwz.add(10).log10()
        
         return g
+    },
+zwzbuyx() {
+        let g = n(2)
+     
+        return g.max(0)
     },
     effectDescription() {
         return `
@@ -64,28 +72,127 @@ addLayer("am", { //这是代码中的节点代码 例如player.p可以调用该�
         },
  2: {
             requirementDescription: "2. 2胀物质基础",
-            effectDescription: "解锁第一胀维度",
+            effectDescription: "解锁第一胀维度,胀物质加成点胀获取",
             done() { return player.am.points.gte("2") }
+        },
+ 3: {
+            requirementDescription: "3. 3胀物质基础",
+            effectDescription: "解锁第二胀维度,胀物质加成声望胀获取",
+            done() { return player.am.points.gte("3") }
+        },
+4: {
+            requirementDescription: "4. 4胀物质基础",
+            effectDescription: "解锁第三胀维度,胀物质加成子资源胀获取",
+            done() { return player.am.points.gte("4") }
+        },
+5: {
+            requirementDescription: "5. 5胀物质基础",
+            effectDescription: "解锁第四胀维度,胀物质加成自动胀获取",
+            done() { return player.am.points.gte("5") }
         },
     },
  
     update(diff) {
         player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))
     },
- clickables: {
+clickables: {
         11: {
             canClick() { return true },
             display() { return `手机端qol<br>长按以重置` },
+            onClick() {
+                doReset(this.layer)
+            },
             onHold() {
-
-     
-                    doReset(this.layer)
-               
+                doReset(this.layer)
             }
         },
-
     },
+ buyables: {
+        11: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(3).add(1)).floor()
 
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第一胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 2) },
+        },
+ 12: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(4).add(2)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第二胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 3) },
+        },
+13: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(5).add(4)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第三胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 4) },
+        },
+14: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(6).add(6)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第四胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 5) },
+        },
+    },
     tabFormat: {
 
         "升级": {
@@ -110,16 +217,21 @@ addLayer("am", { //这是代码中的节点代码 例如player.p可以调用该�
             ],
             unlocked() { return true }
         },
-"购买": {
+"胀维度": {
             content: [
                 "main-display",
                 "prestige-button",
                 "resource-display",
+["display-text", () =>
+                    `每次购买乘数:${format(layers.am.zwzbuyx())}`,
+                    { "font-size": "20px" }
+                ],
+
 "clickables",
                 "buyables",
 
             ],
-            unlocked() { return true }
+            unlocked() { return hasMilestone("am", 2) }
         },
      "挑战": {
             content: [
