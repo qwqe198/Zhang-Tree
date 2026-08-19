@@ -27,8 +27,10 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
     },
     getResetGain() {
         var g = player.p.points.log10().div(63.1).log10()
-if (hasMilestone("pz", 7)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
+if (hasMilestone("pz", 7)&&!hasMilestone("am",1)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
+if (hasMilestone("am",1)) g = g.mul(player.points.add(10).slog().pow(player.points.add(10).slog()))
 if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
+g=g.mul(layers.am.zwzeff())
 g=g.mul(buyableEffect("pz",11))
 g=g.mul(buyableEffect("pz",12))
 g=g.mul(buyableEffect("pz",13))
@@ -70,7 +72,7 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
 你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15),每秒获取${format(this.zdzeff())}x的声望
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
-    layerShown() { return hasUpgrade("p", 55) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
+    layerShown() { return hasUpgrade("p", 25) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
  buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -138,94 +140,99 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
     },
     milestones: {
         1: {
-            requirementDescription: "1e675声望",
+            requirementDescription: "1. 1e675声望",
             effectDescription: "自动胀效果^2",
             done() { return player.p.points.gte("1e675") }
         },
         2: {
-            requirementDescription: "1e691声望",
+            requirementDescription: "2. 1e691声望",
             effectDescription: "自动胀效果^2",
             done() { return player.p.points.gte("1e691") }
         },
         3: {
-            requirementDescription: "1e727声望",
+            requirementDescription: "3. 1e727声望",
             effectDescription: "自动胀效果^2",
             done() { return player.p.points.gte("1e727") }
         },
         4: {
-            requirementDescription: "1e783声望",
+            requirementDescription: "4. 1e783声望",
             effectDescription: "自动胀效果^2",
             done() { return player.p.points.gte("1e783") }
         },
         5: {
-            requirementDescription: "1e812声望",
+            requirementDescription: "5. 1e812声望",
             effectDescription: "自动胀效果^2",
             done() { return player.p.points.gte("1e812") }
         },
         6: {
-            requirementDescription: "1e1000声望获取",
+            requirementDescription: "6. 1e1000声望获取",
             effectDescription: "声望获取二重软上限，超过部分获取为lgx*1e997",
             done() { return player.p.points.gte("1e1000") }
         },
 7: {
-            requirementDescription: "1e1016声望",
+            requirementDescription: "7. 1e1016声望",
             effectDescription: "p升级11效果指数^1.5",
             done() { return player.p.points.gte("1e1016") }
         },
 8: {
-            requirementDescription: "eee40000点",
-            effectDescription: "点加成膨胀点获取(公式:(lg^3)x^0.5/100)",
+            requirementDescription: "8. eee40000点",
+           effectDescription () {  return hasMilestone("am",1)?`点加成膨胀点获取(公式:slgx^slgx)`:`点加成膨胀点获取(公式:(lg^3)x^0.5/100)`},
             done() { return player.points.gte("eee40000") }
         },
 9: {
-            requirementDescription: "6.5挑战胀1分数",
+            requirementDescription: "9. 6.5挑战胀1分数",
             effectDescription: "p购买胀1效果^2,且降低它的需求",
             done() { return challengeEffect("pz", 11).gte("6.5") }
         },
 10: {
-            requirementDescription: "1e150子资源胀",
+            requirementDescription: "10. 1e150子资源胀",
             effectDescription: "p购买胀1效果^2",
             done() { return player.p.zzyz.gte("1e150") }
         },
 11: {
-            requirementDescription: "3.33e333子资源胀",
+            requirementDescription: "11. 3.33e333子资源胀",
             effectDescription: "自动购买p购买胀1",
             done() { return player.p.zzyz.gte("3.33e333") }
         },
 12: {
-            requirementDescription: "9.15挑战胀1分数",
+            requirementDescription: "12. 9.15挑战胀1分数",
             effectDescription: "p购买胀1效果加成膨胀点获取",
             done() { return challengeEffect("pz", 11).gte("9.15") }
         },
 13: {
-            requirementDescription: "3333333膨胀点",
+            requirementDescription: "13. 3333333膨胀点",
             effectDescription: "点胀效果指数^5",
             done() { return player.pz.points.gte("3333333") }
         },
 14: {
-            requirementDescription: "10.9挑战胀1分数",
+            requirementDescription: "14. 10.9挑战胀1分数",
             effectDescription: "升级41效果^2",
             done() { return challengeEffect("pz", 11).gte("10.9") }
         },
 15: {
-            requirementDescription: "e7000000自动胀",
+            requirementDescription: "15. e7000000自动胀",
             effectDescription: "解锁胀购买胀2",
             done() { return player.pz.zdz.gte("1e7000000") }
         },
 16: {
-            requirementDescription: "1e55膨胀点",
+            requirementDescription: "16. 1e55膨胀点",
             effectDescription: "解锁胀购买胀3",
             done() { return player.pz.points.gte("1e55") }
         },
 17: {
-            requirementDescription: "1e265膨胀点",
+            requirementDescription: "17. 1e265膨胀点",
             effectDescription: "点胀效果指数^14",
             done() { return player.pz.points.gte("1e265") }
         },
 18: {
-            requirementDescription: "1e285膨胀点",
+            requirementDescription: "18. 1e285膨胀点",
             effectDescription: "膨胀点获取x10",
             done() { return player.pz.points.gte("1e285") }
+        },
+19: {
+            requirementDescription: "19. 1e308膨胀点",
+            effectDescription: "解锁新层级",
+            done() { return player.pz.points.gte("1e308") }
         },
     },
     upgrades: {
@@ -476,10 +483,23 @@ if(hasUpgrade("pz",44))g=g.pow(upgradeEffect("pz",33))
     update(diff) {
         player.pz.zdz = player.pz.zdz.add(this.zdzgain().mul(diff))
     },
+ clickables: {
+        11: {
+            canClick() { return true },
+            display() { return `手机端qol<br>长按以重置` },
+            onHold() {
+
+     
+                    doReset(this.layer)
+               
+            }
+        },
+
+    },
   challenges: {
         11: {
             name() { return '挑战胀1'},
-            challengeDescription() { return '点获取log10,基于挑战内最高声望点获得分数.'},
+            challengeDescription() { return '点获取lg,基于挑战内最高声望点获得分数.'},
             rewardDescription() { 
                 return `分数:${format(this.rewardEffect())}`
             },
@@ -588,7 +608,7 @@ return g.max(challengeEffect("pz", 22))
                 "main-display",
                 "prestige-button",
                 "resource-display",
-
+"clickables",
 
                 "upgrades",
             ],
@@ -599,7 +619,7 @@ return g.max(challengeEffect("pz", 22))
                 "main-display",
                 "prestige-button",
                 "resource-display",
-
+"clickables",
                 "milestones",
 
             ],
@@ -610,7 +630,7 @@ return g.max(challengeEffect("pz", 22))
                 "main-display",
                 "prestige-button",
                 "resource-display",
-
+"clickables",
                 "buyables",
 
             ],
@@ -621,11 +641,14 @@ return g.max(challengeEffect("pz", 22))
                 "main-display",
                 "prestige-button",
                 "resource-display",
-
+"clickables",
                 "challenges",
 
             ],
             unlocked() { return hasUpgrade("pz", 35) }
         },
     },
+hotkeys: [
+        { key: "z", description: "z: 进行膨胀点重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
+    ],
 })

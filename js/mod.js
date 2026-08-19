@@ -39,6 +39,7 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(0)
 	let g = new ExpantaNum(1.01)
+g=g.mul(layers.am.zwzeff())
 if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
 if(hasUpgrade("pz",14))g=g.pow(upgradeEffect("pz",14))
 if(hasUpgrade("p",11))g=g.pow(upgradeEffect("p",11))
@@ -53,7 +54,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1.8e308膨胀点`}
+	function(){return `残局2胀物质基础`}
 ]
 
 // Determines when the game "ends"

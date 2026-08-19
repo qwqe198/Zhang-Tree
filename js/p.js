@@ -28,6 +28,7 @@ zzyz: new ExpantaNum(0),
     },
    getResetGain() {
         var g = player.points.add(9999999999).log10().log10()
+g=g.mul(layers.am.zwzeff())
 if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
 if(hasUpgrade("p",21))g=g.pow(2)
 if(hasUpgrade("p",22))g=g.pow(2)
@@ -137,6 +138,19 @@ if(inChallenge("pz",22))g=expPow(g,0.5)
         `},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return true },
+ clickables: {
+        11: {
+            canClick() { return true },
+            display() { return `手机端qol<br>长按以重置` },
+            onHold() {
+
+     
+                    doReset(this.layer)
+               
+            }
+        },
+
+    },
    buyables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -321,4 +335,7 @@ if(inChallenge("pz",22))g=n(1)
 player.p.swz =  player.p.swz.add(this.swzgain().mul(diff))
 player.p.zzyz =  player.p.zzyz.add(this.zzyzgain().mul(diff))
         },
+hotkeys: [
+        { key: "p", description: "p: 进行声望重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
+    ],
 })
