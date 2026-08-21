@@ -229,7 +229,7 @@ g=g.mul(layers.am.zwzjseff())
         },
 31: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
-                var g = n(10).pow(x.add(4)).floor()
+                var g = n(10).pow(x.add(3)).floor()
 
                 return g
             },

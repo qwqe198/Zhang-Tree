@@ -484,7 +484,7 @@ if(hasUpgrade("pz",44))g=g.pow(upgradeEffect("pz",33))
     update(diff) {
 if (hasMilestone("am", 7)) setBuyableAmount(this.layer, 11, player.pz.points.add(1).log10().floor().add(1))
 if (hasMilestone("am", 8)) setBuyableAmount(this.layer, 12, player.pz.points.add(1).log10().floor().add(1))
-if (hasMilestone("am", 9)) setBuyableAmount(this.layer, 12, player.pz.points.add(1).log10().floor().add(1))
+if (hasMilestone("am", 9)) setBuyableAmount(this.layer, 13, player.pz.points.add(1).log10().floor().add(1))
         player.pz.zdz = player.pz.zdz.add(this.zdzgain().mul(diff))
     },
  autoUpgrade() { return hasMilestone("am", 6) },
