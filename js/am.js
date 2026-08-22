@@ -6,7 +6,7 @@ addLayer("am", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked: true, //是否开始就解锁
             points: new ExpantaNum(0),
             zwz: new ExpantaNum(0),
-
+bz: new ExpantaNum(1),
         }
     },
     color: "yellow",
@@ -35,6 +35,17 @@ addLayer("am", { //这是代码中的节点代码 例如player.p可以调用该�
         let g = n(10).pow(n(10).pow(this.getResetGain()))
 
         return g
+    },
+ bzgain() {
+        let g = player.am.bz.pow(n(1).sub(n(1).div(layers.am.bzexp())))
+
+        return g.max(0)
+    },
+bzexp() {
+      var g = player.pz.points.log10().div(308)
+
+        if (player.pz.points.lt("1e308")) g = n(1)
+        return g.max(1)
     },
     zwzgain() {
         let g = player.am.points
@@ -122,14 +133,12 @@ zwzjseff() {
         },
 10: {
             requirementDescription: "10. 10胀物质基础",
-            effectDescription: "解锁暴胀(制作中)",
+            effectDescription: "解锁暴胀,暴胀指数基于1e308后的膨胀点增加",
             done() { return player.am.points.gte("10") }
         },
     },
  
-    update(diff) {
-        player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))
-    },
+    
 clickables: {
         11: {
             canClick() { return true },
@@ -249,18 +258,53 @@ g=g.mul(layers.am.zwzjseff())
             unlocked() { return hasMilestone("am", 5) },
         },
     },
+upgrades: {
+        11: {
+            description: `暴胀增加胀物质获取.`,
+            effect() {
+                var g = player.am.bz.add(10).log10()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(100),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+12: {
+            description: `暴胀增加膨胀点获取.`,
+            effect() {
+                var g = player.am.bz.add(10).log10()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e3),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+    },
     tabFormat: {
 
-        "升级": {
+        "暴胀": {
             content: [
                 "main-display",
                 "prestige-button",
                 "resource-display",
+["display-text", () =>
+                    `你有${format(player.am.bz)}暴胀(+${format(layers.am.bzgain())}/s)`,
+
+                    { "font-size": "20px" }
+                ],
+["display-text", () =>
+`暴胀指数${format(layers.am.bzexp())},增加暴胀获取`,
+                    { "font-size": "20px" }
+                ],
 "clickables",
 
                 "upgrades",
             ],
-            unlocked() { return true }
+            unlocked() { return hasMilestone("am", 10) }
         },
         "里程碑": {
             content: [
@@ -289,17 +333,11 @@ g=g.mul(layers.am.zwzjseff())
             ],
             unlocked() { return hasMilestone("am", 2) }
         },
-     "挑战": {
-            content: [
-                "main-display",
-                "prestige-button",
-                "resource-display",
-"clickables",
-                "challenges",
 
-            ],
-            unlocked() { return true }
-        },
+    },
+update(diff) {
+        player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))
+if(hasMilestone("am", 10))player.am.bz = player.am.bz.add(this.bzgain().mul(diff))
     },
 hotkeys: [
         { key: "a", description: "a: 进行胀物质基础重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
