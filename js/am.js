@@ -60,7 +60,7 @@ zwzjsbase() {
         return g.max(1)
     },
 zwzjseff() {
-        let g = layers.am.zwzbuyx().pow(getBuyableAmount(this.layer, 31))
+        let g = layers.am.zwzjsbase().pow(getBuyableAmount(this.layer, 31))
      
         return g.max(1)
     },
@@ -233,7 +233,7 @@ g=g.mul(layers.am.zwzjseff())
 
                 return g
             },
-            display() { return `所有胀维度效果<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            display() { return `所有胀维度效果<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.am.zwz.gte(this.cost()) },
             buy() {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
@@ -242,7 +242,7 @@ g=g.mul(layers.am.zwzjseff())
                 return "计时频率"
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
-                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+                var g =  n(layers.am.zwzjsbase()).pow(x)
 
                 return g
             },
