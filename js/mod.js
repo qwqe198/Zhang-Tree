@@ -54,7 +54,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e3暴胀，已停止更新`}
+	function(){return `残局1e4暴胀`}
 ]
 
 // Determines when the game "ends"

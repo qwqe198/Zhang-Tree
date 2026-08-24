@@ -62,7 +62,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         return g
     },
     dzgain() {
-        let g = player.p.points.log10().div(10.2).mul(layers.p.zzyzeff()).log10()
+        let g = player.p.points.log10().div(10.1).mul(layers.p.zzyzeff()).log10()
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
 if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("p", 31)) g = g.pow(10)
@@ -73,11 +73,11 @@ if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("pz", 32)) g = g.mul(10)
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
-        if (player.p.points.lt(1e102)) g = n(0)
+        if (player.p.points.lt(1e101)) g = n(0)
         return g
     },
     swzgain() {
-        let g = player.p.points.log10().div(13.1).mul(layers.p.zzyzeff()).log10()
+        let g = player.p.points.log10().div(13).mul(layers.p.zzyzeff()).log10()
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
 if (hasMilestone("am",3))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("p", 42)) g = g.pow(10)
@@ -88,11 +88,11 @@ if (hasMilestone("am",3))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("pz", 32)) g = g.mul(10)
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
-        if (player.p.points.lt(1e131)) g = n(0)
+        if (player.p.points.lt(1e130)) g = n(0)
         return g
     },
     zzyzgain() {
-        let g = player.p.points.log10().div(48.6).log10()
+        let g = player.p.points.log10().div(48.5).log10()
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
 if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
         g = g.mul(buyableEffect("p", 11))
@@ -105,7 +105,7 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("pz", 32)) g = g.mul(10)
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
-        if (player.p.points.lt("1e486")) g = n(0)
+        if (player.p.points.lt("1e485")) g = n(0)
         return g
     },
     dzeff() {
@@ -126,6 +126,7 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
     },
     zzyzeff() {
         let g = player.p.zzyz.add(1)
+    if(hasUpgrade("am",13))g=g.pow(upgradeEffect("am",13))
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
         return g
@@ -133,11 +134,11 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
     effectDescription() {
         return `
    <br>
-你有${format(player.p.dz)}点胀(+${format(layers.p.dzgain())}/s)(需1e102声望),点获取^${format(this.dzeff())}
+你有${format(player.p.dz)}点胀(+${format(layers.p.dzgain())}/s)(需1e101声望),点获取^${format(this.dzeff())}
   <br>
-你有${format(player.p.swz)}声望胀(+${format(layers.p.swzgain())}/s)(需1e131声望),声望获取^${format(this.swzeff())}
+你有${format(player.p.swz)}声望胀(+${format(layers.p.swzgain())}/s)(需1e130声望),声望获取^${format(this.swzeff())}
   <br>
-你有${format(player.p.zzyz)}子资源胀(+${format(layers.p.zzyzgain())}/s)(需1e486声望),计算前2个资源获取公式的声望^${format(this.zzyzeff())}
+你有${format(player.p.zzyz)}子资源胀(+${format(layers.p.zzyzgain())}/s)(需1e485声望),计算前2个资源获取公式的声望^${format(this.zzyzeff())}
         `},
     row: 1, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return true },
@@ -253,17 +254,17 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
         31: {
             description: `点胀获取^10(提示:声望超过1e100有很弱的软上限).`,
             unlocked() { return hasUpgrade("p", 25) },
-            cost: n(1.5e102),
+            cost: n(3e101),
         },
         32: {
             description: `点胀获取^10.`,
             unlocked() { return hasUpgrade("p", 31) },
-            cost: n(2e102),
+            cost: n(6e101),
         },
         33: {
             description: `点胀获取^10.`,
             unlocked() { return hasUpgrade("p", 32) },
-            cost: n(2.5e102),
+            cost: n(9e101),
         },
         34: {
             description: `升级11效果指数^100.`,

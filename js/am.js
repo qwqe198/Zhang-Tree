@@ -37,9 +37,9 @@ bz: new ExpantaNum(1),
         return g
     },
  bzgain() {
-        let g = player.am.bz.pow(n(1).sub(n(1).div(layers.am.bzexp())))
-
-        return g.max(0)
+        let g = player.am.bz.max(0)
+if(hasMilestone("am", 12))g=g.mul(layers.am.zwzeff())
+        return g.pow(n(1).sub(n(1).div(layers.am.bzexp()))).max(0)
     },
 bzexp() {
       var g = player.pz.points.log10().div(308)
@@ -49,6 +49,8 @@ bzexp() {
     },
     zwzgain() {
         let g = player.am.points
+        if(hasMilestone("am", 11))g=g.mul(layers.am.zwzeff())
+ if(hasUpgrade("am",11))g=g.mul(upgradeEffect("am",11))
      g=g.mul(buyableEffect("am",11))
 g=g.mul(buyableEffect("am",12))
 g=g.mul(buyableEffect("am",13))
@@ -57,7 +59,7 @@ g=g.mul(buyableEffect("am",14))
     },
     zwzeff() {
         let g = player.am.zwz.add(10).log10()
-       
+           if(hasUpgrade("am",13))g=g.pow(upgradeEffect("am",13))
         return g
     },
 zwzbuyx() {
@@ -88,7 +90,7 @@ zwzjseff() {
     milestones: {
         1: {
             requirementDescription: "1. 1胀物质基础",
-            effectDescription: "你可以基于胀物质基础获得胀物质,它加成点,声望,膨胀点获取,保留4个挑战胀各1分数,修改胀里程碑8公式",
+            effectDescription: "你可以基于胀物质基础获得胀物质,它加成点,声望,膨胀点获取,保留4个挑战胀分数,修改胀里程碑8公式",
             done() { return player.am.points.gte("1") }
         },
  2: {
@@ -135,6 +137,16 @@ zwzjseff() {
             requirementDescription: "10. 10胀物质基础",
             effectDescription: "解锁暴胀,暴胀指数基于1e308后的膨胀点增加",
             done() { return player.am.points.gte("10") }
+        },
+11: {
+            requirementDescription: "11. 1e340膨胀点",
+            effectDescription: "胀物质加成它本身获取",
+            done() { return player.pz.points.gte("1e340") }
+        },
+12: {
+            requirementDescription: "12. 2.5e8胀物质",
+            effectDescription: "胀物质加成暴胀获取(在指数之前)",
+            done() { return player.am.zwz.gte("2.5e8") }
         },
     },
  
@@ -255,7 +267,7 @@ g=g.mul(layers.am.zwzjseff())
 
                 return g
             },
-            unlocked() { return hasMilestone("am", 5) },
+            unlocked() { return hasMilestone("am", 6) },
         },
     },
 upgrades: {
@@ -279,6 +291,18 @@ currencyDisplayName: "暴胀",
             },
             effectDisplay() { return `x${format(this.effect())}` },
             cost: n(1e3),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+        13: {
+            description: `暴胀增加子资源胀,自动胀,胀物质效果.`,
+            effect() {
+                var g = player.am.bz.add(10).log10().add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e4),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"

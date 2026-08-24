@@ -34,6 +34,7 @@ g=g.mul(layers.am.zwzeff())
 g=g.mul(buyableEffect("pz",11))
 g=g.mul(buyableEffect("pz",12))
 g=g.mul(buyableEffect("pz",13))
+        if(hasUpgrade("am",12))g=g.mul(upgradeEffect("am",12))
         if (hasMilestone("pz", 12))g=g.mul(buyableEffect("p",11))
 if (hasMilestone("pz", 18))g=g.mul(10)
         if (player.p.points.lt("1e631")) g = n(0)
@@ -63,6 +64,8 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
         if (hasMilestone("pz", 3)) g = g.pow(2)
         if (hasMilestone("pz", 4)) g = g.pow(2)
         if (hasMilestone("pz", 5)) g = g.pow(2)
+                    if(hasUpgrade("am",13))g=g.pow(upgradeEffect("am",13))
+
         return g
     },
     effectDescription() {
