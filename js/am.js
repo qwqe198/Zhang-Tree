@@ -27,7 +27,7 @@ bz: new ExpantaNum(1),
     },
     getResetGain() {
         var g = player.pz.points.log10().add(9999999692).log10().log10()
-
+g=g.mul(layers.am.wdtseff())
         if (player.pz.points.lt("1e308")) g = n(0)
         return g.floor()
     },
@@ -58,6 +58,7 @@ bzexp() {
 g=g.mul(buyableEffect("am",12))
 g=g.mul(buyableEffect("am",13))
 g=g.mul(buyableEffect("am",14))
+if(hasUpgrade("am",25))g=g.pow(upgradeEffect("am",25))
         return g.max(0)
     },
     zwzeff() {
@@ -67,6 +68,16 @@ g=g.mul(buyableEffect("am",14))
     },
 zwzbuyx() {
         let g = n(2)
+     
+        return g.max(1)
+    },
+wdtsbase() {
+        let g = n(2)
+     
+        return g.max(1)
+    },
+wdtseff() {
+        let g = layers.am.wdtsbase().pow(getBuyableAmount(this.layer, 32))
      
         return g.max(1)
     },
@@ -171,6 +182,16 @@ zwzjseff() {
             effectDescription: "lg(膨胀点+10)加成暴胀获取",
             done() { return player.pz.points.gte("e360") }
         },
+17: {
+            requirementDescription: "17.e12胀物质",
+            effectDescription: "解锁维度提升",
+            done() { return player.am.zwz.gte("e12") }
+        },
+18: {
+            requirementDescription: "18.1维度提升",
+            effectDescription: "解锁第五胀物质维度,每秒获得100%的膨胀点",
+            done() { return  getBuyableAmount(this.layer, 32).gte(1) }
+        },
     },
  
     
@@ -204,6 +225,7 @@ clickables: {
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
 g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 2) },
@@ -225,6 +247,7 @@ g=g.mul(layers.am.zwzjseff())
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
 g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 3) },
@@ -246,6 +269,7 @@ g=g.mul(layers.am.zwzjseff())
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
 g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 4) },
@@ -267,9 +291,98 @@ g=g.mul(layers.am.zwzjseff())
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
 g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 5) },
+        },
+21: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(8).add(9)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第五胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
+                return g
+            },
+            unlocked() { return getBuyableAmount(this.layer, 32).gte(1) },
+        },
+22: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(10).add(13)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第六胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
+                return g
+            },
+            unlocked() { return getBuyableAmount(this.layer, 32).gte(2) },
+        },
+23: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(12).add(18)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第七胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
+                return g
+            },
+            unlocked() { return getBuyableAmount(this.layer, 32).gte(3) },
+        },
+24: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.mul(15).add(24)).floor()
+
+                return g
+            },
+            display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "第八胀维度"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.zwzbuyx()).pow(x).floor()
+g=g.mul(layers.am.zwzjseff())
+g=g.mul(layers.am.wdtseff())
+                return g
+            },
+            unlocked() { return getBuyableAmount(this.layer, 32).gte(4) },
         },
 31: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -291,6 +404,38 @@ g=g.mul(layers.am.zwzjseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 6) },
+        },
+32: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(2)
+
+                return g
+            },
+            display() { return `所有胀维度效果和胀物质基础获取<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最后解锁的胀维度<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return getBuyableAmount(this.layer, 32).gte(4)?getBuyableAmount(this.layer, 24).gte(this.cost()):getBuyableAmount(this.layer, 32).gte(3)?getBuyableAmount(this.layer, 23).gte(this.cost()):getBuyableAmount(this.layer, 32).gte(2)?getBuyableAmount(this.layer, 22).gte(this.cost()):getBuyableAmount(this.layer, 32).gte(1)?getBuyableAmount(this.layer, 21).gte(this.cost()):getBuyableAmount(this.layer, 14).gte(this.cost()) },
+            buy() {
+setBuyableAmount(this.layer, 11, n(0))
+setBuyableAmount(this.layer, 12, n(0))
+setBuyableAmount(this.layer, 13, n(0))
+setBuyableAmount(this.layer, 14, n(0))
+setBuyableAmount(this.layer, 21, n(0))
+setBuyableAmount(this.layer, 22, n(0))
+setBuyableAmount(this.layer, 23, n(0))
+setBuyableAmount(this.layer, 24, n(0))
+setBuyableAmount(this.layer, 31, n(0))
+player.am.zwz=n(0)
+player.am.points=n(0)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "维度提升"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  n(layers.am.wdtsbase()).pow(x)
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 17) },
         },
     },
 upgrades: {
@@ -390,6 +535,18 @@ currencyDisplayName: "暴胀",
             description: `自动胀效果指数^2.`,
         
             cost: n(1e8),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+ 25: {
+            description: `暴胀增加胀物质获取.`,
+            effect() {
+                var g = player.am.bz.add(10).log10().add(10).log10().pow(0.5)
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(3e9),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"

@@ -56,7 +56,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e8暴胀`}
+	function(){return `残局25胀物质基础`}
 ]
 
 // Determines when the game "ends"

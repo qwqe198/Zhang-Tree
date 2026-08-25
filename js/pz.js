@@ -58,7 +58,7 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
         return g
     },
     zdzeff() {
-        let g = player.pz.zdz.add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).pow(66686).sub(1.5).max(0)
+        let g = player.pz.zdz.add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).log10().add(1).pow(66686).sub(0.5).max(1)
         if (hasMilestone("pz", 1)) g = g.pow(2)
         if (hasMilestone("pz", 2)) g = g.pow(2)
         if (hasMilestone("pz", 3)) g = g.pow(2)
@@ -73,7 +73,7 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
  <br>
 膨胀点需要1e631声望
  <br>
-你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15),每秒获取${format(this.zdzeff())}x的声望
+你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15以生效),每秒获取${format(this.zdzeff())}x的声望
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return hasUpgrade("p", 55) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
@@ -607,6 +607,10 @@ return g.max(challengeEffect("pz", 22))
             resource() { return player.p.points },
             unlocked() { return  hasUpgrade("pz", 54) }
         },
+    },
+ passiveGeneration() {
+        if (hasMilestone("am", 18)) return 1
+        return 0
     },
     tabFormat: {
 
