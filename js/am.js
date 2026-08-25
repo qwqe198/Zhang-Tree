@@ -342,6 +342,58 @@ currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
         },
+15: {
+            description: `p升级11效果以log10的倍率对指数生效.`,
+            effect() {
+                var g = upgradeEffect("p",11).add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e5),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+21: {
+            description: `点胀效果以log10的倍率对指数生效.`,
+            effect() {
+                var g = layers.p.dzeff().add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e6),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+22: {
+            description: `子资源胀效果以log10的倍率对指数生效(对的，声望点膨胀了).`,
+            effect() {
+                var g = layers.p.zzyzeff().add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(3e6),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+23: {
+            description: `p升级11效果等于点胀，所有这个升级的加成失效.`,
+
+            cost: n(1e7),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+24: {
+            description: `自动胀效果指数^2.`,
+        
+            cost: n(1e8),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
     },
     tabFormat: {
 
@@ -396,7 +448,7 @@ currencyDisplayName: "暴胀",
     },
 update(diff) {
         player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))
-if(hasMilestone("am", 10))player.am.bz = player.am.bz.add(this.bzgain().mul(diff))
+if(hasMilestone("am", 10))player.am.bz = player.am.bz.add(this.bzgain().mul(diff)).max(1)
     },
 hotkeys: [
         { key: "a", description: "a: 进行胀物质基础重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },

@@ -54,6 +54,8 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (inChallenge("pz", 21)) g = g.pow(0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.75)
         if (inChallenge("pz", 22)) g = g.pow(0.5)
+//每秒获取
+if (hasUpgrade("pz", 15)) g=g.mul(layers.pz.zdzeff())
         return g.floor()
     },
     getNextAt() {
@@ -62,7 +64,9 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         return g
     },
     dzgain() {
-        let g = player.p.points.log10().div(10.1).mul(layers.p.zzyzeff()).log10()
+        let g = player.p.points.log10().div(10.1).mul(layers.p.zzyzeff())
+if(hasUpgrade("am",22))g=expPow(g,upgradeEffect("am",22))
+g = g.add(10).log10()//这也是公式计算
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
 if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("p", 31)) g = g.pow(10)
@@ -77,7 +81,9 @@ if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
         return g
     },
     swzgain() {
-        let g = player.p.points.log10().div(13).mul(layers.p.zzyzeff()).log10()
+        let g = player.p.points.log10().div(13).mul(layers.p.zzyzeff())
+if(hasUpgrade("am",22))g=expPow(g,upgradeEffect("am",22))
+g = g.add(10).log10()//这也是公式计算
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
 if (hasMilestone("am",3))g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("p", 42)) g = g.pow(10)
@@ -199,6 +205,7 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
                 if (hasUpgrade("p", 52)) g = expPow(g, 2)
                 if (hasMilestone("pz", 7)) g = expPow(g, 1.5)
                 if (hasUpgrade("pz", 33)) g = expPow(g, upgradeEffect("pz", 33))
+if (hasUpgrade("am", 23)) g = layers.p.dzeff()
                 if (inChallenge("pz", 21)) g = n(1)
                 if (inChallenge("pz", 22)) g = n(1)
                 return g
@@ -329,7 +336,7 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
     },
     autoUpgrade() { return hasUpgrade("pz", 13) },
     passiveGeneration() {
-        if (hasUpgrade("pz", 15)) return layers.pz.zdzeff()
+        if (hasUpgrade("pz", 15)) return 1
         return 0
     },
     update(diff) {

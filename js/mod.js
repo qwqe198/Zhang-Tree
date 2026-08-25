@@ -44,6 +44,8 @@ if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
 if(hasUpgrade("pz",14))g=g.pow(upgradeEffect("pz",14))
 if(hasUpgrade("p",11))g=g.pow(upgradeEffect("p",11))
 g=g.pow(layers.p.dzeff())
+if(hasUpgrade("am",15))g=expPow(g,upgradeEffect("am",15))
+if(hasUpgrade("am",21))g=expPow(g,upgradeEffect("am",21))
 if(inChallenge("pz",11))g=g.add(10).log10()
 if(inChallenge("pz",22))g=g.add(10).log10()
 	return g}
@@ -54,7 +56,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局1e5暴胀`}
+	function(){return `残局1e8暴胀`}
 ]
 
 // Determines when the game "ends"

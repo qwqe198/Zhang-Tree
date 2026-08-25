@@ -65,7 +65,7 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
         if (hasMilestone("pz", 4)) g = g.pow(2)
         if (hasMilestone("pz", 5)) g = g.pow(2)
                     if(hasUpgrade("am",13))g=g.pow(upgradeEffect("am",13))
-
+        if (hasUpgrade("am", 24)) g = expPow(g, 2)
         return g
     },
     effectDescription() {
