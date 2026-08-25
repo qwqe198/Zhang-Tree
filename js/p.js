@@ -36,7 +36,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (hasUpgrade("p", 24)) g = g.pow(2)
         if (hasUpgrade("p", 25)) g = g.pow(2)
         g = g.pow(layers.p.swzeff())
-        if (g.gte(1e100)) g = expRoot(g, 2).mul(1e90)
+        if (g.gte(1e100)&&!hasMilestone("am", 14)) g = expRoot(g, 2).mul(1e90)
         if (g.gte(1e125)) g = expRoot(g, 2).mul(1e114)
         if (g.gte(1e185)) g = expRoot(g, 2).mul(3e171)
         if (g.gte(1e225)) g = expRoot(g, 2).mul(1e210)

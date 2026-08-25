@@ -591,7 +591,7 @@ return g.max(challengeEffect("pz", 21))
             rewardEffect() {
 let g=n(0)
               if(inChallenge("pz",22))  g=g.max(player.p.points.add(1).log10().pow(0.5))
-
+if(hasUpgrade("am",14))g=g.mul(upgradeEffect("am", 14))
  if(!inChallenge("pz",22))g=g.max(player.pz.challenges[22])
 return g.max(challengeEffect("pz", 22))
             },

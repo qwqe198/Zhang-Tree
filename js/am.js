@@ -39,6 +39,9 @@ bz: new ExpantaNum(1),
  bzgain() {
         let g = player.am.bz.max(0)
 if(hasMilestone("am", 12))g=g.mul(layers.am.zwzeff())
+if(hasMilestone("am", 13))g=g.mul(player.am.points.add(1))
+if(hasMilestone("am", 15))g=g.mul(player.p.points.log10().add(10))
+if(hasMilestone("am", 16))g=g.mul(player.pz.points.log10().add(10))
         return g.pow(n(1).sub(n(1).div(layers.am.bzexp()))).max(0)
     },
 bzexp() {
@@ -145,8 +148,28 @@ zwzjseff() {
         },
 12: {
             requirementDescription: "12. 2.5e8胀物质",
-            effectDescription: "胀物质加成暴胀获取(在指数之前)",
+            effectDescription: "胀物质效果加成暴胀获取(提示:所有加成暴胀获取在暴胀指数之前生效)",
             done() { return player.am.zwz.gte("2.5e8") }
+        },
+13: {
+            requirementDescription: "13. 1e9胀物质",
+            effectDescription: "(胀物质基础+1)加成暴胀获取",
+            done() { return player.am.zwz.gte("1e9") }
+        },
+14: {
+            requirementDescription: "14.ee11自动胀",
+            effectDescription: "弱化声望获取的软上限(这相当于声望获取1e1000之后的部分平方)",
+            done() { return player.pz.zdz.gte("ee11") }
+        },
+15: {
+            requirementDescription: "15.e1044声望",
+            effectDescription: "lg(声望+10)加成暴胀获取",
+            done() { return player.p.points.gte("e1044") }
+        },
+16: {
+            requirementDescription: "16.e360膨胀点",
+            effectDescription: "lg(膨胀点+10)加成暴胀获取",
+            done() { return player.pz.points.gte("e360") }
         },
     },
  
@@ -302,6 +325,18 @@ currencyDisplayName: "暴胀",
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(3e3),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+14: {
+            description: `暴胀增加胀挑战胀4分数获取.`,
+            effect() {
+                var g = player.am.bz.add(10).log10()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
             cost: n(1e4),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
