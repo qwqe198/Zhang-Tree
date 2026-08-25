@@ -46,7 +46,7 @@ if(hasMilestone("am", 16))g=g.mul(player.pz.points.log10().add(10))
     },
 bzexp() {
       var g = player.pz.points.log10().div(308)
-
+if(g.gte(1.44))g=g.root(2).mul(1.2)
         if (player.pz.points.lt("1e308")) g = n(1)
         return g.max(1)
     },
@@ -408,7 +408,7 @@ g=g.mul(layers.am.wdtseff())
 32: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(2)
-
+if(getBuyableAmount(this.layer, 32).gte(4))g=x.mul(2).sub(4)
                 return g
             },
             display() { return `所有胀维度效果和胀物质基础获取<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最后解锁的胀维度<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
