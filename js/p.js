@@ -57,6 +57,8 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
 //每秒获取
 if (hasUpgrade("pz", 15)) g=g.mul(layers.pz.zdzeff())
 if (hasUpgrade("am", 23))g=g.max(1e100)
+if (hasUpgrade("am", 31))g=g.max(1e102)
+if (hasUpgrade("am", 32))g=g.max("e632")
         return g.floor()
     },
     getNextAt() {
@@ -183,11 +185,32 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
                 if (hasUpgrade("pz", 42)) g = g.pow(2)
                 if (hasMilestone("pz", 9)) g = g.pow(2)
                 if (hasMilestone("pz", 10)) g = g.pow(2)
+if (hasMilestone("am", 21)) g = g.pow(2)
                 return g
             },
             unlocked() { return hasUpgrade("pz", 25) },
         },
-
+12: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(10).pow(x.pow(4).add(19000)).floor()
+               
+                return g
+            },
+            display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return player.p.points.gte(this.cost()) },
+            buy() {
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "p购买胀2"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(2).pow(x)
+                
+                return g
+            },
+            unlocked() { return hasMilestone("am", 20) },
+        },
     },
     upgrades: {
         11: {

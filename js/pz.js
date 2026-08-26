@@ -29,11 +29,13 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
         var g = player.p.points.log10().div(63.1).log10()
 if (hasMilestone("pz", 7)&&!hasMilestone("am",1)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
 if (hasMilestone("am",1)) g = g.mul(player.points.add(10).slog().pow(player.points.add(10).slog()))
+if (hasMilestone("am",19)) g = g.mul(player.am.points.add(1))
 if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
 g=g.mul(layers.am.zwzeff())
 g=g.mul(buyableEffect("pz",11))
 g=g.mul(buyableEffect("pz",12))
 g=g.mul(buyableEffect("pz",13))
+ g = g.mul(buyableEffect("p", 12))
         if(hasUpgrade("am",12))g=g.mul(upgradeEffect("am",12))
         if (hasMilestone("pz", 12))g=g.mul(buyableEffect("p",11))
 if (hasMilestone("pz", 18))g=g.mul(10)
@@ -74,6 +76,8 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
 膨胀点需要1e631声望
  <br>
 你有${format(player.pz.zdz)}自动胀(+${format(layers.pz.zdzgain())}/s)(需胀升级15以生效),每秒获取${format(this.zdzeff())}x的声望
+<br>
+实际每秒获取为100%,多余部分计入到最终乘数
         `},
     row: 2, // Row the layer is in on the tree (0 is the first row)  QwQ:1也可以当第一排
     layerShown() { return hasUpgrade("p", 55) || player.pz.points.gte(1) || hasUpgrade("pz", 11) },
@@ -668,6 +672,9 @@ hotkeys: [
 
              if (hasMilestone("am", 1)) {
                 kept.push("challenges")
+            }
+if (hasMilestone("am", 22)) {
+                kept.push("milestones")
             }
             layerDataReset(this.layer, kept)
         }

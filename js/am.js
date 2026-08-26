@@ -47,6 +47,7 @@ if(hasMilestone("am", 16))g=g.mul(player.pz.points.log10().add(10))
 bzexp() {
       var g = player.pz.points.log10().div(308)
 if(g.gte(1.44))g=g.root(2).mul(1.2)
+if(g.gte(1.96))g=g.root(2).mul(1.4)
         if (player.pz.points.lt("1e308")) g = n(1)
         return g.max(1)
     },
@@ -168,29 +169,49 @@ zwzjseff() {
             done() { return player.am.zwz.gte("1e9") }
         },
 14: {
-            requirementDescription: "14.ee11自动胀",
+            requirementDescription: "14. ee11自动胀",
             effectDescription: "弱化声望获取的软上限(这相当于声望获取1e1000之后的部分平方)",
             done() { return player.pz.zdz.gte("ee11") }
         },
 15: {
-            requirementDescription: "15.e1044声望",
+            requirementDescription: "15. e1044声望",
             effectDescription: "lg(声望+10)加成暴胀获取",
             done() { return player.p.points.gte("e1044") }
         },
 16: {
-            requirementDescription: "16.e360膨胀点",
+            requirementDescription: "16. e360膨胀点",
             effectDescription: "lg(膨胀点+10)加成暴胀获取",
             done() { return player.pz.points.gte("e360") }
         },
 17: {
-            requirementDescription: "17.e12胀物质",
+            requirementDescription: "17. e12胀物质",
             effectDescription: "解锁维度提升",
             done() { return player.am.zwz.gte("e12") }
         },
 18: {
-            requirementDescription: "18.1维度提升",
+            requirementDescription: "18. 1维度提升",
             effectDescription: "解锁第五胀物质维度,每秒获得100%的膨胀点,在AM重置中保留P升级",
             done() { return  getBuyableAmount(this.layer, 32).gte(1) }
+        },
+19: {
+            requirementDescription: "19. 25胀物质基础",
+            effectDescription: "(胀物质基础+1)加成膨胀点获取",
+            done() { return  player.am.points.gte("25") }
+        },
+20: {
+            requirementDescription: "20. 9e15胀物质",
+            effectDescription: "解锁第2个p购买胀",
+            done() { return player.am.zwz.gte("9e15") }
+        },
+21: {
+            requirementDescription: "21. e690膨胀点",
+            effectDescription: "p购买胀1效果^2",
+            done() { return player.pz.points.gte("e690") }
+        },
+22: {
+            requirementDescription: "22. 2维度提升",
+            effectDescription: "解锁第六胀物质维度,在AM重置中保留胀里程碑",
+            done() { return  getBuyableAmount(this.layer, 32).gte(2) }
         },
     },
  
@@ -467,6 +488,7 @@ currencyDisplayName: "暴胀",
             description: `暴胀增加子资源胀,自动胀,胀物质效果.`,
             effect() {
                 var g = player.am.bz.add(10).log10().add(10).log10()
+if(g.gte(1.44))g=g.root(2).mul(1.2)
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -547,6 +569,22 @@ currencyDisplayName: "暴胀",
             },
             effectDisplay() { return `^${format(this.effect())}` },
             cost: n(3e9),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+31: {
+            description: `升级23效果2更改为1e102.`,
+        
+            cost: n(1e11),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+32: {
+            description: `升级23效果2更改为1e632.`,
+        
+            cost: n(1e14),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
