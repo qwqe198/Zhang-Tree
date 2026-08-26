@@ -662,4 +662,14 @@ return g.max(challengeEffect("pz", 22))
 hotkeys: [
         { key: "z", description: "z: 进行膨胀点重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
+ doReset(resettingLayer) {
+        if (layers[resettingLayer].row > layers[this.layer].row) {
+            let kept = ["unlocked", "auto"]
+
+             if (hasMilestone("am", 1)) {
+                kept.push("challenges")
+            }
+            layerDataReset(this.layer, kept)
+        }
+    },
 })

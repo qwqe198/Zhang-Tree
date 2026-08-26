@@ -349,4 +349,14 @@ if (hasUpgrade("am", 23)) g = layers.p.dzeff()
     hotkeys: [
         { key: "p", description: "p: 进行声望重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
+ doReset(resettingLayer) {
+        if (layers[resettingLayer].row > layers[this.layer].row) {
+            let kept = ["unlocked", "auto"]
+
+             if (hasMilestone("am", 18)) {
+                kept.push("upgrades")
+            }
+            layerDataReset(this.layer, kept)
+        }
+    },
 })

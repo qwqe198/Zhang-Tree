@@ -189,7 +189,7 @@ zwzjseff() {
         },
 18: {
             requirementDescription: "18.1维度提升",
-            effectDescription: "解锁第五胀物质维度,每秒获得100%的膨胀点",
+            effectDescription: "解锁第五胀物质维度,每秒获得100%的膨胀点,在AM重置中保留P升级",
             done() { return  getBuyableAmount(this.layer, 32).gte(1) }
         },
     },
