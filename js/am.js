@@ -524,7 +524,7 @@ currencyDisplayName: "暴胀",
         currencyLayer: "am"
         },
 23: {
-            description: `p升级11效果等于点胀，所有这个升级的加成失效.`,
+            description: `p升级11效果等于点胀，所有这个升级的加成失效,声望获取不低于1e100`,
 
             cost: n(1e7),
 currencyDisplayName: "暴胀",

@@ -56,6 +56,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (inChallenge("pz", 22)) g = g.pow(0.5)
 //每秒获取
 if (hasUpgrade("pz", 15)) g=g.mul(layers.pz.zdzeff())
+if (hasUpgrade("am", 23))g=g.max(1e100)
         return g.floor()
     },
     getNextAt() {
