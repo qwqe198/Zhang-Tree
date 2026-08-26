@@ -312,8 +312,8 @@ g=g.mul(layers.am.wdtseff())
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
-g=g.mul(layers.am.zwzjseff())
-g=g.mul(layers.am.wdtseff())
+if(getBuyableAmount(this.layer, 32).gte(1))g=g.mul(layers.am.zwzjseff())
+if(getBuyableAmount(this.layer, 32).gte(1))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(1) },
@@ -334,8 +334,8 @@ g=g.mul(layers.am.wdtseff())
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
-g=g.mul(layers.am.zwzjseff())
-g=g.mul(layers.am.wdtseff())
+if(getBuyableAmount(this.layer, 32).gte(2))g=g.mul(layers.am.zwzjseff())
+if(getBuyableAmount(this.layer, 32).gte(2))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(2) },
@@ -356,8 +356,8 @@ g=g.mul(layers.am.wdtseff())
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
-g=g.mul(layers.am.zwzjseff())
-g=g.mul(layers.am.wdtseff())
+if(getBuyableAmount(this.layer, 32).gte(3))g=g.mul(layers.am.zwzjseff())
+if(getBuyableAmount(this.layer, 32).gte(3))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(3) },
@@ -378,8 +378,8 @@ g=g.mul(layers.am.wdtseff())
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
-g=g.mul(layers.am.zwzjseff())
-g=g.mul(layers.am.wdtseff())
+if(getBuyableAmount(this.layer, 32).gte(4))g=g.mul(layers.am.zwzjseff())
+if(getBuyableAmount(this.layer, 32).gte(4))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(4) },
@@ -390,7 +390,7 @@ g=g.mul(layers.am.wdtseff())
 
                 return g
             },
-            display() { return `所有胀维度效果<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            display() { return `所有已解锁胀维度效果<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.am.zwz.gte(this.cost()) },
             buy() {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
@@ -411,7 +411,7 @@ g=g.mul(layers.am.wdtseff())
 if(getBuyableAmount(this.layer, 32).gte(4))g=x.mul(2).sub(4)
                 return g
             },
-            display() { return `所有胀维度效果和胀物质基础获取<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最后解锁的胀维度<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            display() { return `所有已解锁胀维度效果和胀物质基础获取<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最后解锁的胀维度<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return getBuyableAmount(this.layer, 32).gte(4)?getBuyableAmount(this.layer, 24).gte(this.cost()):getBuyableAmount(this.layer, 32).gte(3)?getBuyableAmount(this.layer, 23).gte(this.cost()):getBuyableAmount(this.layer, 32).gte(2)?getBuyableAmount(this.layer, 22).gte(this.cost()):getBuyableAmount(this.layer, 32).gte(1)?getBuyableAmount(this.layer, 21).gte(this.cost()):getBuyableAmount(this.layer, 14).gte(this.cost()) },
             buy() {
 setBuyableAmount(this.layer, 11, n(0))
@@ -542,7 +542,7 @@ currencyDisplayName: "暴胀",
  25: {
             description: `暴胀增加胀物质获取.`,
             effect() {
-                var g = player.am.bz.add(10).log10().add(10).log10().pow(0.5)
+                var g = player.am.bz.add(10).log10().add(10).log10().add(10).log10().pow(3.14)
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
