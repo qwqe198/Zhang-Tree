@@ -30,6 +30,7 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
 if (hasMilestone("pz", 7)&&!hasMilestone("am",1)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
 if (hasMilestone("am",1)) g = g.mul(player.points.add(10).slog().pow(player.points.add(10).slog()))
 if (hasMilestone("am",19)) g = g.mul(player.am.points.add(1))
+if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
 if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
 g=g.mul(layers.am.zwzeff())
 g=g.mul(buyableEffect("pz",11))
@@ -39,6 +40,9 @@ g=g.mul(buyableEffect("pz",13))
         if(hasUpgrade("am",12))g=g.mul(upgradeEffect("am",12))
         if (hasMilestone("pz", 12))g=g.mul(buyableEffect("p",11))
 if (hasMilestone("pz", 18))g=g.mul(10)
+ if (inChallenge("am", 11)) g = expPow(g, 0.66686)
+if (inChallenge("am", 11)) g = g.pow(0.66686)
+//条件
         if (player.p.points.lt("1e631")) g = n(0)
         return g.floor()
     },
@@ -68,6 +72,7 @@ if(hasUpgrade("pz",51))g=g.pow(upgradeEffect("pz",51))
         if (hasMilestone("pz", 5)) g = g.pow(2)
                     if(hasUpgrade("am",13))g=g.pow(upgradeEffect("am",13))
         if (hasUpgrade("am", 24)) g = expPow(g, 2)
+if (inChallenge("am", 11)||inChallenge("am", 12)||inChallenge("am", 21)||inChallenge("am", 22))g=n(1)
         return g
     },
     effectDescription() {

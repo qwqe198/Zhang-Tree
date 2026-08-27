@@ -42,6 +42,7 @@ if(hasMilestone("am", 12))g=g.mul(layers.am.zwzeff())
 if(hasMilestone("am", 13))g=g.mul(player.am.points.add(1))
 if(hasMilestone("am", 15))g=g.mul(player.p.points.log10().add(10))
 if(hasMilestone("am", 16))g=g.mul(player.pz.points.log10().add(10))
+if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
         return g.pow(n(1).sub(n(1).div(layers.am.bzexp()))).max(0)
     },
 bzexp() {
@@ -59,6 +60,7 @@ if(g.gte(2))g=g.root(2).mul(n(2).root(2))
 g=g.mul(buyableEffect("am",12))
 g=g.mul(buyableEffect("am",13))
 g=g.mul(buyableEffect("am",14))
+if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
 if(hasUpgrade("am",25))g=g.pow(upgradeEffect("am",25))
         return g.max(0)
     },
@@ -212,6 +214,46 @@ zwzjseff() {
             requirementDescription: "22. 2维度提升",
             effectDescription: "解锁第六胀物质维度,在AM重置中保留胀里程碑",
             done() { return  getBuyableAmount(this.layer, 32).gte(2) }
+        },
+23: {
+            requirementDescription: "23. 250胀物质基础",
+            effectDescription: "升级12效果^2",
+            done() { return   player.am.points.gte("250") }
+        },
+24: {
+            requirementDescription: "24. 3维度提升",
+            effectDescription: "解锁第七胀物质维度",
+            done() { return  getBuyableAmount(this.layer, 32).gte(3) }
+        },
+25: {
+            requirementDescription: "25. 1e25胀物质",
+            effectDescription: "解锁AM挑战胀,但是你一时半会应该打不过",
+            done() { return player.am.zwz.gte("1e25") }
+        },
+26: {
+            requirementDescription: "26. e860膨胀点",
+            effectDescription: "移除声望获取的软上限",
+            done() { return player.pz.points.gte("e860") }
+        },
+27: {
+            requirementDescription: "27. 1e40000声望获取",
+            effectDescription: "声望获取三重软上限，超过部分获取为lgx*2.5e39995",
+            done() { return player.p.points.gte("1e40000") }
+        },
+28: {
+            requirementDescription: "28. 3.14挑战胀1分数",
+            effectDescription: "(AM挑战胀1分数+1)加成膨胀点,胀物质,暴胀获取",
+            done() { return challengeEffect("am", 11).gte("3.14") }
+        },
+29: {
+            requirementDescription: "29. e925膨胀点",
+            effectDescription: "暴胀指数加成声望胀效果",
+            done() { return player.pz.points.gte("e925") }
+        },
+30: {
+            requirementDescription: "30. F5.1点",
+            effectDescription: "当前残局",
+            done() { return player.points.gte("10^^5.1") }
         },
     },
  
@@ -476,6 +518,7 @@ currencyDisplayName: "暴胀",
             description: `暴胀增加膨胀点获取.`,
             effect() {
                 var g = player.am.bz.add(10).log10()
+if(hasMilestone("am", 23))g=g.pow(2)
                 return g
             },
             effectDisplay() { return `x${format(this.effect())}` },
@@ -589,6 +632,54 @@ currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
         },
+ 33: {
+            description: `am挑战胀1分数加成p购买胀2效果.`,
+            effect() {
+                var g = challengeEffect("am", 11).add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e17),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+34: {
+            description: `削弱声望获取二重软上限(详见胀的第6个里程碑),变成lgx^(1000/3).`,
+        
+            cost: n(1e18),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+    },
+challenges: {
+        11: {
+            name() { return '挑战胀1'},
+            challengeDescription() { return '声望和膨胀点先指数^a再^a,基于挑战内最高膨胀点获得分数.'},
+            rewardDescription() { 
+                return `分数:${format(this.rewardEffect())}`
+            },
+            rewardEffect() {
+let g=n(0)
+              if(inChallenge("am",11))  g=g.max(player.pz.points.add(1).log10().pow(0.5))
+
+ if(!inChallenge("am",11))g=g.max(player.am.challenges[11])
+return g.max(challengeEffect("am", 11))
+            },
+            goal: 0,
+ goalDescription() {
+                return "更多膨胀点"
+            },
+            onExit() {
+                player.am.challenges[11] = player.pz.points.add(1).log10().pow(0.5).max(challengeEffect("am", 11)).max(0)
+            },
+            completionLimit: "1F9999",
+            canComplete() { return true },
+            resource() { return player.pz.points },
+            unlocked() { return  true }
+        },
+
     },
     tabFormat: {
 
@@ -604,7 +695,24 @@ currencyDisplayName: "暴胀",
             ],
             unlocked() { return true }
         },
-     "暴胀": {
+  
+"胀维度": {
+            content: [
+                "main-display",
+                "prestige-button",
+                "resource-display",
+["display-text", () =>
+                    `每次购买乘数:${format(layers.am.zwzbuyx())}`,
+                    { "font-size": "20px" }
+                ],
+
+"clickables",
+                "buyables",
+
+            ],
+            unlocked() { return hasMilestone("am", 2) }
+        },
+   "暴胀": {
             content: [
                 "main-display",
                 "prestige-button",
@@ -624,23 +732,22 @@ currencyDisplayName: "暴胀",
             ],
             unlocked() { return hasMilestone("am", 10) }
         },
-"胀维度": {
+"挑战": {
             content: [
                 "main-display",
                 "prestige-button",
                 "resource-display",
 ["display-text", () =>
-                    `每次购买乘数:${format(layers.am.zwzbuyx())}`,
+                    `进入这里的挑战会使升级32失效,自动胀效果为1(a=0.66686)`,
                     { "font-size": "20px" }
                 ],
 
 "clickables",
-                "buyables",
+                "challenges",
 
             ],
-            unlocked() { return hasMilestone("am", 2) }
+            unlocked() { return hasMilestone("am", 25) }
         },
-
     },
 update(diff) {
         player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))

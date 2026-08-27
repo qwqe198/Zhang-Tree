@@ -56,7 +56,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局250胀物质基础`}
+	function(){return `残局F5.1000点`}
 ]
 
 // Determines when the game "ends"

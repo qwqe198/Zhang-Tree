@@ -36,29 +36,38 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (hasUpgrade("p", 24)) g = g.pow(2)
         if (hasUpgrade("p", 25)) g = g.pow(2)
         g = g.pow(layers.p.swzeff())
-        if (g.gte(1e100)&&!hasMilestone("am", 14)) g = expRoot(g, 2).mul(1e90)
-        if (g.gte(1e125)) g = expRoot(g, 2).mul(1e114)
-        if (g.gte(1e185)) g = expRoot(g, 2).mul(3e171)
-        if (g.gte(1e225)) g = expRoot(g, 2).mul(1e210)
-        if (g.gte(1e256)) g = expRoot(g, 2).mul(1e240)
-        if (g.gte(1e289)) g = expRoot(g, 2).mul(1e272)
-        if (g.gte("1e324")) g = expRoot(g, 2).mul(1e306)
-        if (g.gte("1e361")) g = expRoot(g, 2).mul("1e342")
-        if (g.gte("1e400")) g = expRoot(g, 2).mul("1e380")
-        if (g.gte("1e441")) g = expRoot(g, 2).mul("1e420")
-        if (g.gte("1e484")) g = expRoot(g, 2).mul("1e462")
-        if (g.gte("1e529")) g = expRoot(g, 2).mul("1e506")
-        if (g.gte("1e625")) g = expRoot(g, 2).mul("1e600")
-        if (g.gte("1e1000")) g = g.log10().mul("1e997")
+//软上限
+        if (g.gte(1e100) && !hasMilestone("am", 14)) g = expRoot(g, 2).mul(1e90)
+        if (g.gte(1e125) && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(1e114)
+        if (g.gte(1e185) && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(3e171)
+        if (g.gte(1e225) && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(1e210)
+        if (g.gte(1e256) && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(1e240)
+        if (g.gte(1e289) && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(1e272)
+        if (g.gte("1e324") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(1e306)
+        if (g.gte("1e361") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e342")
+        if (g.gte("1e400") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e380")
+        if (g.gte("1e441") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e420")
+        if (g.gte("1e484") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e462")
+        if (g.gte("1e529") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e506")
+        if (g.gte("1e625") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e600")
+        if (g.gte("1e1000")&&!hasUpgrade("am", 34)) g = g.log10().mul("1e997")
+if (g.gte("1e1000")&&hasUpgrade("am", 34)) g = g.log10().pow(1000/3)
+        if (g.gte("1e40000")) g = g.log10().mul("2.5e39995")
+//挑战
         if (inChallenge("pz", 12)) g = expPow(g, 0.75)
         if (inChallenge("pz", 21)) g = g.pow(0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.75)
         if (inChallenge("pz", 22)) g = g.pow(0.5)
-//每秒获取
-if (hasUpgrade("pz", 15)) g=g.mul(layers.pz.zdzeff())
-if (hasUpgrade("am", 23))g=g.max(1e100)
-if (hasUpgrade("am", 31))g=g.max(1e102)
-if (hasUpgrade("am", 32))g=g.max("e632")
+        if (inChallenge("am", 11)) g = expPow(g, 0.66686)
+        if (inChallenge("am", 11)) g = g.pow(0.66686)
+//最低获取
+ if (hasUpgrade("am", 23)) g = g.max(1e100)
+        if (hasUpgrade("am", 31)) g = g.max(1e102)
+        if (hasUpgrade("am", 32) && !(inChallenge("am", 11) || inChallenge("am", 12) || inChallenge("am", 21) || inChallenge("am", 22))) g = g.max("e632")
+        if (inChallenge("am", 11) || inChallenge("am", 12) || inChallenge("am", 21) || inChallenge("am", 22)) g = g.max(1e102)
+        //每秒获取
+        if (hasUpgrade("pz", 15)) g = g.mul(layers.pz.zdzeff())
+       
         return g.floor()
     },
     getNextAt() {
@@ -68,10 +77,10 @@ if (hasUpgrade("am", 32))g=g.max("e632")
     },
     dzgain() {
         let g = player.p.points.log10().div(10.1).mul(layers.p.zzyzeff())
-if(hasUpgrade("am",22))g=expPow(g,upgradeEffect("am",22))
-g = g.add(10).log10()//这也是公式计算
+        if (hasUpgrade("am", 22)) g = expPow(g, upgradeEffect("am", 22))
+        g = g.add(10).log10()//这也是公式计算
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
-if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
+        if (hasMilestone("am", 2)) g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("p", 31)) g = g.pow(10)
         if (hasUpgrade("p", 32)) g = g.pow(10)
         if (hasUpgrade("p", 33)) g = g.pow(10)
@@ -85,10 +94,10 @@ if (hasMilestone("am",2))g = g.mul(layers.am.zwzeff())
     },
     swzgain() {
         let g = player.p.points.log10().div(13).mul(layers.p.zzyzeff())
-if(hasUpgrade("am",22))g=expPow(g,upgradeEffect("am",22))
-g = g.add(10).log10()//这也是公式计算
+        if (hasUpgrade("am", 22)) g = expPow(g, upgradeEffect("am", 22))
+        g = g.add(10).log10()//这也是公式计算
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
-if (hasMilestone("am",3))g = g.mul(layers.am.zwzeff())
+        if (hasMilestone("am", 3)) g = g.mul(layers.am.zwzeff())
         if (hasUpgrade("p", 42)) g = g.pow(10)
         if (hasUpgrade("p", 43)) g = g.pow(10)
         if (hasUpgrade("p", 44)) g = g.pow(10)
@@ -103,7 +112,7 @@ if (hasMilestone("am",3))g = g.mul(layers.am.zwzeff())
     zzyzgain() {
         let g = player.p.points.log10().div(48.5).log10()
         if (hasUpgrade("pz", 11)) g = g.mul(upgradeEffect("pz", 11))
-if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
+        if (hasMilestone("am", 4)) g = g.mul(layers.am.zwzeff())
         g = g.mul(buyableEffect("p", 11))
         if (hasUpgrade("p", 51)) g = g.pow(2)
         if (hasUpgrade("p", 52)) g = g.pow(2)
@@ -129,13 +138,14 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
     },
     swzeff() {
         let g = player.p.swz.add(1)
+if (hasMilestone("am", 29)) g =g.pow(layers.am.bzexp())
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
         return g
     },
     zzyzeff() {
         let g = player.p.zzyz.add(1)
-    if(hasUpgrade("am",13))g=g.pow(upgradeEffect("am",13))
+        if (hasUpgrade("am", 13)) g = g.pow(upgradeEffect("am", 13))
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
         return g
@@ -185,15 +195,15 @@ if (hasMilestone("am",4))g = g.mul(layers.am.zwzeff())
                 if (hasUpgrade("pz", 42)) g = g.pow(2)
                 if (hasMilestone("pz", 9)) g = g.pow(2)
                 if (hasMilestone("pz", 10)) g = g.pow(2)
-if (hasMilestone("am", 21)) g = g.pow(2)
+                if (hasMilestone("am", 21)) g = g.pow(2)
                 return g
             },
             unlocked() { return hasUpgrade("pz", 25) },
         },
-12: {
+        12: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.pow(4).add(19000)).floor()
-               
+
                 return g
             },
             display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -206,7 +216,7 @@ if (hasMilestone("am", 21)) g = g.pow(2)
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(2).pow(x)
-                
+                if (hasUpgrade("am", 33)) g = g.pow(upgradeEffect("am", 33))
                 return g
             },
             unlocked() { return hasMilestone("am", 20) },
@@ -229,7 +239,7 @@ if (hasMilestone("am", 21)) g = g.pow(2)
                 if (hasUpgrade("p", 52)) g = expPow(g, 2)
                 if (hasMilestone("pz", 7)) g = expPow(g, 1.5)
                 if (hasUpgrade("pz", 33)) g = expPow(g, upgradeEffect("pz", 33))
-if (hasUpgrade("am", 23)) g = layers.p.dzeff()
+                if (hasUpgrade("am", 23)) g = layers.p.dzeff()
                 if (inChallenge("pz", 21)) g = n(1)
                 if (inChallenge("pz", 22)) g = n(1)
                 return g
@@ -372,11 +382,11 @@ if (hasUpgrade("am", 23)) g = layers.p.dzeff()
     hotkeys: [
         { key: "p", description: "p: 进行声望重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
- doReset(resettingLayer) {
+    doReset(resettingLayer) {
         if (layers[resettingLayer].row > layers[this.layer].row) {
             let kept = ["unlocked", "auto"]
 
-             if (hasMilestone("am", 18)) {
+            if (hasMilestone("am", 18)) {
                 kept.push("upgrades")
             }
             layerDataReset(this.layer, kept)
