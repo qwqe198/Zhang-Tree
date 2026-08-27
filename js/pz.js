@@ -9,7 +9,7 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
 
         }
     },
-    color: "blue",
+    color: "#0080ff",
     resource: "膨胀点", // 重置获得的资源名称
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     requires() { return "1e631" },

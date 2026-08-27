@@ -46,8 +46,8 @@ if(hasMilestone("am", 16))g=g.mul(player.pz.points.log10().add(10))
     },
 bzexp() {
       var g = player.pz.points.log10().div(308)
-if(g.gte(1.44))g=g.root(2).mul(1.2)
-if(g.gte(1.96))g=g.root(2).mul(1.4)
+if(g.gte(1.5))g=g.root(2).mul(n(1.5).root(2))
+if(g.gte(2))g=g.root(2).mul(n(2).root(2))
         if (player.pz.points.lt("1e308")) g = n(1)
         return g.max(1)
     },
