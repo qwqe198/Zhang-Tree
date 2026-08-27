@@ -253,8 +253,9 @@ zwzjseff() {
 30: {
             requirementDescription: "30. F5.1点",
             effectDescription: "当前残局",
-            done() { return player.points.gte("10^^5.1") }
+            done() { return player.points.slog10().gte(5.1) }
         },
+
     },
  
     
