@@ -592,7 +592,19 @@ currencyDisplayName: "暴胀",
     },
     tabFormat: {
 
-        "暴胀": {
+   
+        "里程碑": {
+            content: [
+                "main-display",
+                "prestige-button",
+                "resource-display",
+"clickables",
+                "milestones",
+
+            ],
+            unlocked() { return true }
+        },
+     "暴胀": {
             content: [
                 "main-display",
                 "prestige-button",
@@ -611,17 +623,6 @@ currencyDisplayName: "暴胀",
                 "upgrades",
             ],
             unlocked() { return hasMilestone("am", 10) }
-        },
-        "里程碑": {
-            content: [
-                "main-display",
-                "prestige-button",
-                "resource-display",
-"clickables",
-                "milestones",
-
-            ],
-            unlocked() { return true }
         },
 "胀维度": {
             content: [
