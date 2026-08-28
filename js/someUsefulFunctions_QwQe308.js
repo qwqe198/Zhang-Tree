@@ -51,6 +51,10 @@ function expRoot(num,root){
 function expPow(num,pow){
     return ten.pow(num.log10().pow(pow))
 }
+//F后数字乘法
+function slgmul(num,mul){
+    return ten.tetr(num.max(10).slog().mul(mul))
+}
 //e后数字指数软上限
 function expRootSoftcap(num,start,power){
     if(num.lte(start)) return num;

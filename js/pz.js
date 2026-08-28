@@ -684,6 +684,9 @@ hotkeys: [
 if (hasMilestone("am", 22)) {
                 kept.push("milestones")
             }
+if (hasMilestone("am", 33)) {
+                kept.push("upgrades")
+            }
             layerDataReset(this.layer, kept)
         }
     },

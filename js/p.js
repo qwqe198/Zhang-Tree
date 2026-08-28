@@ -36,6 +36,7 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (hasUpgrade("p", 24)) g = g.pow(2)
         if (hasUpgrade("p", 25)) g = g.pow(2)
         g = g.pow(layers.p.swzeff())
+ if (hasUpgrade("am", 35)) g = expPow(g, upgradeEffect("am", 35))
 //软上限
         if (g.gte(1e100) && !hasMilestone("am", 14)) g = expRoot(g, 2).mul(1e90)
         if (g.gte(1e125) && !hasMilestone("am", 26)) g = expRoot(g, 2).mul(1e114)
@@ -52,7 +53,8 @@ addLayer("p", { //这是代码中的节点代码 例如player.p可以调用该�
         if (g.gte("1e625") && !hasMilestone("am", 26)) g = expRoot(g, 2).mul("1e600")
         if (g.gte("1e1000")&&!hasUpgrade("am", 34)) g = g.log10().mul("1e997")
 if (g.gte("1e1000")&&hasUpgrade("am", 34)) g = g.log10().pow(1000/3)
-        if (g.gte("1e40000")) g = g.log10().mul("2.5e39995")
+        if (g.gte("1e40000")&&!hasMilestone("am", 31)) g = g.log10().mul("2.5e39995")
+ if (g.gte("1e40000")&&hasMilestone("am", 31)) g = g.log10().add("60000").pow(8000)
 //挑战
         if (inChallenge("pz", 12)) g = expPow(g, 0.75)
         if (inChallenge("pz", 21)) g = g.pow(0.5)
@@ -139,8 +141,10 @@ if (g.gte("1e1000")&&hasUpgrade("am", 34)) g = g.log10().pow(1000/3)
     swzeff() {
         let g = player.p.swz.add(1)
 if (hasMilestone("am", 29)) g =g.pow(layers.am.bzexp())
+if (hasMilestone("am", 30)) g =g.pow(player.points.add(10).slog())
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
+ if (inChallenge("am", 12)) g = n(1)
         return g
     },
     zzyzeff() {

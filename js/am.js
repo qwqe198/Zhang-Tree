@@ -26,8 +26,9 @@ bz: new ExpantaNum(1),
         return g
     },
     getResetGain() {
-        var g = player.pz.points.log10().add(9999999692).log10().log10()
+        var g = n(1)
 g=g.mul(layers.am.wdtseff())
+if (hasUpgrade("am", 43)) g = g.mul(upgradeEffect("am", 43))
         if (player.pz.points.lt("1e308")) g = n(0)
         return g.floor()
     },
@@ -47,7 +48,9 @@ if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
     },
 bzexp() {
       var g = player.pz.points.log10().div(308)
-if(g.gte(1.5))g=g.root(2).mul(n(1.5).root(2))
+if (hasMilestone("am",32)) g = g.mul(g.add(10).log10())
+if(hasUpgrade("am",42))g=g.mul(upgradeEffect("am",42))
+if(g.gte(1.5)&&!hasUpgrade("am",42))g=g.root(2).mul(n(1.5).root(2))
 if(g.gte(2))g=g.root(2).mul(n(2).root(2))
         if (player.pz.points.lt("1e308")) g = n(1)
         return g.max(1)
@@ -56,6 +59,7 @@ if(g.gte(2))g=g.root(2).mul(n(2).root(2))
         let g = player.am.points
         if(hasMilestone("am", 11))g=g.mul(layers.am.zwzeff())
  if(hasUpgrade("am",11))g=g.mul(upgradeEffect("am",11))
+if(hasUpgrade("am",41))g=g.mul(upgradeEffect("am",41))
      g=g.mul(buyableEffect("am",11))
 g=g.mul(buyableEffect("am",12))
 g=g.mul(buyableEffect("am",13))
@@ -252,10 +256,29 @@ zwzjseff() {
         },
 30: {
             requirementDescription: "30. F5.1点",
-            effectDescription: "当前残局",
+            effectDescription: "点的指数塔(=slg点数=F后面的数字)加成声望胀效果",
             done() { return player.points.slog().gte(5.1) }
         },
-
+31: {
+            requirementDescription: "31. F5.019点&&进入AM挑战胀1",
+            effectDescription: "弱化声望获取三重软上限((lgx+60000)^8000)",
+            done() { return player.points.slog().gte(5.019)&&inChallenge("am",11) }
+        },
+32: {
+            requirementDescription: "32. e1024膨胀点",
+            effectDescription: "暴胀指数加成自身获取,但效果降低",
+            done() { return player.pz.points.gte("e1024") }
+        },
+33: {
+            requirementDescription: "33. 4维度提升",
+            effectDescription: "解锁第八胀物质维度,在AM重置中保留胀升级",
+            done() { return  getBuyableAmount(this.layer, 32).gte(4) }
+        },
+34: {
+            requirementDescription: "34. 1500胀物质基础",
+            effectDescription: "解锁AM挑战胀2",
+            done() { return   player.am.points.gte("1500") }
+        },
     },
  
     
@@ -472,7 +495,7 @@ if(getBuyableAmount(this.layer, 32).gte(4))g=g.mul(layers.am.wdtseff())
 32: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(2)
-if(getBuyableAmount(this.layer, 32).gte(4))g=x.mul(2).sub(4)
+if(getBuyableAmount(this.layer, 32).gte(4))g=x.mul(2).sub(6)
                 return g
             },
             display() { return `所有已解锁胀维度效果和胀物质基础获取<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最后解锁的胀维度<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -606,7 +629,7 @@ currencyDisplayName: "暴胀",
         currencyLayer: "am"
         },
  25: {
-            description: `暴胀增加胀物质获取.`,
+            description: `暴胀以指数增加胀物质获取.`,
             effect() {
                 var g = player.am.bz.add(10).log10().add(10).log10().add(10).log10().pow(3.14)
                 return g
@@ -653,6 +676,54 @@ currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
         },
+35: {
+            description: `声望胀效果以log10的倍率对指数生效.`,
+            effect() {
+                var g = layers.p.swzeff().add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e20),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+ 41: {
+            description: `am挑战胀1分数加成胀物质获取.`,
+            effect() {
+                var g = challengeEffect("am", 11).add(1)
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e21),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+ 42: {
+            description: `am挑战胀2分数加成暴胀指数获取,优化暴胀指数公式.`,
+            effect() {
+                var g = challengeEffect("am", 12).add(10).log10()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e22),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+ 43: {
+            description: `暴胀指数加成胀物质基础获取.`,
+            effect() {
+                var g = layers.am.bzexp()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e32),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
     },
 challenges: {
         11: {
@@ -680,7 +751,31 @@ return g.max(challengeEffect("am", 11))
             resource() { return player.pz.points },
             unlocked() { return  true }
         },
+12: {
+            name() { return '挑战胀2'},
+            challengeDescription() { return '点获取指数塔*a,声望胀失效,基于挑战内最高膨胀点获得分数.'},
+            rewardDescription() { 
+                return `分数:${format(this.rewardEffect())}`
+            },
+            rewardEffect() {
+let g=n(0)
+              if(inChallenge("am",12))  g=g.max(player.pz.points.add(1).log10().pow(0.5))
 
+ if(!inChallenge("am",12))g=g.max(player.am.challenges[12])
+return g.max(challengeEffect("am", 12))
+            },
+            goal: 0,
+ goalDescription() {
+                return "更多膨胀点"
+            },
+            onExit() {
+                player.am.challenges[12] = player.pz.points.add(1).log10().pow(0.5).max(challengeEffect("am", 12)).max(0)
+            },
+            completionLimit: "1F9999",
+            canComplete() { return true },
+            resource() { return player.pz.points },
+            unlocked() { return  true }
+        },
     },
     tabFormat: {
 

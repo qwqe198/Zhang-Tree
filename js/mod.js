@@ -48,6 +48,7 @@ if(hasUpgrade("am",15))g=expPow(g,upgradeEffect("am",15))
 if(hasUpgrade("am",21))g=expPow(g,upgradeEffect("am",21))
 if(inChallenge("pz",11))g=g.add(10).log10()
 if(inChallenge("pz",22))g=g.add(10).log10()
+if(inChallenge("am",12))g=slgmul(g,0.66686)
 	return g}
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
@@ -56,7 +57,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局F5.1000点`}
+	function(){return `残局5000胀物质基础`}
 ]
 
 // Determines when the game "ends"
