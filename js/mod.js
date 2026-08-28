@@ -47,6 +47,7 @@ g=g.pow(layers.p.dzeff())
 if(hasUpgrade("am",15))g=expPow(g,upgradeEffect("am",15))
 if(hasUpgrade("am",21))g=expPow(g,upgradeEffect("am",21))
 g=slgadd(g,buyableEffect("am",34))
+g=slgadd(g,layers.m.effect())
 //挑战
 if(inChallenge("pz",11))g=g.add(10).log10()
 if(inChallenge("pz",22))g=g.add(10).log10()
@@ -59,7 +60,8 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `作者QQ:2960729702<br>残局:AM里程碑43`}
+	function(){return `作者QQ:2960729702`},
+function () { if (hasMilestone("am", 43)) return `t=${format(player.m.t)}`}
 ]
 
 // Determines when the game "ends"

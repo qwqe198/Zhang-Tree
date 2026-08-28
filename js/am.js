@@ -278,12 +278,12 @@ zwzjseff() {
 30: {
             requirementDescription: "30. F5.1点",
             effectDescription: "点的指数塔(=slg点数=F后面的数字)加成声望胀效果",
-            done() { return player.points.slog().gte(5.1) }
+            done() { return fpg(5.1) }
         },
 31: {
             requirementDescription: "31. F5.018点&&进入AM挑战胀1",
             effectDescription: "弱化声望获取三重软上限((lgx+60000)^8000)",
-            done() { return player.points.slog().gte(5.018)&&inChallenge("am",11) }
+            done() { return fpg(5.018)&&inChallenge("am",11) }
         },
 32: {
             requirementDescription: "32. e1024膨胀点",
@@ -342,8 +342,13 @@ zwzjseff() {
         },
 43: {
             requirementDescription: "43. 1919810膨胀点&&进入AM挑战胀2",
-            effectDescription: "当前残局",
+            effectDescription: "解锁元胀质",
             done() { return player.pz.points.gte("1919810")&&inChallenge("am",12) }
+        },
+44: {
+            requirementDescription: "44. 10元胀质",
+            effectDescription: "咕咕咕",
+            done() { return player.m.points.gte("10") }
         },
     },
  
@@ -1032,4 +1037,7 @@ if (hasMilestone("am",35)) {
 hotkeys: [
         { key: "a", description: "a: 进行胀物质基础重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
+doReset(layer) {
+        player.m.t = n(0)
+    },
 })

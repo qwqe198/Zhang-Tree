@@ -51,6 +51,10 @@ function expRoot(num,root){
 function expPow(num,pow){
     return ten.pow(num.log10().pow(pow))
 }
+//获得F后点数
+function fpg(num){
+    return player.points.add(10).slog().gte(num)
+}
 //F后数字加法
 function slgadd(num,add){
     return ten.tetr(num.max(10).slog().add(add))
