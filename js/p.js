@@ -183,7 +183,8 @@ if (hasMilestone("am", 29)) g =g.pow(layers.am.bzexp())
             display() { return `子资源胀获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.p.points.gte(this.cost()) },
             buy() {
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasMilestone("am", 2))setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+if (hasMilestone("am", 2))setBuyableAmount(this.layer, this.id,  player.p.points.add(1).log10().root(2).floor().add(1))
             },
             title() {
                 return "p购买胀1"

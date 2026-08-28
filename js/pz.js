@@ -96,7 +96,8 @@ if (inChallenge("am", 11)||inChallenge("am", 12)||inChallenge("am", 21)||inChall
             display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}膨胀点<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.pz.points.gte(this.cost()) },
             buy() {
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                if (!hasMilestone("am", 3))setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+if (hasMilestone("am", 3))setBuyableAmount(this.layer, this.id, player.pz.points.add(1).log10().floor().add(1))
             },
             title() {
                 return "胀购买胀1"
@@ -117,7 +118,8 @@ if (inChallenge("am", 11)||inChallenge("am", 12)||inChallenge("am", 21)||inChall
             display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}膨胀点<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.pz.points.gte(this.cost()) },
             buy() {
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+  if (!hasMilestone("am", 4))setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+if (hasMilestone("am", 4))setBuyableAmount(this.layer, this.id, player.pz.points.add(1).log10().floor().add(1))
             },
             title() {
                 return "胀购买胀2"
@@ -138,7 +140,8 @@ if (inChallenge("am", 11)||inChallenge("am", 12)||inChallenge("am", 21)||inChall
             display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}膨胀点<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.pz.points.gte(this.cost()) },
             buy() {
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                  if (!hasMilestone("am", 5))setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+if (hasMilestone("am", 5))setBuyableAmount(this.layer, this.id, player.pz.points.add(1).log10().floor().add(1))
             },
             title() {
                 return "胀购买胀3"

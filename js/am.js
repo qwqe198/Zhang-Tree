@@ -112,22 +112,22 @@ zwzjseff() {
         },
  2: {
             requirementDescription: "2. 2胀物质基础",
-            effectDescription: "解锁第一胀维度,胀物质加成点胀获取",
+            effectDescription: "解锁第一胀维度,胀物质加成点胀获取,你可以最大购买p购买胀1,初始就生效胀里程碑9",
             done() { return player.am.points.gte("2") }
         },
  3: {
             requirementDescription: "3. 3胀物质基础",
-            effectDescription: "解锁第二胀维度,胀物质加成声望胀获取",
+            effectDescription: "解锁第二胀维度,胀物质加成声望胀获取,你可以最大购买胀购买胀1",
             done() { return player.am.points.gte("3") }
         },
 4: {
             requirementDescription: "4. 4胀物质基础",
-            effectDescription: "解锁第三胀维度,胀物质加成子资源胀获取",
+            effectDescription: "解锁第三胀维度,胀物质加成子资源胀获取,你可以最大购买胀购买胀2",
             done() { return player.am.points.gte("4") }
         },
 5: {
             requirementDescription: "5. 5胀物质基础",
-            effectDescription: "解锁第四胀维度,胀物质加成自动胀获取",
+            effectDescription: "解锁第四胀维度,胀物质加成自动胀获取,你可以最大购买胀购买胀3",
             done() { return player.am.points.gte("5") }
         },
 6: {
@@ -227,7 +227,7 @@ zwzjseff() {
         },
 25: {
             requirementDescription: "25. 1e25胀物质",
-            effectDescription: "解锁AM挑战胀,但是你一时半会应该打不过",
+            effectDescription: "解锁AM挑战胀,但是你进去只能拿到1分数",
             done() { return player.am.zwz.gte("1e25") }
         },
 26: {
@@ -253,7 +253,7 @@ zwzjseff() {
 30: {
             requirementDescription: "30. F5.1点",
             effectDescription: "当前残局",
-            done() { return player.points.slog10().gte(5.1) }
+            done() { return player.points.slog().gte(5.1) }
         },
 
     },
@@ -646,7 +646,7 @@ currencyDisplayName: "暴胀",
         currencyLayer: "am"
         },
 34: {
-            description: `削弱声望获取二重软上限(详见胀的第6个里程碑),变成lgx^(1000/3).`,
+            description: `削弱声望获取二重软上限(详见胀的第6个里程碑),变成lgx^(1000/3),现在可以试试拿到更多的挑战分数了.`,
         
             cost: n(1e18),
 currencyDisplayName: "暴胀",
