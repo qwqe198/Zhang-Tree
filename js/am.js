@@ -7,6 +7,7 @@ addLayer("am", { //这是代码中的节点代码 例如player.p可以调用该�
             points: new ExpantaNum(0),
             zwz: new ExpantaNum(0),
 bz: new ExpantaNum(1),
+bzexpmax: new ExpantaNum(1),
         }
     },
     color: "yellow",
@@ -47,14 +48,20 @@ if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
         return g.pow(n(1).sub(n(1).div(layers.am.bzexp()))).max(0)
     },
 bzexp() {
-      var g = player.pz.points.log10().div(308)
-if (hasMilestone("am",32)) g = g.mul(g.add(10).log10())
-if(hasUpgrade("am",42))g=g.mul(upgradeEffect("am",42))
-if(g.gte(1.5)&&!hasUpgrade("am",42))g=g.root(2).mul(n(1.5).root(2))
-if(g.gte(2))g=g.root(2).mul(n(2).root(2))
-        if (player.pz.points.lt("1e308")) g = n(1)
-        return g.max(1)
-    },
+    if (hasMilestone("am",35)) {
+        return player.am.bzexpmax || n(1)
+    }
+    return this.bzexpRaw().max(1)
+},
+bzexpRaw() {
+    // 这里放你之前那堆 log10/root 的纯计算逻辑
+    var g = player.pz.points.add(10).log10().div(308).max(1)
+    if (hasMilestone("am",32)) g = g.mul(g.add(10).log10())
+    if (hasUpgrade("am",42)) g = g.mul(upgradeEffect("am",42))
+    if (g.gte(2)) g = g.root(2).mul(n(2).root(2))
+    else if (g.gte(1.5) && !hasUpgrade("am",42)) g = g.root(2).mul(n(1.5).root(2))
+    return g
+},
     zwzgain() {
         let g = player.am.points
         if(hasMilestone("am", 11))g=g.mul(layers.am.zwzeff())
@@ -260,9 +267,9 @@ zwzjseff() {
             done() { return player.points.slog().gte(5.1) }
         },
 31: {
-            requirementDescription: "31. F5.019点&&进入AM挑战胀1",
+            requirementDescription: "31. F5.018点&&进入AM挑战胀1",
             effectDescription: "弱化声望获取三重软上限((lgx+60000)^8000)",
-            done() { return player.points.slog().gte(5.019)&&inChallenge("am",11) }
+            done() { return player.points.slog().gte(5.018)&&inChallenge("am",11) }
         },
 32: {
             requirementDescription: "32. e1024膨胀点",
@@ -278,6 +285,11 @@ zwzjseff() {
             requirementDescription: "34. 1500胀物质基础",
             effectDescription: "解锁AM挑战胀2",
             done() { return   player.am.points.gte("1500") }
+        },
+35: {
+            requirementDescription: "35. 5000胀物质基础",
+            effectDescription: "声望获取^暴胀指数,你的暴胀指数不会低于最大值",
+            done() { return   player.am.points.gte("5000") }
         },
     },
  
@@ -848,6 +860,18 @@ return g.max(challengeEffect("am", 12))
 update(diff) {
         player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))
 if(hasMilestone("am", 10))player.am.bz = player.am.bz.add(this.bzgain().mul(diff)).max(1)
+if (hasMilestone("am",35)) {
+        // 1. 获取当前计算的 g（请确认 bzexpRaw 是你算 g 的函数名）
+        var g = this.bzexpRaw() 
+        
+        // 2. 确保初始化（如果 startData 里没写，这里兜底）
+        if (!player.am.bzexpmax) player.am.bzexpmax = n(1)
+        
+        // 3. 只有真正变大才写入，彻底阻断循环/高频刷新
+        if (g.gt(player.am.bzexpmax)) {
+            player.am.bzexpmax = g
+        }
+    }
     },
 hotkeys: [
         { key: "a", description: "a: 进行胀物质基础重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },

@@ -57,7 +57,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局5000胀物质基础`}
+	function(){return `残局5维度提升`}
 ]
 
 // Determines when the game "ends"
