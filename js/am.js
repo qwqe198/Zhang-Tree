@@ -54,7 +54,6 @@ bzexp() {
     return this.bzexpRaw().max(1)
 },
 bzexpRaw() {
-    // 这里放你之前那堆 log10/root 的纯计算逻辑
     var g = player.pz.points.add(10).log10().div(308).max(1)
     if (hasMilestone("am",32)) g = g.mul(g.add(10).log10())
     if (hasUpgrade("am",42)) g = g.mul(upgradeEffect("am",42))
@@ -786,7 +785,7 @@ return g.max(challengeEffect("am", 12))
             completionLimit: "1F9999",
             canComplete() { return true },
             resource() { return player.pz.points },
-            unlocked() { return  true }
+            unlocked() { return  hasMilestone("am",34) }
         },
     },
     tabFormat: {
@@ -861,13 +860,8 @@ update(diff) {
         player.am.zwz = player.am.zwz.add(this.zwzgain().mul(diff))
 if(hasMilestone("am", 10))player.am.bz = player.am.bz.add(this.bzgain().mul(diff)).max(1)
 if (hasMilestone("am",35)) {
-        // 1. 获取当前计算的 g（请确认 bzexpRaw 是你算 g 的函数名）
         var g = this.bzexpRaw() 
-        
-        // 2. 确保初始化（如果 startData 里没写，这里兜底）
         if (!player.am.bzexpmax) player.am.bzexpmax = n(1)
-        
-        // 3. 只有真正变大才写入，彻底阻断循环/高频刷新
         if (g.gt(player.am.bzexpmax)) {
             player.am.bzexpmax = g
         }

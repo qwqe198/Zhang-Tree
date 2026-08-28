@@ -42,6 +42,7 @@ g=g.mul(buyableEffect("pz",13))
 if (hasMilestone("pz", 18))g=g.mul(10)
  if (inChallenge("am", 11)) g = expPow(g, 0.66686)
 if (inChallenge("am", 11)) g = g.pow(0.66686)
+if (inChallenge("am", 12)) g = g.pow(0.066686)
 //条件
         if (player.p.points.lt("1e631")) g = n(0)
         return g.floor()
