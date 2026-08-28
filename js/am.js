@@ -251,9 +251,9 @@ zwzjseff() {
             done() { return  getBuyableAmount(this.layer, 32).gte(3) }
         },
 25: {
-            requirementDescription: "25. 1e28胀物质",
+            requirementDescription: "25. 1e25胀物质",
             effectDescription: "解锁AM挑战胀,但是你进去只能拿到1分数",
-            done() { return player.am.zwz.gte("1e28") }
+            done() { return player.am.zwz.gte("1e25") }
         },
 26: {
             requirementDescription: "26. e860膨胀点",
@@ -309,6 +309,41 @@ zwzjseff() {
             requirementDescription: "36. 6维度提升",
             effectDescription: "解锁维度献祭",
             done() { return  getBuyableAmount(this.layer, 32).gte(6) }
+        },
+37: {
+            requirementDescription: "37. 2221胀挑战4分数",
+            effectDescription: "优化膨胀点的获取公式",
+            done() { return  challengeEffect("pz", 22).gte(2221) }
+        },
+38: {
+            requirementDescription: "38. 2.228AM挑战胀2分数",
+            effectDescription: "(AM挑战胀2分数+1)加成p购买胀1,胀升级11效果指数",
+            done() { return challengeEffect("am", 12).gte("2.228") }
+        },
+39: {
+            requirementDescription: "39. e1500膨胀点",
+            effectDescription: "计时频率也对膨胀点获取生效",
+            done() { return player.pz.points.gte("e1500") }
+        },
+40: {
+            requirementDescription: "40. 1e105胀物质",
+            effectDescription: "降低p购买胀2的价格",
+            done() { return player.am.zwz.gte("1e105") }
+        },
+41: {
+            requirementDescription: "41. e1600膨胀点",
+            effectDescription: "再次优化膨胀点的获取公式",
+            done() { return  player.pz.points.gte("e1600")}
+        },
+42: {
+            requirementDescription: "42. 3.65挑战胀1分数",
+            effectDescription: "(AM挑战胀1分数+1)加成胀挑战胀4分数获取",
+            done() { return challengeEffect("am", 11).gte("3.65") }
+        },
+43: {
+            requirementDescription: "43. 1919810膨胀点&&进入AM挑战胀2",
+            effectDescription: "当前残局",
+            done() { return player.pz.points.gte("1919810")&&inChallenge("am",12) }
         },
     },
  
@@ -618,7 +653,7 @@ player.am.points=n(0)
 
                 return g
             },
-            unlocked() { return hasMilestone("am", 37) },
+            unlocked() { return hasMilestone("am", 99) },
         },
     },
 upgrades: {
@@ -729,6 +764,7 @@ currencyDisplayName: "暴胀",
             description: `暴胀以指数增加由非胀物质维度提供的胀物质获取.`,
             effect() {
                 var g = player.am.bz.add(10).log10().add(10).log10().add(10).log10().pow(3.14)
+if(hasUpgrade("am",45))g=g.pow(upgradeEffect("am",45))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -757,6 +793,7 @@ currencyDisplayName: "暴胀",
             description: `am挑战胀1分数加成p购买胀2效果.`,
             effect() {
                 var g = challengeEffect("am", 11).add(10).log10()
+if(hasUpgrade("am",44))g=g.pow(upgradeEffect("am",44))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -821,6 +858,30 @@ currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
         },
+ 44: {
+            description: `am挑战胀2分数加成升级33效果.`,
+            effect() {
+                var g = challengeEffect("am", 12).add(1)
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e49),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+45: {
+            description: `am挑战胀2分数加成升级25效果.`,
+            effect() {
+                var g = challengeEffect("am", 12).add(1)
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e54),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
     },
 challenges: {
         11: {
@@ -850,7 +911,7 @@ return g.max(challengeEffect("am", 11))
         },
 12: {
             name() { return '挑战胀2'},
-            challengeDescription() { return '点获取指数塔*a,声望胀失效,基于挑战内最高膨胀点获得分数.'},
+            challengeDescription() { return '点获取指数塔*a,膨胀点获取^0.1a,声望胀失效,基于挑战内最高膨胀点获得分数.'},
             rewardDescription() { 
                 return `分数:${format(this.rewardEffect())}`
             },

@@ -26,7 +26,9 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
         return g
     },
     getResetGain() {
-        var g = player.p.points.log10().div(63.1).log10()
+        var g = player.p.points.add(1e10).log10().div(63.1).log10()
+if (hasMilestone("am", 37))  g = player.p.points.add(10).log10().div(631)
+if (hasMilestone("am", 41))  g = player.p.points.add(10).log10()
 if (hasMilestone("pz", 7)&&!hasMilestone("am",1)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
 if (hasMilestone("am",1)) g = g.mul(player.points.add(10).slog().pow(player.points.add(10).slog()))
 if (hasMilestone("am",19)) g = g.mul(player.am.points.add(1))
@@ -39,6 +41,7 @@ g=g.mul(buyableEffect("pz",13))
  g = g.mul(buyableEffect("p", 12))
         if(hasUpgrade("am",12))g=g.mul(upgradeEffect("am",12))
         if (hasMilestone("pz", 12))g=g.mul(buyableEffect("p",11))
+if (hasMilestone("am", 39))g=g.mul(layers.am.zwzjseff())
 if (hasMilestone("pz", 18))g=g.mul(10)
  if (inChallenge("am", 11)) g = expPow(g, 0.66686)
 if (inChallenge("am", 11)) g = g.pow(0.66686)
@@ -259,6 +262,7 @@ if (hasMilestone("am", 5))setBuyableAmount(this.layer, this.id, player.pz.points
                 var g = player.pz.points.add(11).log10()
 
 if(hasUpgrade("pz",45))g=g.pow(2)
+if(hasMilestone("am", 38))g = g.pow( challengeEffect("am", 12).add(1))
                 return g
             },
             effectDisplay() { return `x${format(this.effect())}` },
@@ -605,6 +609,7 @@ return g.max(challengeEffect("pz", 21))
 let g=n(0)
               if(inChallenge("pz",22))  g=g.max(player.p.points.add(1).log10().pow(0.5))
 if(hasUpgrade("am",14))g=g.mul(upgradeEffect("am", 14))
+if(hasMilestone("am",42))g=g.mul(challengeEffect("am", 12)+1)
  if(!inChallenge("pz",22))g=g.max(player.pz.challenges[22])
 return g.max(challengeEffect("pz", 22))
             },

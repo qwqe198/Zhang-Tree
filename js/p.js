@@ -202,6 +202,7 @@ if (hasMilestone("am", 2))setBuyableAmount(this.layer, this.id,  player.p.points
                 if (hasMilestone("pz", 9)) g = g.pow(2)
                 if (hasMilestone("pz", 10)) g = g.pow(2)
                 if (hasMilestone("am", 21)) g = g.pow(2)
+ if(hasMilestone("am", 38))g = g.pow( challengeEffect("am", 12).add(1))
                 return g
             },
             unlocked() { return hasUpgrade("pz", 25) },
@@ -209,7 +210,7 @@ if (hasMilestone("am", 2))setBuyableAmount(this.layer, this.id,  player.p.points
         12: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.pow(4).add(19000)).floor()
-
+if (hasMilestone("am",40)) g = n(10).pow(x.pow(4)).floor()
                 return g
             },
             display() { return `膨胀点获取<br />x${format(buyableEffect(this.layer, this.id), 2)}. (下一个: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))}).花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}声望<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },

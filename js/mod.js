@@ -59,7 +59,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局6维度提升`}
+	function(){return `作者QQ:2960729702<br>残局:AM里程碑43`}
 ]
 
 // Determines when the game "ends"
