@@ -51,6 +51,10 @@ function expRoot(num,root){
 function expPow(num,pow){
     return ten.pow(num.log10().pow(pow))
 }
+//F后数字加法
+function slgadd(num,add){
+    return ten.tetr(num.max(10).slog().add(add))
+}
 //F后数字乘法
 function slgmul(num,mul){
     return ten.tetr(num.max(10).slog().mul(mul))

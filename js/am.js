@@ -45,6 +45,7 @@ if(hasMilestone("am", 13))g=g.mul(player.am.points.add(1))
 if(hasMilestone("am", 15))g=g.mul(player.p.points.log10().add(10))
 if(hasMilestone("am", 16))g=g.mul(player.pz.points.log10().add(10))
 if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
+g=g.mul(buyableEffect("am",33))
         return g.pow(n(1).sub(n(1).div(layers.am.bzexp()))).max(0)
     },
 bzexp() {
@@ -63,13 +64,27 @@ bzexpRaw() {
 },
     zwzgain() {
         let g = player.am.points
-        if(hasMilestone("am", 11))g=g.mul(layers.am.zwzeff())
- if(hasUpgrade("am",11))g=g.mul(upgradeEffect("am",11))
-if(hasUpgrade("am",41))g=g.mul(upgradeEffect("am",41))
+g=g.mul(layers.am.zwzwdgain())
+g=g.mul(layers.am.zwzfwdgain())
+        return g.max(0)
+    },
+zwzwdgain() {
+        let g = n(1)
      g=g.mul(buyableEffect("am",11))
 g=g.mul(buyableEffect("am",12))
 g=g.mul(buyableEffect("am",13))
 g=g.mul(buyableEffect("am",14))
+ g=g.mul(buyableEffect("am",21))
+g=g.mul(buyableEffect("am",22))
+g=g.mul(buyableEffect("am",23))
+g=g.mul(buyableEffect("am",24))
+        return g.max(0)
+    },
+zwzfwdgain() {
+        let g = n(1)
+       if(hasMilestone("am", 11))g=g.mul(layers.am.zwzeff())
+ if(hasUpgrade("am",11))g=g.mul(upgradeEffect("am",11))
+if(hasUpgrade("am",41))g=g.mul(upgradeEffect("am",41))
 if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
 if(hasUpgrade("am",25))g=g.pow(upgradeEffect("am",25))
         return g.max(0)
@@ -96,7 +111,7 @@ wdtseff() {
     },
 zwzjsbase() {
         let g = n(1.08)
-     
+     g=g.add(buyableEffect("am",34))
         return g.max(1)
     },
 zwzjseff() {
@@ -236,9 +251,9 @@ zwzjseff() {
             done() { return  getBuyableAmount(this.layer, 32).gte(3) }
         },
 25: {
-            requirementDescription: "25. 1e25胀物质",
+            requirementDescription: "25. 1e28胀物质",
             effectDescription: "解锁AM挑战胀,但是你进去只能拿到1分数",
-            done() { return player.am.zwz.gte("1e25") }
+            done() { return player.am.zwz.gte("1e28") }
         },
 26: {
             requirementDescription: "26. e860膨胀点",
@@ -281,14 +296,19 @@ zwzjseff() {
             done() { return  getBuyableAmount(this.layer, 32).gte(4) }
         },
 34: {
-            requirementDescription: "34. 1500胀物质基础",
+            requirementDescription: "34. 3500胀物质基础",
             effectDescription: "解锁AM挑战胀2",
-            done() { return   player.am.points.gte("1500") }
+            done() { return   player.am.points.gte("3500") }
         },
 35: {
-            requirementDescription: "35. 5000胀物质基础",
+            requirementDescription: "35. 12000胀物质基础",
             effectDescription: "声望获取^暴胀指数,你的暴胀指数不会低于最大值",
-            done() { return   player.am.points.gte("5000") }
+            done() { return   player.am.points.gte("12000") }
+        },
+36: {
+            requirementDescription: "36. 6维度提升",
+            effectDescription: "解锁维度献祭",
+            done() { return  getBuyableAmount(this.layer, 32).gte(6) }
         },
     },
  
@@ -478,6 +498,7 @@ if(getBuyableAmount(this.layer, 32).gte(3))g=g.mul(layers.am.wdtseff())
                 var g =  n(layers.am.zwzbuyx()).pow(x).floor()
 if(getBuyableAmount(this.layer, 32).gte(4))g=g.mul(layers.am.zwzjseff())
 if(getBuyableAmount(this.layer, 32).gte(4))g=g.mul(layers.am.wdtseff())
+g=g.mul(buyableEffect("am",33))
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(4) },
@@ -521,6 +542,7 @@ setBuyableAmount(this.layer, 22, n(0))
 setBuyableAmount(this.layer, 23, n(0))
 setBuyableAmount(this.layer, 24, n(0))
 setBuyableAmount(this.layer, 31, n(0))
+setBuyableAmount(this.layer, 33, n(0))
 player.am.zwz=n(0)
 player.am.points=n(0)
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
@@ -534,6 +556,69 @@ player.am.points=n(0)
                 return g
             },
             unlocked() { return hasMilestone("am", 17) },
+        },
+33: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(getBuyableAmount(this.layer, this.id).add(1))
+
+                return g
+            },
+            display() { return `第八胀维度效果和暴胀获取<br />x${format(buyableEffect(this.layer, this.id))}.需要: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最高胀物质` },
+            canAfford() { return player.am.zwz.gte(this.cost()) },
+            buy() {
+setBuyableAmount(this.layer, 11, n(0))
+setBuyableAmount(this.layer, 12, n(0))
+setBuyableAmount(this.layer, 13, n(0))
+setBuyableAmount(this.layer, 14, n(0))
+setBuyableAmount(this.layer, 21, n(0))
+setBuyableAmount(this.layer, 22, n(0))
+setBuyableAmount(this.layer, 23, n(0))
+setBuyableAmount(this.layer, 24, n(0))
+                setBuyableAmount(this.layer, this.id, player.am.zwz.max(getBuyableAmount(this.layer, this.id)))
+player.am.zwz=n(0)
+            },
+            title() {
+                return "维度献祭"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  x.add(10).log10()
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 36) },
+        },
+34: {
+            cost(x = getBuyableAmount(this.layer, this.id)) {
+                var g = n(x.mul(6)).add(8)
+                return g
+            },
+            display() { return `计时频率基础和点获取指数塔<br />+${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}维度提升<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return getBuyableAmount(this.layer, 32).gte(this.cost()) },
+            buy() {
+setBuyableAmount(this.layer, 11, n(0))
+setBuyableAmount(this.layer, 12, n(0))
+setBuyableAmount(this.layer, 13, n(0))
+setBuyableAmount(this.layer, 14, n(0))
+setBuyableAmount(this.layer, 21, n(0))
+setBuyableAmount(this.layer, 22, n(0))
+setBuyableAmount(this.layer, 23, n(0))
+setBuyableAmount(this.layer, 24, n(0))
+setBuyableAmount(this.layer, 31, n(0))
+setBuyableAmount(this.layer, 32, n(0))
+setBuyableAmount(this.layer, 33, n(0))
+player.am.zwz=n(0)
+player.am.points=n(0)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            title() {
+                return "胀物质星系"
+            },
+            effect(x = getBuyableAmount(this.layer, this.id)) {
+                var g =  x.mul(0.02)
+
+                return g
+            },
+            unlocked() { return hasMilestone("am", 37) },
         },
     },
 upgrades: {
@@ -566,6 +651,7 @@ currencyDisplayName: "暴胀",
             description: `暴胀增加子资源胀,自动胀,胀物质效果.`,
             effect() {
                 var g = player.am.bz.add(10).log10().add(10).log10()
+if(g.gte(1.21))g=g.root(2).mul(1.1)
 if(g.gte(1.44))g=g.root(2).mul(1.2)
                 return g
             },
@@ -640,7 +726,7 @@ currencyDisplayName: "暴胀",
         currencyLayer: "am"
         },
  25: {
-            description: `暴胀以指数增加胀物质获取.`,
+            description: `暴胀以指数增加由非胀物质维度提供的胀物质获取.`,
             effect() {
                 var g = player.am.bz.add(10).log10().add(10).log10().add(10).log10().pow(3.14)
                 return g
@@ -808,14 +894,29 @@ return g.max(challengeEffect("am", 12))
                 "main-display",
                 "prestige-button",
                 "resource-display",
+
+"clickables",
+                "buyables",
 ["display-text", () =>
                     `每次购买乘数:${format(layers.am.zwzbuyx())}`,
                     { "font-size": "20px" }
                 ],
-
-"clickables",
-                "buyables",
-
+["display-text", () =>
+                    `维度提升乘数:${format(layers.am.wdtsbase())}`,
+                    { "font-size": "20px" }
+                ],
+["display-text", () =>
+                    `计时频率基础:${format(layers.am.zwzjsbase())}`,
+                    { "font-size": "20px" }
+                ],
+["display-text", () =>
+                    `由维度提供的胀物质乘数:${format(layers.am.zwzwdgain())}`,
+                    { "font-size": "20px" }
+                ],
+["display-text", () =>
+                    `其他方面的胀物质乘数:${format(layers.am.zwzfwdgain())}`,
+                    { "font-size": "20px" }
+                ],
             ],
             unlocked() { return hasMilestone("am", 2) }
         },

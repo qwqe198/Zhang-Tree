@@ -46,6 +46,8 @@ if(hasUpgrade("p",11))g=g.pow(upgradeEffect("p",11))
 g=g.pow(layers.p.dzeff())
 if(hasUpgrade("am",15))g=expPow(g,upgradeEffect("am",15))
 if(hasUpgrade("am",21))g=expPow(g,upgradeEffect("am",21))
+g=slgadd(g,buyableEffect("am",34))
+//挑战
 if(inChallenge("pz",11))g=g.add(10).log10()
 if(inChallenge("pz",22))g=g.add(10).log10()
 if(inChallenge("am",12))g=slgmul(g,0.66686)
@@ -57,7 +59,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function(){return `残局5维度提升`}
+	function(){return `残局6维度提升`}
 ]
 
 // Determines when the game "ends"
