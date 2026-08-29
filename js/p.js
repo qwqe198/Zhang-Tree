@@ -382,6 +382,7 @@ if (hasMilestone("am",40)) g = n(10).pow(x.pow(4)).floor()
     },
     update(diff) {
         if (hasMilestone("pz", 11)) setBuyableAmount(this.layer, 11, player.p.points.add(1).log10().root(2).floor().add(1))
+if (hasMilestone("am", 44)) setBuyableAmount(this.layer, 12, player.p.points.add(1).log10().root(4).floor().add(1))
         player.p.dz = player.p.dz.add(this.dzgain().mul(diff))
         player.p.swz = player.p.swz.add(this.swzgain().mul(diff))
         player.p.zzyz = player.p.zzyz.add(this.zzyzgain().mul(diff))

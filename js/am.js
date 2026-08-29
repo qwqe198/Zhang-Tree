@@ -86,6 +86,7 @@ zwzfwdgain() {
  if(hasUpgrade("am",11))g=g.mul(upgradeEffect("am",11))
 if(hasUpgrade("am",41))g=g.mul(upgradeEffect("am",41))
 if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
+if (hasMilestone("am",47)) g = g.mul(player.pz.points.add(10).log10())
 if(hasUpgrade("am",25))g=g.pow(upgradeEffect("am",25))
         return g.max(0)
     },
@@ -347,8 +348,33 @@ zwzjseff() {
         },
 44: {
             requirementDescription: "44. 10元胀质",
-            effectDescription: "咕咕咕",
+            effectDescription: "自动获得p购买胀2",
             done() { return player.m.points.gte("10") }
+        },
+45: {
+            requirementDescription: "45. 2026t",
+            effectDescription: "(t+1)加成膨胀点获取",
+            done() { return player.m.t.gte("2026") }
+        },
+46: {
+            requirementDescription: "46. 2026元胀质",
+            effectDescription: "(元胀质+1)加成膨胀点获取",
+            done() { return player.m.points.gte("2026") }
+        },
+47: {
+            requirementDescription: "47. e1900膨胀点",
+            effectDescription: "膨胀点数量级加成胀物质获取",
+            done() { return  player.pz.points.gte("e1900")}
+        },
+48: {
+            requirementDescription: "48. 8维度提升",
+            effectDescription: "解锁胀物质星系",
+            done() { return  getBuyableAmount(this.layer, 32).gte(8) }
+        },
+49: {
+            requirementDescription: "49. 1胀物质星系",
+            effectDescription: "咕咕咕",
+            done() { return  getBuyableAmount(this.layer, 34).gte(1) }
         },
     },
  
@@ -632,8 +658,8 @@ player.am.zwz=n(0)
                 var g = n(x.mul(6)).add(8)
                 return g
             },
-            display() { return `计时频率基础和点获取指数塔<br />+${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}维度提升<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
-            canAfford() { return getBuyableAmount(this.layer, 32).gte(this.cost()) },
+            display() { return `计时频率基础和点获取指数塔<br />+${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}第八胀维度<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
+            canAfford() { return getBuyableAmount(this.layer, 24).gte(this.cost()) },
             buy() {
 setBuyableAmount(this.layer, 11, n(0))
 setBuyableAmount(this.layer, 12, n(0))
@@ -658,7 +684,7 @@ player.am.points=n(0)
 
                 return g
             },
-            unlocked() { return hasMilestone("am", 99) },
+            unlocked() { return hasMilestone("am", 48) },
         },
     },
 upgrades: {

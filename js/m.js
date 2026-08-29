@@ -75,7 +75,6 @@ g=g.pow(buyableEffect("m",14))
             display() { return `指数增福时间在公式中的效果.<br />^${format(buyableEffect(this.layer, this.id), 2)}.(下一级: ${format(this.effect(getBuyableAmount(this.layer, this.id).add(1)))})<br />费用:${format(this.cost(getBuyableAmount(this.layer, this.id)))}元胀质<br>等级:${formatWhole(getBuyableAmount(this.layer, this.id))}` },
             canAfford() { return player.m.points.gte(this.cost()) },
             buy() {
-                player.m.points = player.m.points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             title() {
