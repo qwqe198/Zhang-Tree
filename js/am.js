@@ -85,6 +85,7 @@ zwzfwdgain() {
        if(hasMilestone("am", 11))g=g.mul(layers.am.zwzeff())
  if(hasUpgrade("am",11))g=g.mul(upgradeEffect("am",11))
 if(hasUpgrade("am",41))g=g.mul(upgradeEffect("am",41))
+if(hasUpgrade("am",53))g=g.mul(upgradeEffect("am",53))
 if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
 if (hasMilestone("am",47)) g = g.mul(player.pz.points.add(10).log10())
 if(hasUpgrade("am",25))g=g.pow(upgradeEffect("am",25))
@@ -381,6 +382,26 @@ zwzjseff() {
             effectDescription: "(胀物质基础+1)加成膨胀点获取",
             done() { return fpg(5.14) }
         },
+51: {
+            requirementDescription: "51. 3挑战胀1分数",
+            effectDescription: "(AM挑战胀2分数+1)加成元胀质获取",
+            done() { return challengeEffect("am", 12).gte("3") }
+        },
+52: {
+            requirementDescription: "52. 2胀物质星系",
+            effectDescription: "自动购买胀物质维度",
+            done() { return  getBuyableAmount(this.layer, 34).gte(2) }
+        },
+53: {
+            requirementDescription: "53. 3胀物质星系",
+            effectDescription: "维度献祭不再重置任何东西",
+            done() { return  getBuyableAmount(this.layer, 34).gte(3) }
+        },
+54: {
+            requirementDescription: "54. 1e7胀物质基础",
+            effectDescription: "当前残局",
+            done() { return   player.am.points.gte("1e7") }
+        },
     },
  
     
@@ -418,6 +439,8 @@ g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 2) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
  12: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -440,6 +463,8 @@ g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 3) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
 13: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -462,6 +487,8 @@ g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 4) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
 14: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -484,6 +511,8 @@ g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return hasMilestone("am", 5) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
 21: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -506,6 +535,8 @@ if(getBuyableAmount(this.layer, 32).gte(1))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(1) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
 22: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -528,7 +559,10 @@ if(getBuyableAmount(this.layer, 32).gte(2))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(2) },
+  abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
+ 
 23: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(12).add(18)).floor()
@@ -550,6 +584,8 @@ if(getBuyableAmount(this.layer, 32).gte(3))g=g.mul(layers.am.wdtseff())
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(3) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
 24: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -573,6 +609,8 @@ g=g.mul(buyableEffect("am",33))
                 return g
             },
             unlocked() { return getBuyableAmount(this.layer, 32).gte(4) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 52) ? 0 : 1.79e308 },
         },
 31: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -636,7 +674,7 @@ player.am.points=n(0)
             },
             display() { return `第八胀维度效果和暴胀获取<br />x${format(buyableEffect(this.layer, this.id))}.需要: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}最高胀物质` },
             canAfford() { return player.am.zwz.gte(this.cost()) },
-            buy() {
+            buy() { if(!hasMilestone('am', 53)){
 setBuyableAmount(this.layer, 11, n(0))
 setBuyableAmount(this.layer, 12, n(0))
 setBuyableAmount(this.layer, 13, n(0))
@@ -646,7 +684,9 @@ setBuyableAmount(this.layer, 22, n(0))
 setBuyableAmount(this.layer, 23, n(0))
 setBuyableAmount(this.layer, 24, n(0))
                 setBuyableAmount(this.layer, this.id, player.am.zwz.max(getBuyableAmount(this.layer, this.id)))
-player.am.zwz=n(0)
+player.am.zwz=n(0)}
+if(hasMilestone('am', 53)){
+                setBuyableAmount(this.layer, this.id, player.am.zwz.max(getBuyableAmount(this.layer, this.id)))}
             },
             title() {
                 return "维度献祭"
@@ -710,6 +750,7 @@ currencyDisplayName: "暴胀",
             effect() {
                 var g = player.am.bz.add(10).log10()
 if(hasMilestone("am", 23))g=g.pow(2)
+if(hasUpgrade("am",52))g=g.pow(upgradeEffect("am",52))
                 return g
             },
             effectDisplay() { return `x${format(this.effect())}` },
@@ -933,13 +974,26 @@ currencyDisplayName: "暴胀",
         currencyLayer: "am"
         },
 52: {
-            description: `咕咕咕.`,
+            description: `am挑战胀2分数加成升级12效果.`,
             effect() {
-                var g = layers.am.bzexp()
+   var g = challengeEffect("am", 12).add(1)
+if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
+  return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e83),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+ 53: {
+            description: `am挑战胀2分数加成胀物质获取.`,
+            effect() {
+                var g = challengeEffect("am", 12).add(1)
                 return g
             },
             effectDisplay() { return `x${format(this.effect())}` },
-            cost: n(1e76),
+            cost: n(1e94),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
@@ -1089,6 +1143,17 @@ if (hasMilestone("am",35)) {
         if (!player.am.bzexpmax) player.am.bzexpmax = n(1)
         if (g.gt(player.am.bzexpmax)) {
             player.am.bzexpmax = g
+        }
+for (row = 1; row <= 2; row++) {
+            for (col = 1; col <= 4; col++) {
+                if (layers[this.layer].buyables[row * 10 + col]) {
+                    layers[this.layer].buyables[row * 10 + col].abtick += diff
+                    if (layers[this.layer].buyables[row * 10 + col].abtick >= layers[this.layer].buyables[row * 10 + col].abdelay() && layers[this.layer].buyables[row * 10 + col].unlocked() && layers[this.layer].buyables[row * 10 + col].canAfford()) {
+                        layers[this.layer].buyables[row * 10 + col].buy()
+                        layers[this.layer].buyables[row * 10 + col].abtick = 0
+                    }
+                }
+            }
         }
     }
     },
