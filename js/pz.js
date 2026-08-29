@@ -34,6 +34,7 @@ if (hasMilestone("am",1)) g = g.mul(player.points.add(10).slog().pow(player.poin
 if (hasMilestone("am",19)) g = g.mul(player.am.points.add(1))
 if (hasMilestone("am",45)) g = g.mul(player.m.t.add(1))
 if (hasMilestone("am",46)) g = g.mul(player.m.points.add(1))
+if (hasMilestone("am",50)) g = g.mul(player.am.points.add(1))
 if (hasMilestone("am",28)) g = g.mul(challengeEffect("am", 11).add(1))
 if (hasUpgrade("pz", 41)) g = g.mul(upgradeEffect("pz",41))
 g=g.mul(layers.am.zwzeff())

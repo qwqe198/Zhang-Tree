@@ -58,6 +58,8 @@ g=g.mul(buyableEffect("m",12))
     getResetGain() {
        var g=player.points.add(10).slog().sub(4.116)
 g=g.mul(buyableEffect("m",13))
+if (hasUpgrade("am", 51)) g = g.mul(upgradeEffect("am", 51))
+if (hasMilestone("am",49))g=g.mul(getBuyableAmount("am", 34).add(1))
 g=g.pow(buyableEffect("m",14))
      if(player.points.lt("10^^5.116"))g=n(0)
         return g.floor()

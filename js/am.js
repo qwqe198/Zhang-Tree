@@ -373,8 +373,13 @@ zwzjseff() {
         },
 49: {
             requirementDescription: "49. 1胀物质星系",
-            effectDescription: "咕咕咕",
+            effectDescription: "胀物质星系加成元胀质获取",
             done() { return  getBuyableAmount(this.layer, 34).gte(1) }
+        },
+50: {
+            requirementDescription: "50. F5.14点",
+            effectDescription: "(胀物质基础+1)加成膨胀点获取",
+            done() { return fpg(5.14) }
         },
     },
  
@@ -913,7 +918,32 @@ currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
         },
+51: {
+            description: `暴胀指数加成元胀质获取.`,
+            effect() {
+                var g = layers.am.bzexp()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e68),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+52: {
+            description: `咕咕咕.`,
+            effect() {
+                var g = layers.am.bzexp()
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e76),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
     },
+
 challenges: {
         11: {
             name() { return '挑战胀1'},
