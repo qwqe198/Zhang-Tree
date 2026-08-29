@@ -389,7 +389,7 @@ zwzjseff() {
             done() { return fpg(5.14) }
         },
 51: {
-            requirementDescription: "51. 3挑战胀1分数",
+            requirementDescription: "51. 3挑战胀2分数",
             effectDescription: "(AM挑战胀2分数+1)加成元胀质获取",
             done() { return challengeEffect("am", 12).gte("3") }
         },
