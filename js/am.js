@@ -400,7 +400,7 @@ clickables: {
         11: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(3).add(1)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -422,7 +422,7 @@ g=g.mul(layers.am.wdtseff())
  12: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(4).add(2)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -444,7 +444,7 @@ g=g.mul(layers.am.wdtseff())
 13: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(5).add(4)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -466,7 +466,7 @@ g=g.mul(layers.am.wdtseff())
 14: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(6).add(6)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -488,7 +488,7 @@ g=g.mul(layers.am.wdtseff())
 21: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(8).add(9)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -510,7 +510,7 @@ if(getBuyableAmount(this.layer, 32).gte(1))g=g.mul(layers.am.wdtseff())
 22: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(10).add(13)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -532,7 +532,7 @@ if(getBuyableAmount(this.layer, 32).gte(2))g=g.mul(layers.am.wdtseff())
 23: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(12).add(18)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -554,7 +554,7 @@ if(getBuyableAmount(this.layer, 32).gte(3))g=g.mul(layers.am.wdtseff())
 24: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.mul(15).add(24)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `胀物质获取<br />x${format(buyableEffect(this.layer, this.id), 2)}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -577,7 +577,7 @@ g=g.mul(buyableEffect("am",33))
 31: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
                 var g = n(10).pow(x.add(3)).floor()
-
+if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             display() { return `所有已解锁胀维度效果<br />x${format(buyableEffect(this.layer, this.id))}.花费: ${format(this.cost(getBuyableAmount(this.layer, this.id)))}胀物质<br>等级: ${format(getBuyableAmount(this.layer, this.id))}` },
@@ -898,6 +898,7 @@ currencyDisplayName: "暴胀",
             description: `am挑战胀2分数加成升级33效果.`,
             effect() {
                 var g = challengeEffect("am", 12).add(1)
+if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -910,6 +911,7 @@ currencyDisplayName: "暴胀",
             description: `am挑战胀2分数加成升级25效果.`,
             effect() {
                 var g = challengeEffect("am", 12).add(1)
+if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
