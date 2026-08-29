@@ -6,6 +6,7 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
             unlocked: true, //是否开始就解锁
             points: new ExpantaNum(0),
  t: new ExpantaNum(0),
+   time: n(0),
         }
     },
     requires() { return new ExpantaNum("10^^5.116") },
@@ -45,12 +46,13 @@ g=g.pow(buyableEffect("m",11))
     },
  effect2() {
         var g = player.m.points.add(1)
-
+g=g.pow(buyableEffect("m",23))
         return g.max(1)
 
     },
 tgain() {
         var g = n(1)
+if (hasMilestone("am",57))g=g.mul(player.am.points.add(1))
 g=g.mul(buyableEffect("m",12))
         return g.max(1)
 
@@ -61,7 +63,9 @@ g=g.mul(buyableEffect("m",13))
 if (hasUpgrade("am", 51)) g = g.mul(upgradeEffect("am", 51))
 if (hasMilestone("am",49))g=g.mul(getBuyableAmount("am", 34).add(1))
 if (hasMilestone("am",51))g=g.mul(challengeEffect("am", 12).add(1))
+if (hasMilestone("am",55))g=g.mul(challengeEffect("am", 11).add(1))
 g=g.pow(buyableEffect("m",14))
+if(g.gte(1e38))g=expPow(g.mul(1e62),0.5).mul(1e28)
      if(player.points.lt("10^^5.116"))g=n(0)
         return g.floor()
     },
@@ -95,6 +99,7 @@ g=g.pow(buyableEffect("m",14))
                 return two.pow(x.pow(1.25)).mul(317.49)
             },
             effect(x = getBuyableAmount('m', this.id)) {
+                x = x.mul(buyableEffect('m', 22))
                 return player.m.t.add(1).log10().add(1).pow(x.add(1).root(1.6).sub(1).mul(2.22))
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
@@ -118,7 +123,7 @@ g=g.pow(buyableEffect("m",14))
                 return two.pow(x.add(1).pow(1.33).sub(1)).mul(10)
             },
             effect(x = getBuyableAmount('m', this.id)) {
-        
+           x = x.mul(buyableEffect('m', 21))
                 x = player.m.points.add(10).log10().pow(x.add(1).root(1.75).sub(1))
               
                 return x
@@ -160,6 +165,120 @@ g=g.pow(buyableEffect("m",14))
             buy() {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            unlocked() { return true },
+           
+        },
+ 21: {
+            cost(x = getBuyableAmount('m', this.id)) {
+                return n(10).pow((expRoot(x.pow(1.2).add(10), 0.5)).sub(10)).mul(1e15)
+            },
+            effect(x = getBuyableAmount('m', this.id)) {
+             
+                return getBuyableAmount('m', 13).add(10).log10().pow(x.add(1).root(2.5).sub(1).mul(1.25))
+            },
+            canAfford() { return player[this.layer].points.gte(this.cost()) },
+            title() {
+                return "浓缩元胀质浓缩"
+            },
+            display() {
+                return `浓缩元胀质增幅浓缩元胀质.
+                x ${format(this.effect())}浓缩元胀质等级. (下一级${format(this.effect(getBuyableAmount('m', this.id).add(1)))})
+                    等级:${format(player.m.buyables[this.id])}<br>
+                    价格: ${format(this.cost())} 元胀质`
+            },
+            buy() {
+             
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            unlocked() { return true },
+          
+        },
+        22: {
+            cost(x = getBuyableAmount('m', this.id)) {
+                return n(10).pow((expRoot(x.pow(1.1).add(10), 0.5)).sub(10)).mul(1e16)
+            },
+            effect(x = getBuyableAmount('m', this.id)) {
+        
+                var time = n(player.m.resetTime)
+                time = time.div(150).pow(0.8).mul(150)
+                return time.mul(1.5).add(1).pow(x.add(1).root(5).sub(1).div(6))
+            },
+            canAfford() { return player[this.layer].points.gte(this.cost()) },
+            title() {
+                return "加速子"
+            },
+          
+            display() {
+                return `基于距离上次重置的现实时间倍增时间浓缩.
+                x ${format(this.effect())}时间浓缩等级. (下一级${format(this.effect(getBuyableAmount('m', this.id).add(1)))})
+                    等级:${format(player.m.buyables[this.id])} <br>
+                    价格: ${format(this.cost())} 元胀质`
+            },
+            buy() {
+              
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+            unlocked() { return true },
+
+        },
+        23: {
+            cost(x = getBuyableAmount('m', this.id)) {
+                return n(4).pow((expRoot(x.pow(1.1).add(10), 0.5)).sub(10)).mul(1e19)
+            },
+            effect(x = getBuyableAmount('m', this.id)) {
+                x = x.add(buyableEffect("m", 24))
+                var eff = x.pow(1.25).mul(1.25).add(1)
+            
+                return eff
+
+            },
+            canAfford() { return player[this.layer].points.gte(this.cost()) },
+            title() {
+                return "元化元"
+            },
+           
+            display() {
+                return `元胀质在公式的作用^ ${format(this.effect())}. (下一级${format(this.effect(getBuyableAmount('m', this.id).add(1)))})
+                    等级:${format(player.m.buyables[this.id])}<br>
+                    价格: ${format(this.cost())} 元胀质`
+            },
+            buy() {
+              
+               
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+          
+            unlocked() { return true },
+         
+        },
+        24: {
+            cost(x = getBuyableAmount('m', this.id)) {
+                return n(10).pow((expPow(x.pow(1.1).add(10), 2.5)).sub(10)).mul(1e30)
+            },
+            effect(x = getBuyableAmount('m', this.id)) {
+              
+                x = expRoot(x.add(10), 1.33).sub(10)
+                var eff =slgadd(player.m.time.add(1), -0.75).mul(expRoot(buyableEffect('m', 22).pow(3).add(10), 1.25).sub(10)).pow(x.add(1).root(6).sub(1)).sub(1).max(0)
+                eff = powsoftcap(eff, n(10), 1.5)
+                return eff
+            },
+            canAfford() { return player[this.layer].points.gte(this.cost()) },
+            title() {
+                return "时间扭曲"
+            },
+        
+            
+            display() {
+                return `基于时间和加速子强度加成元化元.
+                + ${format(this.effect())}元化元等级. (下一级${format(this.effect(getBuyableAmount('m', this.id).add(1)))})
+                    等级:${format(player.m.buyables[this.id])}<br>
+                    价格: ${format(this.cost())} 元胀质`
+            },
+            buy() {
+              
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+            },
+        
             unlocked() { return true },
            
         },

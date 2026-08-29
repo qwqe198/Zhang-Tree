@@ -63,6 +63,7 @@ if (g.gte("1e1000")&&hasUpgrade("am", 34)) g = g.log10().pow(1000/3)
         if (inChallenge("pz", 22)) g = g.pow(0.5)
         if (inChallenge("am", 11)) g = expPow(g, 0.66686)
         if (inChallenge("am", 11)) g = g.pow(0.66686)
+if(inChallenge("am",21))g=g.pow(player.points.add(10).log10().div(631).min(1))
 //最低获取
  if (hasUpgrade("am", 23)) g = g.max(1e100)
         if (hasUpgrade("am", 31)) g = g.max(1e102)
@@ -146,6 +147,7 @@ if (hasMilestone("am", 30)) g =g.pow(player.points.add(10).slog())
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
  if (inChallenge("am", 12)) g = n(1)
+if (inChallenge("am", 21)) g = n(1)
         return g
     },
     zzyzeff() {
@@ -153,6 +155,7 @@ if (hasMilestone("am", 30)) g =g.pow(player.points.add(10).slog())
         if (hasUpgrade("am", 13)) g = g.pow(upgradeEffect("am", 13))
         if (inChallenge("pz", 21)) g = expPow(g, 0.5)
         if (inChallenge("pz", 22)) g = expPow(g, 0.5)
+if (inChallenge("am", 21)) g = n(1)
         return g
     },
     effectDescription() {

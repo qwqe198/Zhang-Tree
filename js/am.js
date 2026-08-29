@@ -116,6 +116,12 @@ zwzjsbase() {
      g=g.add(buyableEffect("am",34))
         return g.max(1)
     },
+zwzxxbase() {
+        let g = n(0.02)
+
+        return g.max(0)
+    },
+
 zwzjseff() {
         let g = layers.am.zwzjsbase().pow(getBuyableAmount(this.layer, 31))
      
@@ -399,8 +405,23 @@ zwzjseff() {
         },
 54: {
             requirementDescription: "54. 1e7胀物质基础",
-            effectDescription: "当前残局",
+            effectDescription: "解锁第3个am挑战胀",
             done() { return   player.am.points.gte("1e7") }
+        },
+55: {
+            requirementDescription: "55. 4.5555挑战胀1分数",
+            effectDescription: "(AM挑战胀1分数+1)加成元胀质获取",
+            done() { return challengeEffect("am", 11).gte("4.5555") }
+        },
+56: {
+            requirementDescription: "56. e5000膨胀点",
+            effectDescription: "优化升级44，45，52公式",
+            done() { return player.pz.points.gte("e5000") }
+        },
+57: {
+            requirementDescription: "57. e388胀物质",
+            effectDescription: "(胀物质基础+1)加成t获取",
+            done() { return player.am.zwz.gte("e388") }
         },
     },
  
@@ -725,7 +746,7 @@ player.am.points=n(0)
                 return "胀物质星系"
             },
             effect(x = getBuyableAmount(this.layer, this.id)) {
-                var g =  x.mul(0.02)
+                var g =  x.mul(layers.am.zwzxxbase())
 
                 return g
             },
@@ -737,6 +758,7 @@ upgrades: {
             description: `暴胀增加胀物质获取.`,
             effect() {
                 var g = player.am.bz.add(10).log10()
+if(hasUpgrade("am",54))g=g.pow(upgradeEffect("am",54))
                 return g
             },
             effectDisplay() { return `x${format(this.effect())}` },
@@ -939,7 +961,8 @@ currencyDisplayName: "暴胀",
             description: `am挑战胀2分数加成升级33效果.`,
             effect() {
                 var g = challengeEffect("am", 12).add(1)
-if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
+if(g.gte(4)&&!hasMilestone('am',56))g=g.root(10).mul(n(4).pow(0.9))
+if(g.gte(4)&&hasMilestone('am',56))g=g.root(2).mul(n(2))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -952,7 +975,8 @@ currencyDisplayName: "暴胀",
             description: `am挑战胀2分数加成升级25效果.`,
             effect() {
                 var g = challengeEffect("am", 12).add(1)
-if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
+if(g.gte(4)&&!hasMilestone('am',56))g=g.root(10).mul(n(4).pow(0.9))
+if(g.gte(4)&&hasMilestone('am',56))g=g.root(2).mul(n(2))
                 return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -977,7 +1001,8 @@ currencyDisplayName: "暴胀",
             description: `am挑战胀2分数加成升级12效果.`,
             effect() {
    var g = challengeEffect("am", 12).add(1)
-if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
+if(g.gte(4)&&!hasMilestone('am',56))g=g.root(10).mul(n(4).pow(0.9))
+if(g.gte(4)&&hasMilestone('am',56))g=g.root(2).mul(n(2))
   return g
             },
             effectDisplay() { return `^${format(this.effect())}` },
@@ -994,6 +1019,31 @@ currencyDisplayName: "暴胀",
             },
             effectDisplay() { return `x${format(this.effect())}` },
             cost: n(1e94),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+54: {
+            description: `am挑战胀3分数加成升级11效果.`,
+            effect() {
+                var g = challengeEffect("am", 21).add(1)
+if(g.gte(4))g=g.root(10).mul(n(4).pow(0.9))
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e120),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+55: {
+            description: `am挑战胀3分数加成胀物质星系效果(需要超过1以生效,未实装).`,
+            effect() {
+                var g = challengeEffect("am", 21).root(2).max(1)
+                return g
+            },
+            effectDisplay() { return `x${format(this.effect())}` },
+            cost: n(1e150),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
@@ -1050,6 +1100,31 @@ return g.max(challengeEffect("am", 12))
             canComplete() { return true },
             resource() { return player.pz.points },
             unlocked() { return  hasMilestone("am",34) }
+        },
+21: {
+            name() { return '挑战胀3'},
+            challengeDescription() { return '点获取指数塔-2.8,声望获取基于点数获得加成,膨胀点获取log10后^(暴胀指数^a),声望胀和子资源胀失效,基于挑战内最高膨胀点获得分数.'},
+            rewardDescription() { 
+                return `分数:${format(this.rewardEffect())}`
+            },
+            rewardEffect() {
+let g=n(0)
+              if(inChallenge("am",21))  g=g.max(player.pz.points.add(1).log10().pow(0.5))
+
+ if(!inChallenge("am",21))g=g.max(player.am.challenges[21])
+return g.max(challengeEffect("am", 21))
+            },
+            goal: 0,
+ goalDescription() {
+                return "更多膨胀点"
+            },
+            onExit() {
+                player.am.challenges[21] = player.pz.points.add(1).log10().pow(0.5).max(challengeEffect("am", 21)).max(0)
+            },
+            completionLimit: "1F9999",
+            canComplete() { return true },
+            resource() { return player.pz.points },
+            unlocked() { return  hasMilestone("am",54) }
         },
     },
     tabFormat: {

@@ -51,6 +51,7 @@ g=slgadd(g,layers.m.effect())
 //挑战
 if(inChallenge("pz",11))g=g.add(10).log10()
 if(inChallenge("pz",22))g=g.add(10).log10()
+if(inChallenge("am",21))g=slgadd(g,-2.8)
 if(inChallenge("am",12))g=slgmul(g,0.66686)
 	return g}
 
