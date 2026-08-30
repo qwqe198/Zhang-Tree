@@ -118,7 +118,7 @@ zwzjsbase() {
     },
 zwzxxbase() {
         let g = n(0.02)
-
+if(hasUpgrade("am",55))g=g.mul(upgradeEffect("am",55))
         return g.max(0)
     },
 
@@ -423,6 +423,21 @@ zwzjseff() {
             effectDescription: "(胀物质基础+1)加成t获取",
             done() { return player.am.zwz.gte("e388") }
         },
+58: {
+            requirementDescription: "58. 4胀物质星系",
+            effectDescription: "自动购买计时频率",
+            done() { return  getBuyableAmount(this.layer, 34).gte(4) }
+        },
+59: {
+            requirementDescription: "59. e6000膨胀点",
+            effectDescription: "元胀质获得变得更好",
+            done() { return player.pz.points.gte("e6000") }
+        },
+60: {
+            requirementDescription: "60. 2.5e8胀物质基础",
+            effectDescription: "当前残局",
+            done() { return   player.am.points.gte("2.5e8") }
+        },
     },
  
     
@@ -653,6 +668,8 @@ if(g.gte("1e308"))g=n(10).pow(g.log10().pow(2).div(308))
                 return g
             },
             unlocked() { return hasMilestone("am", 6) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 58) ? 0 : 1.79e308 },
         },
 32: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -686,6 +703,8 @@ player.am.points=n(0)
                 return g
             },
             unlocked() { return hasMilestone("am", 17) },
+   abtick: 0,
+            abdelay() { return hasMilestone('am', 99) ? 0 : 1.79e308 },
         },
 33: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -718,6 +737,8 @@ if(hasMilestone('am', 53)){
                 return g
             },
             unlocked() { return hasMilestone("am", 36) },
+abtick: 0,
+            abdelay() { return hasMilestone('am', 99) ? 0 : 1.79e308 },
         },
 34: {
             cost(x = getBuyableAmount(this.layer, this.id)) {
@@ -751,6 +772,8 @@ player.am.points=n(0)
                 return g
             },
             unlocked() { return hasMilestone("am", 48) },
+abtick: 0,
+            abdelay() { return hasMilestone('am', 99) ? 0 : 1.79e308 },
         },
     },
 upgrades: {
@@ -785,7 +808,8 @@ currencyDisplayName: "暴胀",
             description: `暴胀增加子资源胀,自动胀,胀物质效果.`,
             effect() {
                 var g = player.am.bz.add(10).log10().add(10).log10()
-if(g.gte(1.21))g=g.root(2).mul(1.1)
+if(hasUpgrade("am",61))g=g.pow(upgradeEffect("am",61))
+if(g.gte(1.21)&&!hasUpgrade('am',62))g=g.root(2).mul(1.1)
 if(g.gte(1.44))g=g.root(2).mul(1.2)
                 return g
             },
@@ -1037,13 +1061,33 @@ currencyDisplayName: "暴胀",
         currencyLayer: "am"
         },
 55: {
-            description: `am挑战胀3分数加成胀物质星系效果(需要超过1以生效,未实装).`,
+            description: `am挑战胀3分数加成胀物质星系效果(需要超过1以生效).`,
             effect() {
                 var g = challengeEffect("am", 21).root(2).max(1)
                 return g
             },
             effectDisplay() { return `x${format(this.effect())}` },
             cost: n(1e150),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+61: {
+            description: `am挑战胀3分数加成升级13效果.`,
+            effect() {
+                var g = challengeEffect("am", 21).add(10).log10()
+                return g
+            },
+            effectDisplay() { return `^${format(this.effect())}` },
+            cost: n(1e170),
+currencyDisplayName: "暴胀",
+        currencyInternalName: "bz",
+        currencyLayer: "am"
+        },
+62: {
+            description: `优化升级13公式.`,
+
+            cost: n(7.77e177),
 currencyDisplayName: "暴胀",
         currencyInternalName: "bz",
         currencyLayer: "am"
@@ -1219,7 +1263,7 @@ if (hasMilestone("am",35)) {
         if (g.gt(player.am.bzexpmax)) {
             player.am.bzexpmax = g
         }
-for (row = 1; row <= 2; row++) {
+for (row = 1; row <= 3; row++) {
             for (col = 1; col <= 4; col++) {
                 if (layers[this.layer].buyables[row * 10 + col]) {
                     layers[this.layer].buyables[row * 10 + col].abtick += diff

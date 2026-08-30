@@ -64,10 +64,13 @@ function slgmul(num,mul){
     return ten.tetr(num.max(10).slog().mul(mul))
 }
 //e后数字指数软上限
-function expRootSoftcap(num,start,power){
-    if(num.lte(start)) return num;
-    num = num.log10();start = start.log10()
-    return ten.pow(num.root(power).mul(start.pow(one.sub(one.div(power)))))
+function expRootSoftcap(num, start, power) {
+    num = n(num);
+    start = n(start);
+    if (num.lte(start)) return num;
+    const logNum = num.log10();
+    const logStart = start.log10();
+      return ten.pow(logNum.root(power).mul(logStart.pow(one.sub(one.div(power)))))
 }
 //修改class属性
 function setClass(id,toClass = []){

@@ -12,7 +12,7 @@
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.02",
+	num: "0.03",
 	name: "",
 }
 
