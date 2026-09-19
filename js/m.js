@@ -22,6 +22,7 @@ addLayer("m", { //这是代码中的节点代码 例如player.p可以调用该�
     baseResource: "点数",//基础资源名称
     gainMult() { // 资源获取数量倍率
         mult = new ExpantaNum(1)
+
         return mult
     },
     gainExp() { // 资源获取指数加成(与exponent相乘)
@@ -59,6 +60,7 @@ g=g.mul(buyableEffect("m",12))
     },
     getResetGain() {
        var g=player.points.add(10).slog().sub(4.116)
+ if (hasMilestone("ng", 1)) g = g.mul(player.ng.points.add(1))
 g=g.mul(buyableEffect("m",13))
 if (hasUpgrade("am", 51)) g = g.mul(upgradeEffect("am", 51))
 if (hasMilestone("am",49))g=g.mul(getBuyableAmount("am", 34).add(1))
@@ -296,9 +298,7 @@ clickables: {
             }
         },
     },
-   doReset(layer) {
-        player.m.t = n(0)
-    },
+
 hotkeys: [
         { key: "m", description: "m: 进行元胀质重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],

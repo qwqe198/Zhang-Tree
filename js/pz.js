@@ -29,6 +29,7 @@ addLayer("pz", { //这是代码中的节点代码 例如player.p可以调用该�
         var g = player.p.points.add(1e10).log10().div(63.1).log10()
 if (hasMilestone("am", 37))  g = player.p.points.add(10).log10().div(631)
 if (hasMilestone("am", 41))  g = player.p.points.add(10).log10()
+ if (hasMilestone("ng", 1)) g = g.mul(player.am.points.add(1))
 if (hasMilestone("pz", 7)&&!hasMilestone("am",1)) g = g.mul(player.points.add(1).log10().add(1).log10().add(1).log10().root(2).div(100).max(1))
 if (hasMilestone("am",1)) g = g.mul(player.points.add(10).slog().pow(player.points.add(10).slog()))
 if (hasMilestone("am",19)) g = g.mul(player.am.points.add(1))
@@ -206,7 +207,7 @@ if (hasMilestone("am", 5))setBuyableAmount(this.layer, this.id, player.pz.points
 9: {
             requirementDescription: "9. 6.5挑战胀1分数",
             effectDescription: "p购买胀1效果^2,且降低它的需求",
-            done() { return challengeEffect("pz", 11).gte("6.5") }
+            done() { return player.pz.challenges[11]>=6.5 }
         },
 10: {
             requirementDescription: "10. 1e150子资源胀",
@@ -221,7 +222,7 @@ if (hasMilestone("am", 5))setBuyableAmount(this.layer, this.id, player.pz.points
 12: {
             requirementDescription: "12. 9.15挑战胀1分数",
             effectDescription: "p购买胀1效果加成膨胀点获取",
-            done() { return challengeEffect("pz", 11).gte("9.15") }
+            done() { return  player.pz.challenges[11]>=9.15 }
         },
 13: {
             requirementDescription: "13. 3333333膨胀点",
@@ -231,7 +232,7 @@ if (hasMilestone("am", 5))setBuyableAmount(this.layer, this.id, player.pz.points
 14: {
             requirementDescription: "14. 10.9挑战胀1分数",
             effectDescription: "升级41效果^2",
-            done() { return challengeEffect("pz", 11).gte("10.9") }
+            done() { return player.pz.challenges[11]>=10.9 }
         },
 15: {
             requirementDescription: "15. e7000000自动胀",

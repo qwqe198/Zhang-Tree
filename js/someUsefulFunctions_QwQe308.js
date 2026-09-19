@@ -63,6 +63,10 @@ function slgadd(num,add){
 function slgmul(num,mul){
     return ten.tetr(num.max(10).slog().mul(mul))
 }
+//F后数字指数
+function slgpow(num,pow){
+    return ten.tetr(num.max(10).slog().pow(pow))
+}
 //e后数字指数软上限
 function expRootSoftcap(num, start, power) {
     num = n(num);

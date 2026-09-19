@@ -29,6 +29,7 @@ bzexpmax: new ExpantaNum(1),
     getResetGain() {
         var g = n(1)
 g=g.mul(layers.am.wdtseff())
+ if (hasMilestone("ng", 1)) g = g.mul(player.ng.points.add(1))
 if (hasUpgrade("am", 43)) g = g.mul(upgradeEffect("am", 43))
         if (player.pz.points.lt("1e308")) g = n(0)
         return g.floor()
@@ -276,7 +277,7 @@ zwzjseff() {
 28: {
             requirementDescription: "28. 3.14挑战胀1分数",
             effectDescription: "(AM挑战胀1分数+1)加成膨胀点,胀物质,暴胀获取",
-            done() { return challengeEffect("am", 11).gte("3.14") }
+            done() { return player.am.challenges[11]>=3.14 }
         },
 29: {
             requirementDescription: "29. e925膨胀点",
@@ -321,12 +322,12 @@ zwzjseff() {
 37: {
             requirementDescription: "37. 2221胀挑战4分数",
             effectDescription: "优化膨胀点的获取公式",
-            done() { return  challengeEffect("pz", 22).gte(2221) }
+            done() { return player.pz.challenges[22]>=2221 }
         },
 38: {
             requirementDescription: "38. 2.228AM挑战胀2分数",
             effectDescription: "(AM挑战胀2分数+1)加成p购买胀1,胀升级11效果指数",
-            done() { return challengeEffect("am", 12).gte("2.228") }
+            done() { return player.am.challenges[12]>=2.228 }
         },
 39: {
             requirementDescription: "39. e1500膨胀点",
@@ -346,7 +347,7 @@ zwzjseff() {
 42: {
             requirementDescription: "42. 3.65挑战胀1分数",
             effectDescription: "(AM挑战胀1分数+1)加成胀挑战胀4分数获取",
-            done() { return challengeEffect("am", 11).gte("3.65") }
+            done() { return player.am.challenges[11]>=3.65 }
         },
 43: {
             requirementDescription: "43. 1919810膨胀点&&进入AM挑战胀2",
@@ -391,7 +392,7 @@ zwzjseff() {
 51: {
             requirementDescription: "51. 3挑战胀2分数",
             effectDescription: "(AM挑战胀2分数+1)加成元胀质获取",
-            done() { return challengeEffect("am", 12).gte("3") }
+            done() { return player.am.challenges[12]>=3 }
         },
 52: {
             requirementDescription: "52. 2胀物质星系",
@@ -411,7 +412,7 @@ zwzjseff() {
 55: {
             requirementDescription: "55. 4.5555挑战胀1分数",
             effectDescription: "(AM挑战胀1分数+1)加成元胀质获取",
-            done() { return challengeEffect("am", 11).gte("4.5555") }
+            done() { return player.am.challenges[11]>=4.5555 }
         },
 56: {
             requirementDescription: "56. e5000膨胀点",
@@ -435,7 +436,7 @@ zwzjseff() {
         },
 60: {
             requirementDescription: "60. 2.5e8胀物质基础",
-            effectDescription: "当前残局",
+            effectDescription: "解锁平衡胀",
             done() { return   player.am.points.gte("2.5e8") }
         },
     },
@@ -1279,7 +1280,5 @@ for (row = 1; row <= 3; row++) {
 hotkeys: [
         { key: "a", description: "a: 进行胀物质基础重置", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
-doReset(layer) {
-        player.m.t = n(0)
-    },
+
 })

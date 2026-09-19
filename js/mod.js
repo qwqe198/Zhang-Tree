@@ -39,6 +39,7 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints()) return new ExpantaNum(0)
 	let g = new ExpantaNum(1.01)
+ if (hasMilestone("ng", 1)) g = g.mul(player.p.points.add(1))
 g=g.mul(layers.am.zwzeff())
 if(hasUpgrade("pz",11))g=g.mul(upgradeEffect("pz",11))
 if(hasUpgrade("pz",14))g=g.pow(upgradeEffect("pz",14))
